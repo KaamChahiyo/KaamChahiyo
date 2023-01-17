@@ -21,7 +21,7 @@ export const Location = [
 
 export const Icons = [
   { name: "logo-facebook", link: "https://www.facebook.com/" },
-  { name: "logo-twitter", link: "#" },
-  { name: "logo-github", link: "#" },
-  { name: "logo-linkedin", link: "#" },
+  { name: "logo-twitter", link: "https://twitter.com/" },
+  { name: "logo-github", link: "https://github.com/" },
+  { name: "logo-linkedin", link: "https://www.linkedin.com/" },
 ];

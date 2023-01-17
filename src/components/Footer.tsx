@@ -1,12 +1,17 @@
 import React from "react";
 import ItemsContainer from "./ItemsContainer";
+import SocialIcons from "./SocialIcons";
 
 export default function Footer() {
   return (
-    <div className="bg-[#19134def] text-gray-300 w-full h-full">
+    <div className="bg-[#13102eef] text-gray-300 w-full h-full">
       <ItemsContainer />
-      <div className=" grid grid-cols-1 text-center  text-gray-50 ">
+      <div
+        className="  grid grid-cols-1 sm:grid-cols-2 gap-5 
+      text-center pt-2 text-gray-50 text-sm pb-8"
+      >
         <span>Copyright © 2023 Apply. All rights reserved.</span>
+        <SocialIcons />
       </div>
     </div>
   );
