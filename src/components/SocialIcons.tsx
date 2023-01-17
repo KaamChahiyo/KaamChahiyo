@@ -1,6 +1,6 @@
 import { SocialIcon } from "react-social-icons";
 
-const Social = () => {
+const SocialIcons = () => {
   return (
     <div className="gap-5 ">
       <SocialIcon url="https://facebook.com/" />
@@ -10,4 +10,4 @@ const Social = () => {
     </div>
   );
 };
-export default Social;
+export default SocialIcons;
