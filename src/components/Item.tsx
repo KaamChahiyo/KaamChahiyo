@@ -1,6 +1,6 @@
 import React from "react";
 
-const Item = ({ Links, title }) => {
+const Item = ({ Links, title }: { Links: string; title: string }) => {
   return (
     <ul>
       <h1 className="mb-1 font-semibold">{title}</h1>
