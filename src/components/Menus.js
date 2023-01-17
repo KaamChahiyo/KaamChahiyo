@@ -18,10 +18,3 @@ export const Location = [
   { name: "Map of location", link: "#" },
   { name: "Map of location", link: "#" },
 ];
-
-export const Icons = [
-  { name: "logo-facebook", link: "https://www.facebook.com/" },
-  { name: "logo-twitter", link: "https://twitter.com/" },
-  { name: "logo-github", link: "https://github.com/" },
-  { name: "logo-linkedin", link: "https://www.linkedin.com/" },
-];
