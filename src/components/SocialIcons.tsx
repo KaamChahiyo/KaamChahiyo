@@ -1,12 +1,12 @@
-import { SocialIcon } from "react-social-icons";
+import { FacebookIcon, TelegramIcon, GithubIcon } from "../icons";
+import FooterIcon from "./FooterIcon";
 
 const SocialIcons = () => {
   return (
     <div className="flex gap-5 ">
-      <SocialIcon url="https://facebook.com/" />
-      <SocialIcon url="https://twitter.com/" />
-      <SocialIcon url="https://linkedin.com/" />
-      <SocialIcon url="https://github.com/" />
+      <FooterIcon icon={FacebookIcon} link="#" />
+      <FooterIcon icon={TelegramIcon} link="#" />
+      <FooterIcon icon={GithubIcon} link="#" />
     </div>
   );
 };

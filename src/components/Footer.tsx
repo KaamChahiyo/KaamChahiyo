@@ -4,7 +4,7 @@ import SocialIcons from "./SocialIcons";
 
 export default function Footer() {
   return (
-    <div className="bg-[#13102eef] text-gray-300 w-full h-full">
+    <div className="bg-gradient-to-r from-emerald-700 to-emerald-800 text-gray-300 w-full h-full">
       <ItemsContainer />
       <div
         className="  grid grid-cols-1 sm:grid-cols-2 gap-5 
