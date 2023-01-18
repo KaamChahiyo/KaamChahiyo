@@ -5,8 +5,14 @@ export default function Home() {
   return (
     <>
       <AppHeader />
-      <div className="flex min-h-screen w-full justify-center items-center font-sans text-lg font-bold text-blue-700">
-        KaamChahiyo App
+      <div className="">
+        <div>HeroSection</div>
+        <div>Recent Job posting</div>
+        <div>Top categories</div>
+        <div>Top Services</div>
+        <div>Top Employees</div>
+        <div>Working procedure</div>
+        <div>We have Served</div>
       </div>
       <Footer />
     </>
