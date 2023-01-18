@@ -77,7 +77,6 @@ export default function AppHeader() {
             >
               <Link href="/">Home</Link>
             </span>
-            +d
           </div>
         </div>
 
