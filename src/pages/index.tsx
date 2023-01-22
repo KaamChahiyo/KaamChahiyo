@@ -3,6 +3,9 @@ import AppHeader from "../components/AppHeader";
 import Footer from "../components/Footer";
 import TopCategory from "../components/TopCategory";
 import TopServices from "../components/TopServices";
+import SearchBar from "../components/SearchBar";
+import { categories } from "../lib/categories";
+import { locations } from "../lib/locations";
 
 export default function Home() {
   return (
@@ -15,10 +18,22 @@ export default function Home() {
             alt="Hero Section"
             fill
             className="object-cover"
-            quality={100} />
+            quality={100}
+          />
           <div className="absolute top-80 left-44 w-full flex gap-10 m-auto container">
-            <input className="px-8 py-3 rounded-full w-[50%] overflow-hidden focus:outline-none focus:shadow-outline focus:border-orange-400 border-2" type="text" placeholder="Search for a job by catagory" />
-            <input className="px-8 py-3 rounded-full w-[50%] overflow-hidden focus:outline-none focus:shadow-outline focus:border-orange-400 border-2 " type="text" placeholder="Search for a job by location" />
+            <form className="rounded-full w-[50%] overflow-hidden focus:outline-none ">
+              <SearchBar
+                placeHolder="Search job by Category"
+                data={categories}
+              />
+            </form>
+
+            <form className="rounded-full w-[50%] overflow-hidden focus:outline-none ">
+              <SearchBar
+                placeHolder="Search for a job by location"
+                data={locations}
+              />
+            </form>
           </div>
         </div>
         <div>Recent Job posting</div>
