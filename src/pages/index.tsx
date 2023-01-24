@@ -21,19 +21,16 @@ export default function Home() {
             quality={100}
           />
           <div className="absolute top-80 left-44 w-full flex gap-10 m-auto container">
-            <form className="rounded-full w-[50%] overflow-hidden focus:outline-none ">
-              <SearchBar
-                placeHolder="Search job by Category"
-                data={categories}
-              />
-            </form>
+            <SearchBar
+              placeHolder="Search job by job Category"
+              data={categories}
+            />
 
-            <form className="rounded-full w-[50%] overflow-hidden focus:outline-none ">
-              <SearchBar
-                placeHolder="Search for a job by location"
-                data={locations}
-              />
-            </form>
+            <SearchBar
+              placeHolder="Search for a job by location"
+              data={locations}
+            />
+            <form className="rounded-full w-[50%] overflow-hidden focus:outline-none "></form>
           </div>
         </div>
         <div>Recent Job posting</div>
