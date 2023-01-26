@@ -12,7 +12,6 @@ import WorkingMethod from "../components/WorkingMethod";
 export default function Home() {
   return (
     <>
-      <AppHeader />
       <div className="flex flex-col w-full">
         <div className="h-[720px] w-full relative top-0 ">
           <Image
@@ -41,7 +40,6 @@ export default function Home() {
         <WorkingMethod />
         <div>We have Served</div>
       </div>
-      <Footer />
     </>
   );
 }
