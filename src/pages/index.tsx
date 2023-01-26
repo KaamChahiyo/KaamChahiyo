@@ -7,6 +7,7 @@ import SearchBar from "../components/SearchBar";
 import { categories } from "../lib/categories";
 import { locations } from "../lib/locations";
 import RecentJobPost from "../components/RecentJobPost";
+import WorkingMethod from "../components/WorkingMethod";
 
 export default function Home() {
   return (
@@ -37,7 +38,7 @@ export default function Home() {
         <TopCategory />
         <TopServices />
         <div>Top Employees</div>
-        <div>Working procedure</div>
+        <WorkingMethod />
         <div>We have Served</div>
       </div>
       <Footer />
