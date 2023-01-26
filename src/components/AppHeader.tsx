@@ -50,14 +50,13 @@ export default function AppHeader() {
         <div className="flex justify-between w-full items-center container mx-auto">
           <div className="cursor-pointer ">
             <Link href="/">
-              {/* <Image
-                                src="/assets/images/logo.png"
-                                width={203}
-                                height={88}
-                                objectFit="contain"
-                                alt="KaamChahiyo"
-                            /> */}
-              Logo
+              <Image
+                src="/assets/img/logo-no-background.png"
+                width={203}
+                height={88}
+                className="object-cover"
+                alt="KaamChahiyo"
+              />
             </Link>
           </div>
 
@@ -96,14 +95,14 @@ export default function AppHeader() {
             <div className="bg-white  min-h-screen w-8/12 flex flex-col align-top overflow-hidden justify-start p-6">
               <div className="relative flex justify-start">
                 <Link href="/">
-                  {/* <Image
-                                        src="/assets/images/logo.png"
-                                        width={203}
-                                        height={88}
-                                        objectFit="contain"
-                                        alt="KaamChahiyo"
-                                    /> */}
-                  Logo
+                  <Image
+                    src="/assets/img/logo-no-background.png"
+                    width={203}
+                    height={88}
+                    className="object-cover"
+                    alt="KaamChahiyo"
+                  />
+
                 </Link>
               </div>
               {menu.map((menuName) => (
