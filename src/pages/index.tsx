@@ -7,12 +7,12 @@ import SearchBar from "../components/SearchBar";
 import { categories } from "../lib/categories";
 import { locations } from "../lib/locations";
 import RecentJobPost from "../components/RecentJobPost";
+import TopEmployees from "../components/TopEmployees";
 import WorkingMethod from "../components/WorkingMethod";
 
 export default function Home() {
   return (
     <>
-      <AppHeader />
       <div className="flex flex-col w-full">
         <div className="h-[720px] w-full relative top-0 ">
           <Image
@@ -22,12 +22,11 @@ export default function Home() {
             className="object-cover"
             quality={100}
           />
-          <div className="absolute w-full top-80 place-content-center flex gap-10 m-auto container">
+          <div className="absolute top-80 flex justify-center w-full gap-10">
             <SearchBar
               placeHolder="Search job by job Category"
               data={categories}
             />
-
             <SearchBar
               placeHolder="Search for a job by location"
               data={locations}
@@ -37,11 +36,10 @@ export default function Home() {
         <RecentJobPost />
         <TopCategory />
         <TopServices />
-        <div>Top Employees</div>
+        <TopEmployees />
         <WorkingMethod />
         <div>We have Served</div>
       </div>
-      <Footer />
     </>
   );
 }
