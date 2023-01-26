@@ -4,25 +4,27 @@ import React from "react";
 function TopEmployees() {
   return (
     <div className="">
-      <div className="flex justify-center text-2xl py-6">Top Employees</div>
+      <div className="flex justify-center font-bold text-2xl mb-8 py-4">
+        Top Employees
+      </div>
       <div className="flex gap-10 justify-center">
         <TopEmployee
           avatarURL="/assets/img/profile-image.png"
-          employeeName=""
+          employeeName="Ananta Raj Mishra"
           employeeDescription="Hello I am top employee. I did many good jobs so I became top
 employee."
           employeeTag="Software Engineer"
         />
         <TopEmployee
           avatarURL="/assets/img/profile-image.png"
-          employeeName=""
+          employeeName="Suman Chalise"
           employeeDescription="Hello I am top employee. I did many good jobs so I became top
 employee."
           employeeTag="Software Engineer"
         />
         <TopEmployee
           avatarURL="/assets/img/profile-image.png"
-          employeeName=""
+          employeeName="Deepak Acharya"
           employeeDescription="Hello I am top employee. I did many good jobs so I became top
 employee."
           employeeTag="Software Engineer"

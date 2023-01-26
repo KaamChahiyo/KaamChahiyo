@@ -8,7 +8,7 @@ export default function RecentJobPost() {
   let catetegoryOfPost = "Category";
   return (
     <div className="m-auto container ">
-      <div className="p-10 text-center font-bold text-3xl">
+      <div className="p-10 text-center font-bold text-2xl">
         Recent Job posting
       </div>
       <div className="flex gap-5  px-10 py-10 mx-5 my-5 ">
