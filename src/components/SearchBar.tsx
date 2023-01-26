@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { categories } from "../lib/categories";
 
 export default function SearchBar({
   placeHolder,

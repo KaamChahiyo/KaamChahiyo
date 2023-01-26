@@ -6,6 +6,7 @@ import TopServices from "../components/TopServices";
 import SearchBar from "../components/SearchBar";
 import { categories } from "../lib/categories";
 import { locations } from "../lib/locations";
+import RecentJobPost from "../components/RecentJobPost";
 
 export default function Home() {
   return (
@@ -20,7 +21,7 @@ export default function Home() {
             className="object-cover"
             quality={100}
           />
-          <div className="absolute top-80 left-44 w-full flex gap-10 m-auto container">
+          <div className="absolute w-full top-80 place-content-center flex gap-10 m-auto container">
             <SearchBar
               placeHolder="Search job by job Category"
               data={categories}
@@ -30,10 +31,9 @@ export default function Home() {
               placeHolder="Search for a job by location"
               data={locations}
             />
-            <form className="rounded-full w-[50%] overflow-hidden focus:outline-none "></form>
           </div>
         </div>
-        <div>Recent Job posting</div>
+        <RecentJobPost />
         <TopCategory />
         <TopServices />
         <div>Top Employees</div>
