@@ -8,9 +8,11 @@ export default function RecentJobPost() {
   let catetegoryOfPost = "Category";
   return (
     <div className="m-auto">
-      <div className=" p-10 font-bold text-xl">Recent Job posting</div>
-      <div className="flex overflow-x-auto gap-5  px-10 mx-5 ">
-        <div className="Job_1 w-1/3 shadow-lg">
+      <div className="p-10 text-center font-bold text-3xl">
+        Recent Job posting
+      </div>
+      <div className="flex gap-5  px-10 py-10 mx-5 my-5">
+        <div className="Job_1 w-1/3 shadow-lg hover:shadow-sm">
           <div className="font-bold p-5 text-xl">Job Title</div>
           <div className="flex gap-4 italic p-3">
             <p>{dateTimeOfPost}</p>
@@ -24,7 +26,7 @@ export default function RecentJobPost() {
           <div className="italic p-8">{locationOfPost}</div>
         </div>
 
-        <div className="Job_1 w-1/3 shadow-lg">
+        <div className="Job_1 w-1/3 shadow-lg hover:shadow-sm">
           <div className="font-bold p-5 text-xl">Job Title</div>
           <div className="flex gap-4 italic p-3">
             <p>{dateTimeOfPost}</p>
@@ -38,7 +40,7 @@ export default function RecentJobPost() {
           <div className="italic p-8">{locationOfPost}</div>
         </div>
 
-        <div className="Job_1 w-1/3 shadow-lg">
+        <div className="Job_1 w-1/3 shadow-lg hover:shadow-sm">
           <div className="font-bold p-5 text-xl">Job Title</div>
           <div className="flex gap-4 italic p-3">
             <p>{dateTimeOfPost}</p>
