@@ -24,14 +24,14 @@ export default function SearchBar({
     <div>
       <div>
         <input
-          className="px-8 py-3 rounded-full w-[100%] focus:outline-none focus:shadow-outline focus:border-orange-400 border-2"
+          className=" w-96 px-8 py-3 rounded-full focus:outline-none focus:shadow-outline focus:border-orange-400 border-2"
           type="text"
           value={value}
           onChange={onChange}
           placeholder={placeHolder}
         ></input>
       </div>
-      <div className="rounded-lg border-red-700 flex flex-col">
+      <div className="rounded-lg border-red-700 flex flex-col overflow-hidden">
         {data
           .filter((item: { filterItem: string }) => {
             const searchTerm = value.toLowerCase();
