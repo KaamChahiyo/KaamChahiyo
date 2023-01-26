@@ -11,7 +11,7 @@ export default function WorkingMethod() {
           <Method
             icon={AccIcon}
             name={"Create Account"}
-            description={"Register, Get Verified and Login to KaamChaiyo"}
+            description={"Register, Get Verified and Login to KaamChahiyo"}
             link="#"
           />
         </div>
