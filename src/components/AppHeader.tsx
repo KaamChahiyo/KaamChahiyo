@@ -70,12 +70,61 @@ export default function AppHeader() {
           <div className="gap-12 justify-center font-semibold leading-7 hidden lg:flex">
             <span
               className={classNames({
-                "text-primary-0 border-b-2 hover:border-primary-0 border-primary-0 active:outline-offset-3":
+                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
                   route.pathname === "/",
               })}
             >
               <Link href="/">Home</Link>
             </span>
+            <span
+              className={classNames({
+                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                  route.pathname === "/services",
+              })}
+            >
+              <Link href="/services">Services</Link>
+            </span>
+            <span
+              className={classNames({
+                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                  route.pathname === "/job-listing",
+              })}
+            >
+              <Link href="/job-listing">Job Listing</Link>
+            </span>
+            <span
+              className={classNames({
+                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                  route.pathname === "/location",
+              })}
+            >
+              <Link href="/location">Location</Link>
+            </span>
+            <span
+              className={classNames({
+                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                  route.pathname === "/about",
+              })}
+            >
+              <Link href="/about">About</Link>
+            </span>
+            <span
+              className={classNames({
+                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                  route.pathname === "/blog",
+              })}
+            >
+              <Link href="/blog">Blog</Link>
+            </span>
+
+          </div>
+          <div className="flex gap-8">
+            <div className="flex bg-teal-900 border-2 border-teal-900 text-white font-semibold px-6 py-3 rounded hover:text-teal-900 hover:bg-white hover:border-2 hover:border-teal-900 ">
+              <Link href="/login">Login</Link>
+            </div>
+            <div className="flex bg-[#2D9515] border-2 border-[#2D9515] text-white font-semibold px-6 py-3 rounded hover:text-[#2D9515] hover:bg-white hover:border-2 hover:border-[#2D9515] ">
+              <Link href="/signup">Signup</Link>
+            </div>
           </div>
         </div>
 
