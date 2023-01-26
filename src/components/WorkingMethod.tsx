@@ -3,7 +3,7 @@ import React from "react";
 
 export default function WorkingMethod() {
   return (
-    <div className="container m-auto w-full flex flex-col justify-center gap-10">
+    <div className="container m-auto w-full flex flex-col justify-center gap-10 mt-16">
       <div className="text-2xl text-center font-bold">Working Procedure</div>
       <div className="gap-10 flex flex-row justify-center ">
         <Method
