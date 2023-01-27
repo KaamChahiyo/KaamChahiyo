@@ -63,10 +63,12 @@ const JobList = ({
   return (
     <div>
       <div className="m-auto container ">
-        <div className="flex gap-5  px-10 py-10 mx-5 my-5 ">
-          <div className="Job_1 w-1/3 shadow-lg hover:shadow-sm">
-            <div className="font-bold p-5 text-xl">{jobTitleOfPost}</div>
+        <div className="flex gap-5">
+          <div className="w-1/3 shadow-lg hover:shadow-sm">
+            <div className="font-bold text-xl">{jobTitleOfPost}</div>
             <div className="flex gap-4 italic p-3">
+              <p>{postBy}</p>
+              <p>{postByPic}</p>
               <p>{dateTimeOfPost}</p>
               <p>{catetegoryOfPost}</p>
             </div>
