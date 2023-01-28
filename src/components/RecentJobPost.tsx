@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function RecentJobPost() {
@@ -12,6 +13,7 @@ export default function RecentJobPost() {
           dateTimeOfPost="5 hours ago"
           catetegoryOfPost="Plumber"
           locationOfPost="Bharatpur"
+          link="#"
           jobDescriptionOfPost="Description of the job is wirtten here. We should write what
           problem or solutions we need on this section. Employer posts a job
           and this is description from that post."
@@ -24,6 +26,7 @@ export default function RecentJobPost() {
           dateTimeOfPost="5 hours ago"
           catetegoryOfPost="Carpenter"
           locationOfPost="Bhaktapur"
+          link="#"
           jobDescriptionOfPost="Description of the job is wirtten here. We should write what
           problem or solutions we need on this section. Employer posts a job
           and this is description from that post."
@@ -41,6 +44,7 @@ const Recentjobs = ({
   catetegoryOfPost,
   jobDescriptionOfPost,
   locationOfPost,
+  link,
 }: {
   jobTitleOfPost: string;
   postBy: string;
@@ -49,9 +53,10 @@ const Recentjobs = ({
   catetegoryOfPost: string;
   jobDescriptionOfPost: string;
   locationOfPost: string;
+  link: string;
 }) => {
   return (
-    <div className="w-1/3">
+    <Link href={link} className="w-1/3">
       <div className="shadow-lg hover:shadow-sm p-5">
         <div className="font-bold text-xl">{jobTitleOfPost}</div>
         <div className="flex gap-4 italic p-3">
@@ -63,6 +68,6 @@ const Recentjobs = ({
         <div className="jobDetail text-lg px-3">{jobDescriptionOfPost}</div>
         <div className="italic p-8">{locationOfPost}</div>
       </div>
-    </div>
+    </Link>
   );
 };

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export default function JobListing() {
@@ -14,6 +15,7 @@ export default function JobListing() {
           catetegoryOfPost="Plumber"
           locationOfPost="Bharatpur"
           jobTitleOfPost="Water Leakage & Tap Installation"
+          link="#"
           jobTagsOfPost={
             (jobTags = [
               { tag: "Leakage" },
@@ -31,7 +33,6 @@ export default function JobListing() {
         problem or solutions we need on this section. Employer posts a job
         and this is description from that post."
         />
-
         <JobList
           postBy="Ramesh"
           postByPicURL="/assets/img/profile-image.png"
@@ -39,6 +40,7 @@ export default function JobListing() {
           catetegoryOfPost="Plumber"
           locationOfPost="Bharatpur"
           jobTitleOfPost="Water Leakage & Tap Installation"
+          link="#"
           jobTagsOfPost={
             (jobTags = [
               { tag: "Leakage" },
@@ -56,7 +58,6 @@ export default function JobListing() {
         problem or solutions we need on this section. Employer posts a job
         and this is description from that post."
         />
-
         <JobList
           postBy="Ramesh"
           postByPicURL="/assets/img/profile-image.png"
@@ -64,6 +65,7 @@ export default function JobListing() {
           catetegoryOfPost="Plumber"
           locationOfPost="Bharatpur"
           jobTitleOfPost="Water Leakage & Tap Installation"
+          link="#"
           jobTagsOfPost={
             (jobTags = [
               { tag: "Leakage" },
@@ -95,6 +97,7 @@ const JobList = ({
   postByPicURL,
   jobTitleOfPost,
   jobTagsOfPost,
+  link,
 }: {
   dateTimeOfPost: string;
   catetegoryOfPost: string;
@@ -104,9 +107,10 @@ const JobList = ({
   postByPicURL: string;
   jobTitleOfPost: string;
   jobTagsOfPost: any;
+  link: string;
 }) => {
   return (
-    <div className="w-3/5 shadow-lg shadow-green-200 hover:shadow-sm p-3">
+    <div className="w-3/5 shadow-md shadow-green-200 hover:shadow-sm p-3">
       <div className="font-bold text-xl p-2">{jobTitleOfPost}</div>
       <div className="flex gap-4 italic p-3">
         <div className="h-7 w-7 relative rounded-full overflow-hidden ">
@@ -126,7 +130,14 @@ const JobList = ({
           ))}
         </div>
       </div>
-      <div className="italic p-8">{locationOfPost}</div>
+      <div className="flex justify-center items-center gap-x-96 p-5">
+        <div className="italic  p-2">{locationOfPost}</div>
+        <Link href={link}>
+          <div className="p-2 bg-emerald-500 hover:bg-emerald-400 text-lg font-bold">
+            Apply
+          </div>
+        </Link>
+      </div>
     </div>
   );
 };
