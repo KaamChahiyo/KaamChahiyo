@@ -221,6 +221,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-nepal-map@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/react-nepal-map/-/react-nepal-map-1.0.1.tgz#ffd3e3c83608723c744293be41f954939cde7923"
+  integrity sha512-E6W7ZMquatofk2fKdzSeG11tGWbdbfG333w2/mlErgVrdyGbapYHPTryefsn9RtiTCq/rb6Z+22VnFEmnAvA/w==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@18.0.26":
   version "18.0.26"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.0.26.tgz"

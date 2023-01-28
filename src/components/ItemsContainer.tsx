@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { About, Catagories, QuickLinks, Location } from "../components/Menus";
+import { Catagories, QuickLinks, Location } from "../components/Menus";
 
 const Item = ({ Links, title }: { Links: string; title: string }) => {
   return (
