@@ -1,18 +1,20 @@
 export const About = [
-  { name: "LOGO", link: "#" },
+  { name: "KaamChahiyo", link: "/assets/img/logo-white.png" },
   { name: "About Text", link: "#" },
 ];
 export const Catagories = [
-  { name: "List1", link: "#" },
-  { name: "List2", link: "#" },
-  { name: "List3", link: "#" },
+  { name: "Plumber", link: "#" },
+  { name: "Electrician", link: "#" },
+  { name: "Household", link: "#" },
+  { name: "Painter", link: "#" },
 ];
 export const QuickLinks = [
-  { name: "Link 1", link: "#" },
-  { name: "Link 2", link: "#" },
-  { name: "Link 3", link: "#" },
-  { name: "Link 4", link: "#" },
-  { name: "Link 5", link: "#" },
+  { name: "Home", link: "#" },
+  { name: "Services", link: "#" },
+  { name: "Job Listing", link: "#" },
+  { name: "Location", link: "#" },
+  { name: "About", link: "#" },
+  { name: "Blog", link: "#" },
 ];
 export const Location = [
   { name: "Map of location", link: "#" },
