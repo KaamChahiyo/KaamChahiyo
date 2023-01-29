@@ -10,69 +10,72 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Session {
-  id           String    @id @default(cuid())
-  sessionToken String    @unique
-  accessToken  String    @unique
-  userId       String
-  expires      DateTime
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  deletedAt    DateTime?
-  user         User      @relation(fields: [userId], references: [id])
-}
-
 model User {
-  id            String    @id @default(cuid())
-  name          String
-  email         String    @unique
-  emailVerified DateTime?
-  bio           String    @db.VarChar(255)
-  password      String?
-  role          String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now())
-  deletedAt     DateTime?
-  sessions      Session[]
-  Job           Job[]
-  Job           Job[]
+  id              String    @id @default(cuid())
+  name            String
+  email           String    @unique
+  emailVerifiedOn DateTime?
+  bio             String?   @db.VarChar(255)
+  password        String
+  role            Role?     @relation(fields: [roleId], references: [id])
+  roleId          String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @default(now())
+  deletedAt       DateTime?
+  AssignedOn      Job[]     @relation("Assigned")
+  PostedOn        Job[]     @relation("Posted")
 }
 
-model Payment {
-  id          Int      @id @default(autoincrement())
-  method      String
-  status      Boolean  @default(false)
-  paymentDate DateTime
-  Job         Job      @relation(fields: [jobId], references: [id])
-  jobId       Int
-}
-
-model Category {
-  id   Int     @id @default(autoincrement())
-  name String?
-  Job  Job[]
+model Role {
+  id          String @id @default(cuid())
+  name        String @unique
+  displayName String
+  User        User[]
 }
 
 model Location {
-  id   Int     @id @default(autoincrement())
-  name String?
-  Job  Job[]
+  id          String  @id @default(cuid())
+  name        String? @unique
+  displayName String
+  Job         Job[]
+}
+
+model PaymentMethod {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  displayName String
+  Payment     Payment[]
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  status          String
+  paymentDate     DateTime
+  PaymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId String
+}
+
+model Category {
+  id          String @id @default(cuid())
+  name        String @unique
+  displayName String
+  Job         Job[]
 }
 
 model Job {
-  id             Int       @id @default(autoincrement())
-  title          String?
-  postedOn       DateTime  @default(now())
-  isVerified     Boolean   @default(false)
-  description    String    @db.VarChar(255)
-  Category       Category? @relation(fields: [categoryId], references: [id])
-  categoryId     Int
-  price          Float?
-  location       Location  @relation(fields: [locationId], references: [id])
-  locationId     Int
-  Payment        Payment[]
-  postedByUser   User      @relation(name: "posted-by-user", fields: [postedByUserId], references: [id])
-  postedByUserId String
-  User           User?     @relation(fields: [userId], references: [id])
-  userId         String?
+  id           String    @id @default(cuid())
+  title        String?
+  isVerified   Boolean   @default(false)
+  description  String    @db.VarChar(255)
+  price        Float?
+  postedBy     User      @relation("Posted", fields: [postedById], references: [id])
+  postedById   String
+  postedOn     DateTime  @default(now())
+  assignedTo   User      @relation("Assigned", fields: [assignedToId], references: [id])
+  assignedToId String
+  assignedOn   DateTime
+  Category     Category  @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  Location     Location? @relation(fields: [locationId], references: [id])
+  locationId   String?
 }
