@@ -11,7 +11,7 @@ import {
 export default function TopCategory() {
   return (
     <div className="flex m-auto container gap-36 justify-center items-center p-10">
-      <div className="text-center font-bold ">Top Category</div>
+      <div className="text-center font-bold text-2xl ">Top Category</div>
       <div className="text-sm text-center flex gap-10  ">
         <Category icon={ElectricianIcon} services={"Electrician"} link="#" />
         <Category icon={PlumberIcon} services={"Plumber"} link="#" />

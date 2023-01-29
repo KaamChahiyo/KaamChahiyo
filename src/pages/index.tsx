@@ -38,7 +38,6 @@ export default function Home() {
         <TopServices />
         <TopEmployees />
         <WorkingMethod />
-        <div>We have Served</div>
       </div>
     </>
   );

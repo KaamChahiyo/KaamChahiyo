@@ -12,4 +12,4 @@ export default function Location() {
             </div>
         </div >
     )
-}
+    }

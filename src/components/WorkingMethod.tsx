@@ -3,7 +3,7 @@ import React from "react";
 
 export default function WorkingMethod() {
   return (
-    <div className="container m-auto w-full flex flex-col justify-center gap-10">
+    <div className="container m-auto w-full flex flex-col justify-center gap-10 mt-16">
       <div className="text-2xl text-center font-bold">Working Procedure</div>
       <div className="gap-10 flex flex-row justify-center ">
         <Method
@@ -14,13 +14,13 @@ export default function WorkingMethod() {
         />
         <Method
           step="2"
-          name={"Post Job/Apply for Job "}
+          name={"Post / Apply for Job "}
           description={"Post Job or Apply for Job as per your need."}
           link="#"
         />
         <Method
           step="3"
-          name={"Get Paid"}
+          name={"Get Pay/Paid"}
           description={"After Job is Completed Get Paid "}
           link="#"
         />

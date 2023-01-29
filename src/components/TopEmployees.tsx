@@ -1,31 +1,37 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 function TopEmployees() {
   return (
     <div className="">
-      <div className="flex justify-center text-2xl py-6">Top Employees</div>
+      <div className="flex justify-center font-bold text-2xl mb-8 py-4">
+        Top Employees
+      </div>
       <div className="flex gap-10 justify-center">
         <TopEmployee
           avatarURL="/assets/img/profile-image.png"
-          employeeName=""
+          employeeName="Ananta Raj Mishra"
           employeeDescription="Hello I am top employee. I did many good jobs so I became top
 employee."
           employeeTag="Software Engineer"
+          link="#"
         />
         <TopEmployee
           avatarURL="/assets/img/profile-image.png"
-          employeeName=""
+          employeeName="Suman Chalise"
           employeeDescription="Hello I am top employee. I did many good jobs so I became top
 employee."
           employeeTag="Software Engineer"
+          link="#"
         />
         <TopEmployee
           avatarURL="/assets/img/profile-image.png"
-          employeeName=""
+          employeeName="Deepak Acharya"
           employeeDescription="Hello I am top employee. I did many good jobs so I became top
 employee."
           employeeTag="Software Engineer"
+          link="#"
         />
       </div>
     </div>
@@ -38,15 +44,20 @@ const TopEmployee = ({
   employeeName,
   employeeDescription,
   employeeTag,
+  link,
 }: {
   avatarURL: string;
   employeeName: string;
   employeeDescription: string;
   employeeTag: string;
+  link: string;
 }) => {
   return (
     <>
-      <div className="flex flex-col border container  shadow-md w-96 gap-4 p-10  rounded-lg">
+      <Link
+        href={link}
+        className="flex flex-col border container shadow-md hover:shadow-sm w-96 gap-4 p-10  rounded-lg"
+      >
         <div className="flex flex-col gap-2 justify-center items-center">
           <div className="h-20 w-20 relative rounded-full overflow-hidden ">
             <Image src={avatarURL} alt="Profile Image" fill />
@@ -61,7 +72,7 @@ const TopEmployee = ({
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };
