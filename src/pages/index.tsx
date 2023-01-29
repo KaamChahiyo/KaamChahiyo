@@ -1,11 +1,7 @@
 import Image from "next/image";
-import AppHeader from "../components/AppHeader";
-import Footer from "../components/Footer";
 import TopCategory from "../components/TopCategory";
 import TopServices from "../components/TopServices";
 import SearchBar from "../components/SearchBar";
-import { categories } from "../lib/categories";
-import { locations } from "../lib/locations";
 import RecentJobPost from "../components/RecentJobPost";
 import TopEmployees from "../components/TopEmployees";
 import WorkingMethod from "../components/WorkingMethod";
@@ -42,3 +38,24 @@ export default function Home() {
     </>
   );
 }
+
+export const locations = [
+  { filterItem: "Bharatpur" },
+  { filterItem: "Kathmandu" },
+  { filterItem: "Lalitpur" },
+  { filterItem: "Birgunj" },
+  { filterItem: "Bharatpur" },
+  { filterItem: "Lamjung" },
+  { filterItem: "Pokhara" },
+  { filterItem: "Hetuda" },
+  { filterItem: "Banepa" },
+  { filterItem: "Basgadi" },
+]
+
+export const categories = [
+  { filterItem: "Painter" },
+  { filterItem: "Household" },
+  { filterItem: "IT services" },
+  { filterItem: "Plumber" },
+  { filterItem: "Electrician" },
+]
