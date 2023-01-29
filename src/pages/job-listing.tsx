@@ -6,58 +6,11 @@ export default function JobListing() {
   let jobTags;
   return (
     <div className="flex flex-col items-center justify-center p-10 bg-gradient-to-b from-white to-emerald-50">
-      <div className="flex font-bold text-2xl p-3">Jobs you might like</div>
+      <div>
+        <div className="flex font-bold text-2xl p-3">Jobs you might like</div>
+        <div></div>
+      </div>
       <div className="flex flex-col items-center justify-center gap-4">
-        <JobList
-          postBy="Ramesh"
-          postByPicURL="/assets/img/profile-image.png"
-          dateTimeOfPost="5 hours ago"
-          catetegoryOfPost="Plumber"
-          locationOfPost="Bharatpur"
-          jobTitleOfPost="Water Leakage & Tap Installation"
-          link="#"
-          jobTagsOfPost={
-            (jobTags = [
-              { tag: "Leakage" },
-              { tag: "Tap Installation" },
-              { tag: "Plumbing" },
-            ])
-          }
-          jobDescriptionOfPost="Description of the job is wirtten here. We should write what
-        problem or solutions we need on this section. Employer posts a job
-        and this is description from that post. Description of the job is wirtten here. We should write what
-        problem or solutions we need on this section. Employer posts a job
-        and this is description from that post.Description of the job is wirtten here. We should write what
-        problem or solutions we need on this section. Employer posts a job
-        and this is description from that post.Description of the job is wirtten here. We should write what
-        problem or solutions we need on this section. Employer posts a job
-        and this is description from that post."
-        />
-        <JobList
-          postBy="Ramesh"
-          postByPicURL="/assets/img/profile-image.png"
-          dateTimeOfPost="5 hours ago"
-          catetegoryOfPost="Plumber"
-          locationOfPost="Bharatpur"
-          jobTitleOfPost="Water Leakage & Tap Installation"
-          link="#"
-          jobTagsOfPost={
-            (jobTags = [
-              { tag: "Leakage" },
-              { tag: "Tap Installation" },
-              { tag: "Plumbing" },
-            ])
-          }
-          jobDescriptionOfPost="Description of the job is wirtten here. We should write what
-        problem or solutions we need on this section. Employer posts a job
-        and this is description from that post. Description of the job is wirtten here. We should write what
-        problem or solutions we need on this section. Employer posts a job
-        and this is description from that post.Description of the job is wirtten here. We should write what
-        problem or solutions we need on this section. Employer posts a job
-        and this is description from that post.Description of the job is wirtten here. We should write what
-        problem or solutions we need on this section. Employer posts a job
-        and this is description from that post."
-        />
         <JobList
           postBy="Ramesh"
           postByPicURL="/assets/img/profile-image.png"
