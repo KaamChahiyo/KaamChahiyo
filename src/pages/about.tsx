@@ -5,7 +5,7 @@ export default function About() {
   return (
     <div>
       <div className="flex justify-center bg-gradient-to-r from-emerald-500 to-emerald-600 gap-12 p-5">
-        <div className="text-left w-80 ">
+        <div className="text-left w-80 text-white">
           <div className="font-bold text-4xl gap-5 py-10">KAAMCHAHIYO</div>
           <div className="font-semibold text-xl py-5 gap-2">
             KaamChahiyo focuses on creating Employment Opportunities,
