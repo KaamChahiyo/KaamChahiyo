@@ -12,8 +12,8 @@ import {
 
 export default function Services() {
   return (
-    <div className="flex items-center justify-center pb-5 m-auto gap-10">
-      <div className="grid grid-cols-4 p-3 gap-10 place-content-center">
+    <div className="flex items-center justify-center pb-5 m-auto">
+      <div className="grid grid-cols-3 p-3 gap-12 place-content-center">
         <AllServices
           icon={PlumberIcon}
           services={"Plumber"}
@@ -35,7 +35,7 @@ export default function Services() {
         />
         <AllServices
           icon={HomeIcon}
-          services={"HouseHold"}
+          services={"House Hold"}
           activeJobs="5"
           rank="N/A"
         />
@@ -81,14 +81,13 @@ const AllServices = ({
 }) => {
   return (
     <div className="flex gap-10">
-      <div className="flex flex-row w-auto gap-5 border rounded-lg shadow-lg p-5">
-        <div className="h-32 w-32">{icon}</div>
+      <div className="flex flex-col w-auto gap-5 border rounded-lg shadow-lg hover:shadow-sm p-5 bg-slate-50 hover:scale-110 h-fit items-center">
+        <div className="w-24 opacity-70 ">{icon}</div>
         <div className="flex flex-col">
-          <div className="font-bold text-lg w-36 pb-1">{services}</div>
-          <div className="font-medium">Active Jobs:</div>
-          <div className="font-semibold mx-4 ">{activeJobs}</div>
-          <div className="">Rank:</div>
-          <div className="font-medium mx-2">{rank}</div>
+          <div className="font-bold text-xl w-48 pb-1">{services}</div>
+          <div className="text-lg pb-2">Active Jobs: &nbsp; {activeJobs}</div>
+          <div className="pb-1">Rank: &nbsp; {rank}</div>
+          <div className="text-lg mx-2"></div>
         </div>
       </div>
     </div>
