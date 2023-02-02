@@ -5,7 +5,7 @@ export default function SearchBar() {
 
   const onChangeLocation = (locEvent: {target:{value:any}}) => {
     setLocValue(locEvent.target.value);
-    console.log(locEvent.target.value);
+    // console.log(locEvent.target.value);
   };
 
   const onSearchLoc = (searchLocationTerm:string) => {
@@ -21,9 +21,13 @@ export default function SearchBar() {
     setCatValue(event.target.value);
   };
 
-  const onSearch = (searchTerm:string ) => {
-    setCatValue(searchTerm);
-    // console.log("search category ", searchTerm);
+  const onSearch = (cSearchTerm:string ) => {
+    setCatValue(cSearchTerm);
+    // console.log("cSearch category ", cSearchTerm);
+  };
+
+  const onClickBtn = (searchLocationTerm: string, cSearchTerm: string) => {
+    console.log("category: " +cSearchTerm +" location: " + searchLocationTerm);
   };
 
   return (
@@ -75,14 +79,14 @@ export default function SearchBar() {
       <div className="rounded-lg border-red-700 flex flex-col overflow-hidden">
         {categories
           .filter((item: { filterItem: any }) => {
-            const searchTerm = catValue.toLowerCase(); 
+            const cSearchTerm = catValue.toLowerCase(); 
             //console.log(catValue);
             const lowerCaseData = item.filterItem.toLowerCase();
 
             return (
-              searchTerm &&
-              lowerCaseData.startsWith(searchTerm) &&
-              lowerCaseData != searchTerm
+              cSearchTerm &&
+              lowerCaseData.startsWith(cSearchTerm) &&
+              lowerCaseData != cSearchTerm
             );
           })
           .map((item: { filterItem: any }) => (
@@ -98,7 +102,9 @@ export default function SearchBar() {
       </div>
       <div>
         <input type='button' value="Search" 
-        className="flex rounded-lg bg-[#2D9515] text-white text-lg hover:bg-teal-700 px-3 py-2.5" />
+        className="flex rounded-lg bg-[#2D9515] text-white text-lg hover:bg-teal-700 px-3 py-2.5" 
+        onClick={() => onClickBtn(catValue, locValue)}
+        />
         </div>
     </div>
   );
