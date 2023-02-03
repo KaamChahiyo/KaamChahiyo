@@ -12,6 +12,7 @@
     "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "dependencies": {
+    "@next-auth/prisma-adapter": "^1.0.5",
     "@next/font": "13.1.1",
     "@prisma/client": "4.9.0",
     "@types/lodash": "^4.14.191",
@@ -25,6 +26,7 @@
     "eslint-config-next": "^12.0.4",
     "lodash": "^4.17.21",
     "next": "^13.1.1",
+    "next-auth": "^4.19.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-nepal-map": "^1.0.2",
