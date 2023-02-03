@@ -9,8 +9,8 @@ export const authOptions: NextAuthOptions = {
   debug: true,
 
   pages: {
-    signIn: "/signin",
-    signOut: "/signout",
+    signIn: "/login",
+    // signOut: "/signout",
     error: "/error", // Error code passed in query string as ?error=
   },
   callbacks: {
