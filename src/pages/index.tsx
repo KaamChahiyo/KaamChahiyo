@@ -18,15 +18,10 @@ export default function Home() {
             className="object-cover"
             quality={100}
           />
-          <div className="absolute top-80 flex justify-center w-full gap-10">
+          <div className="absolute top-80 flex justify-center w-full ">
             <SearchBar
-              placeHolder="Search job by job Category"
-              data={categories}
             />
-            <SearchBar
-              placeHolder="Search for a job by location"
-              data={locations}
-            />
+            
           </div>
         </div>
         <RecentJobPost />
@@ -39,23 +34,3 @@ export default function Home() {
   );
 }
 
-export const locations = [
-  { filterItem: "Bharatpur" },
-  { filterItem: "Kathmandu" },
-  { filterItem: "Lalitpur" },
-  { filterItem: "Birgunj" },
-  { filterItem: "Bharatpur" },
-  { filterItem: "Lamjung" },
-  { filterItem: "Pokhara" },
-  { filterItem: "Hetuda" },
-  { filterItem: "Banepa" },
-  { filterItem: "Basgadi" },
-]
-
-export const categories = [
-  { filterItem: "Painter" },
-  { filterItem: "Household" },
-  { filterItem: "IT services" },
-  { filterItem: "Plumber" },
-  { filterItem: "Electrician" },
-]
