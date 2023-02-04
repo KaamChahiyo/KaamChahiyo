@@ -5,10 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { MenuIcon } from "../icons";
+import { useSession } from "next-auth/react";
 
 export default function AppHeader() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const route = useRouter();
+  const { data: userData } = useSession();
+  const user = userData?.user
+
   const menu = [
     {
       menuLabel: "Main Menu",
@@ -119,12 +123,21 @@ export default function AppHeader() {
 
           </div>
           <div className="flex gap-8">
-            <div className="flex bg-teal-900 border-2 border-teal-900 text-white font-semibold px-6 py-3 rounded hover:text-teal-900 hover:bg-white hover:border-2 hover:border-teal-900 ">
-              <Link href="/login">Login</Link>
-            </div>
-            <div className="flex bg-[#2D9515] border-2 border-[#2D9515] text-white font-semibold px-6 py-3 rounded hover:text-[#2D9515] hover:bg-white hover:border-2 hover:border-[#2D9515] ">
-              <Link href="/signup">Signup</Link>
-            </div>
+            {user ?
+              <><div>Session exists {user?.name}</div>
+                <div className="flex bg-[#2D9515] border-2 border-[#2D9515] text-white font-semibold px-6 py-3 rounded hover:text-[#2D9515] hover:bg-white hover:border-2 hover:border-[#2D9515] ">
+                  <Link href="/logout">Logout</Link>
+                </div>
+              </> :
+              <><div className="flex bg-teal-900 border-2 border-teal-900 text-white font-semibold px-6 py-3 rounded hover:text-teal-900 hover:bg-white hover:border-2 hover:border-teal-900 ">
+                <Link href="/login">Login</Link>
+              </div>
+                <div className="flex bg-[#2D9515] border-2 border-[#2D9515] text-white font-semibold px-6 py-3 rounded hover:text-[#2D9515] hover:bg-white hover:border-2 hover:border-[#2D9515] ">
+                  <Link href="/signup">Signup</Link>
+                </div>
+              </>
+
+            }
           </div>
         </div>
 

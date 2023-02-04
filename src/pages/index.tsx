@@ -5,8 +5,10 @@ import SearchBar from "../components/SearchBar";
 import RecentJobPost from "../components/RecentJobPost";
 import TopEmployees from "../components/TopEmployees";
 import WorkingMethod from "../components/WorkingMethod";
+import { getLocations } from "../services/locationService";
+import { getCategories } from "../services/categoryService"
 
-export default function Home() {
+export default function Home({ locations, categories }) {
   return (
     <>
       <div className="flex flex-col w-full">
@@ -19,9 +21,8 @@ export default function Home() {
             quality={100}
           />
           <div className="absolute top-80 flex justify-center w-full ">
-            <SearchBar
-            />
-            
+            <SearchBar locations={locations} categories={categories} />
+
           </div>
         </div>
         <RecentJobPost />
@@ -34,3 +35,8 @@ export default function Home() {
   );
 }
 
+export async function getServerSideProps() {
+  const categories = await getCategories();
+  const locations = await getLocations();
+  return { props: { categories, locations } };
+}
