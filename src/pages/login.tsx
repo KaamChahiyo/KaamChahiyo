@@ -36,9 +36,13 @@ export default function Login() {
                         </p>
 
                         <div className='flex gap-6 flex-col w-full'>
-                            <button onClick={() => signIn("google", {
-                                callbackUrl: `${window.location.origin}/`,
-                            })} className='border border-gray-200 rounded-md flex gap-6 px-6 py-3 w-full items-center'>
+                            <button onClick={() => signIn("facebook")} className='border border-gray-200 rounded-md flex gap-6 px-6 py-3 w-full items-center'>
+                                <div className='w-6 relative'>
+                                    <Image alt="" src="/assets/img/FacebookIcon.svg" width={20} height={20} />
+                                </div>
+                                <div className='flex flex-1 items-center justify-center'>Continue with Facebook</div>
+                            </button>
+                            <button onClick={() => signIn("google")} className='border border-gray-200 rounded-md flex gap-6 px-6 py-3 w-full items-center'>
                                 <div className='w-6 relative'>
                                     <Image alt="" src="/assets/img/GoogleIcon.svg" width={20} height={20} />
                                 </div>
