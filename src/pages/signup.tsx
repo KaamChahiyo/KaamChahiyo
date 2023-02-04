@@ -1,8 +1,72 @@
+import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react'
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+// import { useSnackbar } from 'notistack';
 
 export default function Signup() {
+    const {
+        handleSubmit,
+        register,
+        watch,
+        setError,
+        formState: { errors, isSubmitting },
+    } = useForm();
+    const router = useRouter();
+
+    let defaultBody = {
+        name: "",
+        email: "",
+        password: "",
+    };
+    // const { enqueueSnackbar } = useSnackbar();
+    async function onSubmit(values) {
+        try {
+            const body = { ...defaultBody, ...values };
+            await fetch(
+                `/api/signup`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        accept: "application/json",
+                    },
+                    body: Object.entries(body)
+                        .map((e) => e.join("="))
+                        .join("&"),
+                },
+            )
+                .then(async (res) => {
+                    if (!res.ok) {
+                        const errorResp = await res.json()
+                        throw Error(errorResp.message)
+                    }
+                    res.json()
+                    // enqueueSnackbar('User Registered Successfully.', {
+                    //     variant: 'success'
+                    // })
+                    router.replace("/login")
+                })
+                .catch((err) => {
+                    // enqueueSnackbar('Failed to register a user.', {
+                    //     variant: 'error'
+                    // })
+                    setError('submit', {
+                        type: "server",
+                        message: err.message,
+                    });
+                    return null;
+                });
+        }
+        catch (error) {
+            setError('submit', {
+                type: "server",
+                message: 'Unable to connect to the server properly!!',
+            });
+        }
+    }
     return (
         <>
             <div className="flex justify-center items-center my-36">
@@ -36,18 +100,19 @@ export default function Signup() {
                         <p className="font-medium text-sm text-[#9A9A9A] text-center ">
                             --- Or singup with ---
                         </p>
-                        <div className="flex p-5 justify-center gap-5 ">
-                            <Link href="#">
-                                <div className="bg-teal-100 flex justify-center p-3 rounded-full" >
+                        <div className="flex p-5 justify-center gap-5 flex-col">
+                            <button onClick={() => signIn("facebook")} className='border border-gray-200 rounded-md flex gap-6 px-6 py-3 w-full items-center'>
+                                <div className='w-6 relative'>
                                     <Image alt="" src="/assets/img/FacebookIcon.svg" width={20} height={20} />
                                 </div>
-                            </Link>
-                            <Link href="#">
-
-                                <div className="bg-teal-100 flex justify-center p-3 rounded-full" >
+                                <div className='flex flex-1 items-center justify-center'>Continue with Facebook</div>
+                            </button>
+                            <button onClick={() => signIn("google")} className='border border-gray-200 rounded-md flex gap-6 px-6 py-3 w-full items-center'>
+                                <div className='w-6 relative'>
                                     <Image alt="" src="/assets/img/GoogleIcon.svg" width={20} height={20} />
                                 </div>
-                            </Link>
+                                <div className='flex flex-1 items-center justify-center'>Continue with Google</div>
+                            </button>
                         </div>
                         <div>
                             <p className="text-center ">Already have account ?

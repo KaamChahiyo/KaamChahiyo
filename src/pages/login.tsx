@@ -1,8 +1,10 @@
+import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
 export default function Login() {
+    const { data: session, status } = useSession();
     return (
         <>
             <div className="flex justify-center items-center my-36">
@@ -32,30 +34,52 @@ export default function Login() {
                         <p className="font-medium text-sm text-[#9A9A9A] text-center ">
                             --- Or login with ---
                         </p>
-                        <div className="flex p-5 justify-center gap-5 ">
+
+                        <div className='flex gap-6 flex-col w-full'>
+                            <button onClick={() => signIn("facebook")} className='border border-gray-200 rounded-md flex gap-6 px-6 py-3 w-full items-center'>
+                                <div className='w-6 relative'>
+                                    <Image alt="" src="/assets/img/FacebookIcon.svg" width={20} height={20} />
+                                </div>
+                                <div className='flex flex-1 items-center justify-center'>Continue with Facebook</div>
+                            </button>
+                            <button onClick={() => signIn("google")} className='border border-gray-200 rounded-md flex gap-6 px-6 py-3 w-full items-center'>
+                                <div className='w-6 relative'>
+                                    <Image alt="" src="/assets/img/GoogleIcon.svg" width={20} height={20} />
+                                </div>
+                                <div className='flex flex-1 items-center justify-center'>Continue with Google</div>
+                            </button>
+                            <div>
+                                <p className="text-center ">Don't have account ?
+                                </p>
+
+                                <p className="text-teal-900 font-bold text-sm text-center">
+                                    <Link href="/signup">Signup</Link>
+                                </p>
+                            </div>
+                        </div>
+                        {/* <div className="flex p-5 justify-center gap-5 flex-col ">
                             <Link href="#">
                                 <div className="bg-teal-100 flex justify-center p-3 rounded-full" >
                                     <Image alt="" src="/assets/img/FacebookIcon.svg" width={20} height={20} />
                                 </div>
                             </Link>
-                            <Link href="#">
 
-                                <div className="bg-teal-100 flex justify-center p-3 rounded-full" >
-                                    <Image alt="" src="/assets/img/GoogleIcon.svg" width={20} height={20} />
-                                </div>
-                            </Link>
-                        </div>
-                        <div>
-                            <p className="text-center ">Don't have account ?
-                            </p>
+                            <button className="bg-teal-100 flex justify-center p-3 rounded-full gap-5 items-center" onClick={() => signIn("google")} >
+                                <Image alt="" src="/assets/img/GoogleIcon.svg" width={20} height={20} />
+                                <div>Signin with Google</div>
+                            </button>
+                            <div>
+                                <p className="text-center ">Don't have account ?
+                                </p>
 
-                            <p className="text-teal-900 font-bold text-sm text-center">
-                                <Link href="/signup">Signup</Link>
-                            </p>
-                        </div>
+                                <p className="text-teal-900 font-bold text-sm text-center">
+                                    <Link href="/signup">Signup</Link>
+                                </p>
+                            </div>
+                        </div> */}
                     </div>
-                </div>
-            </div >
+                </div >
+            </div>
         </>
     )
 }
