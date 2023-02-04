@@ -83,7 +83,7 @@ const JobList = ({
           ))}
         </div>
       </div>
-      <div className="flex justify-center items-center gap-x-96 p-5">
+      <div className="flex justify-between items-center p-5">
         <div className="italic  p-2">{locationOfPost}</div>
         <Link href={link}>
           <div className="p-2 bg-emerald-500 hover:bg-emerald-400 text-lg font-bold">
