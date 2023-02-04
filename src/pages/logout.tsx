@@ -1,8 +1,9 @@
-import Image from 'next/image'
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
 
 export default function Logout() {
+    signOut({ callbackUrl: "/" });
     return (
         <>
             <div className="flex justify-center items-center my-36">
