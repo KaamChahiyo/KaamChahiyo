@@ -122,19 +122,33 @@ export default function AppHeader() {
             </span>
 
           </div>
-          <div className="flex gap-8">
+          <div className="flex gap-8 items-center justify-center">
             {user ?
-              <><div>Session exists {user?.name}</div>
+              <><div className="relative ">
+                <Image
+                  src={user?.image}
+                  alt={user?.name}
+                  width={100}
+                  height={100}
+                  quality={100}
+                  className="rounded-full object-fill w-10 h-10"
+                />
+              </div>
                 <div className="flex bg-[#2D9515] border-2 border-[#2D9515] text-white font-semibold px-6 py-3 rounded hover:text-[#2D9515] hover:bg-white hover:border-2 hover:border-[#2D9515] ">
                   <Link href="/logout">Logout</Link>
                 </div>
               </> :
-              <><div className="flex bg-teal-900 border-2 border-teal-900 text-white font-semibold px-6 py-3 rounded hover:text-teal-900 hover:bg-white hover:border-2 hover:border-teal-900 ">
-                <Link href="/login">Login</Link>
-              </div>
-                <div className="flex bg-[#2D9515] border-2 border-[#2D9515] text-white font-semibold px-6 py-3 rounded hover:text-[#2D9515] hover:bg-white hover:border-2 hover:border-[#2D9515] ">
-                  <Link href="/signup">Signup</Link>
-                </div>
+              <>
+                <Link href="/login">
+                  <div className="flex bg-teal-900 border-2 border-teal-900 text-white font-semibold px-6 py-3 rounded hover:text-teal-900 hover:bg-white hover:border-2 hover:border-teal-900 ">
+                    Login
+                  </div>
+                </Link>
+                <Link href="/signup">
+                  <div className="flex bg-[#2D9515] border-2 border-[#2D9515] text-white font-semibold px-6 py-3 rounded hover:text-[#2D9515] hover:bg-white hover:border-2 hover:border-[#2D9515] ">
+                    Signup
+                  </div>
+                </Link>
               </>
 
             }
@@ -186,7 +200,7 @@ export default function AppHeader() {
             </div>
           </div>
         </section>
-      </nav>
-    </div>
+      </nav >
+    </div >
   );
 }
