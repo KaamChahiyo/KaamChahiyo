@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import React from 'react'
 
 export default function ErrorPage() {
     return (
@@ -10,7 +9,7 @@ export default function ErrorPage() {
                         <div className=" flex flex-col gap-5 ">
                             <div className='flex flex-col gap-3'>
                                 <p className=" font-bold text-4xl text-center "> Error!</p>
-                                <p className=" text-gray-400 text-center text-md ">You have been logged out of the session.</p>
+                                <p className=" text-gray-400 text-center text-md ">Error detected while browsing the Application.</p>
                             </div>
                             <div>
                                 <p className="text-teal-900 font-bold text-sm text-center">
