@@ -3,6 +3,7 @@ import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { omit } from "lodash";
 import prisma from "../../../lib/prismadb";
+import { selectClasses } from "@mui/material";
 
 export default async function handle(
   req: NextApiRequest,
@@ -14,7 +15,7 @@ export default async function handle(
   if (req.method === "PUT") {
     await handleUpdateUser(res, req);
   } else {
-    res.setHeader("Allow", ["GET "], ["PUT"]);
+    res.setHeader("Allow", ["GET ", "PUT"]);
     res.status(405).json({ message: "Method not found." });
   }
 }
@@ -23,11 +24,23 @@ const handleViewUser = async (res, req) => {
   const session = await getServerSession(req, res, authOptions);
   if (!session) {
     res.status(401).json({ message: "You must be logged in." });
+    return;
   } else {
-    res.json({ session });
+    const user = await prisma.user.findFirst({
+      where: { id: session.user["id"] },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        bio: true,
+        role: true,
+        image: true,
+        createdAt: true,
+      },
+    });
+    res.json(user);
   }
 };
-
 const handleUpdateUser = async (req, res) => {
   const session = await getServerSession(req, res, authOptions);
   if (!session) res.status(401).json({ message: "You must be logged in." });
