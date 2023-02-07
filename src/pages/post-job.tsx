@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function PostJob({ categories, locations }) {
-  const { data: session } = useSession()
-  const router = useRouter()
+  const { data: session } = useSession();
+  const router = useRouter();
 
   if (!session) {
     router.replace("/login")

@@ -1,11 +1,11 @@
 // import { MenuIcon } from "../icons";
 import classNames from "classnames";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { MenuIcon } from "../icons";
-import { useSession } from "next-auth/react";
 
 export default function AppHeader() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -74,7 +74,7 @@ export default function AppHeader() {
           <div className="gap-12 justify-center font-semibold leading-7 hidden lg:flex">
             <span
               className={classNames({
-                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
                   route.pathname === "/",
               })}
             >
@@ -82,7 +82,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
                   route.pathname === "/services",
               })}
             >
@@ -90,7 +90,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
                   route.pathname === "/job-listing",
               })}
             >
@@ -98,7 +98,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
                   route.pathname === "/location",
               })}
             >
@@ -106,7 +106,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
                   route.pathname === "/about",
               })}
             >
@@ -114,7 +114,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#319516] text-[#319516] hover:text-[#319516] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
                   route.pathname === "/blog",
               })}
             >
@@ -134,18 +134,18 @@ export default function AppHeader() {
                   className="rounded-full object-fill w-10 h-10"
                 />
               </div>
-                <div className="flex bg-[#2D9515] border-2 border-[#2D9515] text-white font-semibold px-6 py-3 rounded hover:text-[#2D9515] hover:bg-white hover:border-2 hover:border-[#2D9515] ">
+                <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
                   <Link href="/logout">Logout</Link>
                 </div>
               </> :
               <>
                 <Link href="/login">
-                  <div className="flex bg-teal-900 border-2 border-teal-900 text-white font-semibold px-6 py-3 rounded hover:text-teal-900 hover:bg-white hover:border-2 hover:border-teal-900 ">
+                  <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1]">
                     Login
                   </div>
                 </Link>
                 <Link href="/signup">
-                  <div className="flex bg-[#2D9515] border-2 border-[#2D9515] text-white font-semibold px-6 py-3 rounded hover:text-[#2D9515] hover:bg-white hover:border-2 hover:border-[#2D9515] ">
+                  <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
                     Signup
                   </div>
                 </Link>
