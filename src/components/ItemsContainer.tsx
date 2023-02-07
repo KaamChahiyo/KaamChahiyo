@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Catagories, QuickLinks, Location } from "../components/Menus";
 
-const Item = ({ Links, title }: { Links: string; title: string }) => {
+const Item = ({ Links, title }) => {
   return (
     <div>
       <ul>
@@ -9,7 +9,7 @@ const Item = ({ Links, title }: { Links: string; title: string }) => {
         {Links.map((link) => (
           <li key={link.name}>
             <a
-              className="text-gray-400 hover:text-teal-400 text-lg duration-300 cursor-pointer leading-6"
+              className="text-white hover:text-blue-400 text-lg duration-300 cursor-pointer leading-6"
               href={link.link}
             >
               {link.name}
@@ -23,7 +23,7 @@ const Item = ({ Links, title }: { Links: string; title: string }) => {
 
 const ItemsContainer = () => {
   return (
-    <div className="grid grid-cols-4 justify-center m-auto container gap-6 px-5 py-12">
+    <div className="grid grid-cols-4 justify-center m-auto container gap-6 px-5 py-12 text-white">
       {/* <Item Links={About} title="ABOUT" /> */}
       <div className="flex flex-col gap-5 pr-10">
         <div className="w-40 h-20 relative">
