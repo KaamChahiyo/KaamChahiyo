@@ -3,7 +3,6 @@ import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { omit } from "lodash";
 import prisma from "../../../lib/prismadb";
-import { selectClasses } from "@mui/material";
 
 export default async function handle(
   req: NextApiRequest,
