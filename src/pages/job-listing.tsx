@@ -1,32 +1,55 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { TabSelector } from "../components/TabSelector";
+import { TabPanel, useTabs } from "react-headless-tabs";
 
 export default function JobListing() {
+  const [selectedTab, setSelectedTab] = useTabs(["recent-jobs", "all-jobs"]);
   let jobTags;
   return (
-    <div className="flex flex-col items-center justify-center p-10 bg-gradient-to-b from-white to-emerald-50">
+    <div>
       <div>
-        <div className="flex font-bold text-2xl p-3">Jobs you might like</div>
-        <div></div>
-      </div>
-      <div className="flex flex-col items-center justify-center gap-4">
-        <JobList
-          postBy="Ramesh"
-          postByPicURL="/assets/img/profile-image.png"
-          dateTimeOfPost="5 hours ago"
-          catetegoryOfPost="Plumber"
-          locationOfPost="Bharatpur"
-          jobTitleOfPost="Water Leakage & Tap Installation"
-          link="#"
-          jobTagsOfPost={
-            (jobTags = [
-              { tag: "Leakage" },
-              { tag: "Tap Installation" },
-              { tag: "Plumbing" },
-            ])
-          }
-          jobDescriptionOfPost="Description of the job is wirtten here. We should write what
+        <div className="flex flex-col items-center justify-center p-10 bg-gradient-to-b from-white to-emerald-50">
+          <div className="flex flex-col items-center justify-center w-full">
+            <div className="flex font-bold text-2xl p-3">Jobs you might like</div>
+            <div className="flex items-center justify-center">
+              <TabSelector
+                isActive={selectedTab === "recent-jobs"}
+                onClick={() => setSelectedTab("recent-jobs")}>
+                {/* <div className="w-48 font-semibold text-xl"> */}
+                Recent&#160;jobs
+                {/* </div> */}
+              </TabSelector>
+              <TabSelector
+                isActive={selectedTab === "all-jobs"}
+                onClick={() => setSelectedTab("all-jobs")}>
+                {/* <div className="w-48 font-semibold text-xl"> */}
+                All&#160;jobs
+                {/* </div> */}
+              </TabSelector>
+            </div>
+          </div>
+
+          <div>
+            <TabPanel hidden={selectedTab !== "recent-jobs"}>
+              <div className="flex flex-col items-center justify-center gap-4">
+                <JobList
+                  postBy="Ramesh"
+                  postByPicURL="/assets/img/profile-image.png"
+                  dateTimeOfPost="5 hours ago"
+                  catetegoryOfPost="Plumber"
+                  locationOfPost="Bharatpur"
+                  jobTitleOfPost="Water Leakage & Tap Installation"
+                  link="#"
+                  jobTagsOfPost={
+                    (jobTags = [
+                      { tag: "Leakage" },
+                      { tag: "Tap Installation" },
+                      { tag: "Plumbing" },
+                    ])
+                  }
+                  jobDescriptionOfPost="Description of the job is wirtten here. We should write what
         problem or solutions we need on this section. Employer posts a job
         and this is description from that post. Description of the job is wirtten here. We should write what
         problem or solutions we need on this section. Employer posts a job
@@ -35,7 +58,64 @@ export default function JobListing() {
         and this is description from that post.Description of the job is wirtten here. We should write what
         problem or solutions we need on this section. Employer posts a job
         and this is description from that post."
-        />
+                />
+              </div>
+            </TabPanel>
+            <TabPanel hidden={selectedTab !== "all-jobs"}>
+              <div className="flex flex-col items-center justify-center gap-4">
+                <JobList
+                  postBy="Ramesh"
+                  postByPicURL="/assets/img/profile-image.png"
+                  dateTimeOfPost="5 hours ago"
+                  catetegoryOfPost="Plumber"
+                  locationOfPost="Bharatpur"
+                  jobTitleOfPost="Water Leakage & Tap Installation"
+                  link="#"
+                  jobTagsOfPost={
+                    (jobTags = [
+                      { tag: "Leakage" },
+                      { tag: "Tap Installation" },
+                      { tag: "Plumbing" },
+                    ])
+                  }
+                  jobDescriptionOfPost="Description of the job is wirtten here. We should write what
+        problem or solutions we need on this section. Employer posts a job
+        and this is description from that post. Description of the job is wirtten here. We should write what
+        problem or solutions we need on this section. Employer posts a job
+        and this is description from that post.Description of the job is wirtten here. We should write what
+        problem or solutions we need on this section. Employer posts a job
+        and this is description from that post.Description of the job is wirtten here. We should write what
+        problem or solutions we need on this section. Employer posts a job
+        and this is description from that post."
+                />
+              </div>
+              <div className="flex flex-col items-center justify-center gap-4">
+                <JobList
+                  postBy="Suresh"
+                  postByPicURL="/assets/img/profile-image.png"
+                  dateTimeOfPost="2 days ago"
+                  catetegoryOfPost="Plumber"
+                  locationOfPost="Rampur"
+                  jobTitleOfPost="Dhara Halni"
+                  link="#"
+                  jobTagsOfPost={
+                    (jobTags = [
+                      { tag: "Leakage" },
+                      { tag: "Tap Installation" },
+                      { tag: "Plumbing" },
+                    ])
+                  }
+                  jobDescriptionOfPost="Description of the job is wirtten here. We should write what
+        problem or solutions we need on this section. Employer posts a job
+        and this is description from that post. Description of the job is wirtten here. We should write what
+        problem or solutions we need on this section. Employer posts a job
+        and this is description from that post."
+                />
+              </div>
+            </TabPanel>
+          </div>
+
+        </div>
       </div>
     </div>
   );

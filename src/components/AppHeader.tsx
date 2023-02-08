@@ -124,20 +124,25 @@ export default function AppHeader() {
           </div>
           <div className="flex gap-8 items-center justify-center">
             {user ?
-              <><div className="relative ">
-                <Image
-                  src={user?.image}
-                  alt={user?.name}
-                  width={100}
-                  height={100}
-                  quality={100}
-                  className="rounded-full object-fill w-10 h-10"
-                />
-              </div>
+              <>
+                <Link href="/userProfile">
+                  <div className="relative ">
+                    <Image
+                      src={user?.image}
+                      alt={user?.name}
+                      width={100}
+                      height={100}
+                      quality={100}
+                      className="rounded-full object-fill w-10 h-10"
+                    />
+                  </div>
+                </Link>
                 <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
                   <Link href="/logout">Logout</Link>
                 </div>
-              </> :
+
+              </>
+              :
               <>
                 <Link href="/login">
                   <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1]">
