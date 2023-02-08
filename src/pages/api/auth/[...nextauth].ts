@@ -16,10 +16,11 @@ export const authOptions: NextAuthOptions = {
     signOut: "/logout",
   },
   callbacks: {
-    jwt: async ({ user, token }) => {
-      if (user) {
-        token.uid = user.id;
-      }
+    async session({ session, user }) {
+      session.user["id"] = user.id;
+      return session;
+    },
+    async jwt({ token }) {
       return token;
     },
   },
