@@ -88,27 +88,27 @@ export default function Profile() {
                                             <p className="font-bold text-4xl text-center p-4">Update your profile</p>
                                         </div>
                                         <div className='flex flex-col'>
-                                            <div className=''>
-                                                <Image src={session?.user?.image} alt={userName} width={100} height={100} quality={100} />
+                                            <div className='w-20 h-20'>
+                                                <Image src={data?.["image"]} alt={data?.["name"]} width={100} height={100} quality={100} />
                                             </div>
-                                            <div>{session.user.name}</div>
+                                            <div>{data?.["name"]}</div>
                                         </div>
                                         <div className='flex flex-col gap-1 text-gray-500'>
                                             <label className='text-grey'>Name:</label>
-                                            <input type="text" placeholder="Name" value={userName}
+                                            <input type="text" placeholder="Name" value={data?.["name"]} onChange={nameChange}
                                                 className='border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md'
                                             />
 
                                         </div>
                                         <div className='flex flex-col gap-1 text-gray-500'>
                                             <label>Email:</label>
-                                            <input type="text" placeholder="email" value={userEmail}
+                                            <input type="text" placeholder="Email" value={data?.["email"]}
                                                 className='border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md'
                                             />
                                         </div>
                                         <div className='flex flex-col gap-1 text-gray-500'>
                                             <label>Bio:</label>
-                                            <textarea rows={3} value={data} placeholder="Bio" onChange={bioChange}
+                                            <textarea rows={3} value={data?.["bio"]} placeholder="Bio" onChange={bioChange}
                                                 className='border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md'
                                             />
                                         </div>
