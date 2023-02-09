@@ -10,23 +10,23 @@ export default function JobListing() {
   return (
     <div>
       <div>
-        <div className="flex flex-col items-center justify-center p-10 bg-gradient-to-b from-white to-emerald-50">
+        <div className="flex flex-col items-center justify-center p-10 bg-gradient-to-b from-white to-blue-50">
           <div className="flex flex-col items-center justify-center w-full">
             <div className="flex font-bold text-2xl p-3">Jobs you might like</div>
             <div className="flex items-center justify-center">
               <TabSelector
                 isActive={selectedTab === "recent-jobs"}
                 onClick={() => setSelectedTab("recent-jobs")}>
-                {/* <div className="w-48 font-semibold text-xl"> */}
-                Recent&#160;jobs
-                {/* </div> */}
+                <div className={`w-44 text-center bg-blue-50 rounded-lg py-2 font-semibold text-lg`}>
+                  Recent jobs
+                </div>
               </TabSelector>
               <TabSelector
                 isActive={selectedTab === "all-jobs"}
                 onClick={() => setSelectedTab("all-jobs")}>
-                {/* <div className="w-48 font-semibold text-xl"> */}
-                All&#160;jobs
-                {/* </div> */}
+                <div className="w-44 text-center bg-blue-50 rounded-lg py-2 font-semibold text-lg }">
+                  All jobs
+                </div>
               </TabSelector>
             </div>
           </div>
@@ -143,7 +143,7 @@ const JobList = ({
   link: string;
 }) => {
   return (
-    <div className="w-3/5 shadow-md shadow-green-200 hover:shadow-sm p-3">
+    <div className="w-3/5 shadow-md shadow-200 hover:shadow-sm p-3">
       <div className="font-bold text-xl p-2">{jobTitleOfPost}</div>
       <div className="flex gap-4 italic p-3">
         <div className="h-7 w-7 relative rounded-full overflow-hidden ">

@@ -7,12 +7,10 @@ export default function SearchBar({ locations, categories }) {
   console.log("Locationb from prop", categories)
   const onChangeLocation = (locEvent: { target: { value: any } }) => {
     setLocValue(locEvent.target.value);
-    // console.log(locEvent.target.value);
   };
 
   const onSearchLoc = (searchLocationTerm: string) => {
     setLocValue(searchLocationTerm);
-    // console.log("search location", searchLocationTerm);
   };
 
   const [catValue, setCatValue] = useState("");
@@ -25,50 +23,93 @@ export default function SearchBar({ locations, categories }) {
 
   const onSearch = (cSearchTerm: string) => {
     setCatValue(cSearchTerm);
-    // console.log("cSearch category ", cSearchTerm);
   };
 
   const onClickBtn = (searchLocationTerm: string, cSearchTerm: string) => {
     console.log("category: " + cSearchTerm + " location: " + searchLocationTerm);
   };
 
+  const [selectedOption, setSelectedOption] = useState("categories");
+  const select = (e) => { console.log(e.target.value); setSelectedOption(e.target.value); }
+
   return (
     <div className="flex justify-center gap-10">
       <div>
-        <div>
-          <input
-            className=" w-96 px-8 py-3 rounded-full focus:outline-none focus:shadow-outline focus:border-orange-400 border-2"
-            type="text"
-            value={locValue}
-            onChange={onChangeLocation}
-            placeholder="Search By Location"
-          ></input>
+        <div className="flex">
+          <div className="flex">
+            <select className="rounded-full rounded-r-none bg-white px-3">
+              <option value="categories" onClick={select}>Categories</option>
+              <option value="location" onClick={select}>Locations</option>
+            </select>
+          </div>
+          {selectedOption === "categories" ?
+            <input
+              className="w-96 px-8 py-3 rounded-l-none rounded-full focus:outline-none focus:shadow-outline focus:border-orange-400 "
+              type="text"
+              value={catValue}
+              onChange={onChange}
+              placeholder="Search By Category"
+            ></input>
+            :
+            <input
+              className="flex w-96 px-8 py-3 rounded-l-none rounded-full focus:outline-none focus:shadow-outline focus:border-orange-400 "
+              type="text"
+              value={locValue}
+              onChange={onChangeLocation}
+              placeholder="Search By Location"
+            ></input>
+          }
         </div>
         <div className="rounded-lg border-red-700 flex flex-col overflow-hidden">
-          {locations
-            .filter((location: ILocation) => {
-              const searchLocationTerm = locValue.toLowerCase();
-              //console.log("locVal= "+locValue);
-              const lowerCaseData = location.displayName.toLowerCase();
-              return (
-                searchLocationTerm &&
-                lowerCaseData.startsWith(searchLocationTerm) &&
-                lowerCaseData !== searchLocationTerm
-              );
-            })
-            .map((location: ILocation) => (
-              <div
-                onClick={() => onSearchLoc(location.displayName)}
-                key={location.id}
-                className="bg-white text-black mx-5 px-3 py-2 border-b flex"
-              >
-                {location.displayName}
-              </div>
-            ))}
+          {selectedOption === "categories" ?
+            categories
+              .filter((category: ICategory) => {
+                const cSearchTerm = catValue.toLowerCase();
+                //console.log(catValue);
+                const lowerCaseData = category.displayName.toLowerCase();
+
+                return (
+                  cSearchTerm &&
+                  lowerCaseData.startsWith(cSearchTerm) &&
+                  lowerCaseData != cSearchTerm
+                );
+              })
+              .map((category: ICategory) => (
+                <div
+                  onClick={() => onSearch(category.displayName)}
+                  key={category.id}
+                  className="bg-white text-black mx-5 px-3 py-2 border-b flex"
+                >
+                  {category.displayName}
+                </div>
+              ))
+
+            :
+            locations
+              .filter((location: ILocation) => {
+                const searchLocationTerm = locValue.toLowerCase();
+                //console.log("locVal= "+locValue);
+                const lowerCaseData = location.displayName.toLowerCase();
+                return (
+                  searchLocationTerm &&
+                  lowerCaseData.startsWith(searchLocationTerm) &&
+                  lowerCaseData !== searchLocationTerm
+                );
+              })
+              .map((location: ILocation) => (
+                <div
+                  onClick={() => onSearchLoc(location.displayName)}
+                  key={location.id}
+                  className="bg-white text-black mx-5 px-3 py-2 border-b flex"
+                >
+                  {location.displayName}
+                </div>
+              ))
+          }
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <div>
           <input
             className=" w-96 px-8 py-3 rounded-full focus:outline-none focus:shadow-outline focus:border-orange-400 border-2"
@@ -101,7 +142,8 @@ export default function SearchBar({ locations, categories }) {
               </div>
             ))}
         </div>
-      </div>
+      </div> */}
+
       <div>
         <input type='button' value="Search"
           className="flex rounded-lg bg-[#2D9515] text-white text-lg hover:bg-teal-700 px-3 py-2.5"
