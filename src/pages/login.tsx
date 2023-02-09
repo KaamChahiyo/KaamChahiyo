@@ -10,7 +10,7 @@ import { authOptions } from './api/auth/[...nextauth]';
 
 export default function Login() {
     const router = useRouter();
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const {
         handleSubmit,
         register,
