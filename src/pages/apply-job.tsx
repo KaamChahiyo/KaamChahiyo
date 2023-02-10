@@ -79,7 +79,7 @@ const JobList = ({
       </div>
       <div className="jobDetail text-lg px-3">{jobDescriptionOfPost}</div>
       <div className="flex mx-5 ">
-        <div className="flex gap-2 ">
+        <div className="flex gap-2" key="">
           {jobTagsOfPost.map((item: { tag: string }) => (
             <div className="rounded-2xl bg-slate-100 p-2">{item.tag}</div>
           ))}

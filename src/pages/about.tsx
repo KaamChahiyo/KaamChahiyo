@@ -37,7 +37,7 @@ export default function About() {
             Creating Job Oppoturnity for Everyone
           </div>
           <div className="font-semibold text-xl py-2 ">
-            It's very difficult to find the professionals for small but
+            It&apos;s very difficult to find the professionals for small but
             important household jobs. We come with the solution of this problem
             by creating a easy job portal which is available to everyone.
           </div>
