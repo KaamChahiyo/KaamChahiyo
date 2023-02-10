@@ -15,7 +15,6 @@ export default function RecentJobPost() {
           locationOfPost="Bharatpur"
           jobTitleOfPost="Water Leakage & Tap Installation"
           link="#"
-          jobTagsOfPost=""
           jobDescriptionOfPost="Description of the job is wirtten here. We should write what
                     problem or solutions we need on this section. Employer posts a job
                     and this is description from that post. Description of the job is wirtten here. We should write what
@@ -23,7 +22,7 @@ export default function RecentJobPost() {
         />
       </div>
       <div className="bg-[#4ed131] rounded-lg font-bold p-3">
-        Show More Jobs
+        <Link href="/job-listing">Show More Jobs</Link>
       </div>
     </div>
   );
@@ -37,7 +36,6 @@ const JobList = ({
   postBy,
   postByPicURL,
   jobTitleOfPost,
-  jobTagsOfPost,
   link,
 }: {
   dateTimeOfPost: string;
@@ -47,7 +45,6 @@ const JobList = ({
   postBy: string;
   postByPicURL: string;
   jobTitleOfPost: string;
-  jobTagsOfPost: any;
   link: string;
 }) => {
   return (
