@@ -16,7 +16,6 @@ export default function Profile() {
         "security-tab",
     ]);
     const { data: session } = useSession();
-    console.log(session);
     const router = useRouter();
     useEffect(() => {
         if (!session) {
