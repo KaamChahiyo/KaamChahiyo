@@ -8,13 +8,13 @@ export default function Footer() {
     <div className=" bg-[#0063F1] text-white w-full h-full">
       <div className="flex justify-center">
         <div className="grid grid-cols-4 justify-center m-auto container gap-6 px-5 py-12 text-white">
-          <div className="flex flex-col gap-5 pr-10">
-            <div className="w-40 h-20 relative">
+          <div className="flex flex-col gap-5">
+            <div className="w-72 h-8 relative">
               <Image
                 src="/assets/img/logo-white.png"
                 alt="KaamChahiyo"
                 fill
-                className="object-cover"
+                className="object-contain"
               />
             </div>
             <div>
