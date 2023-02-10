@@ -12,3 +12,5 @@ export * from "./PlumberIcon";
 export * from "./ElectricianIcon";
 export * from "./WebdesignerIcon";
 export * from "./HomeIcon";
+export * from "./PasswordIcon";
+export * from "./ProfileIcon";

@@ -1,9 +1,18 @@
-
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]';
 
 export default function ForgetPassword() {
+    const { data: session } = useSession();
+    const router = useRouter();
+    useEffect(() => {
+        if (session) {
+            router.replace("/")
+        }
+    }, [session])
+
     return (
         <>
             <div className="flex justify-center items-center my-36">
@@ -29,4 +38,16 @@ export default function ForgetPassword() {
             </div >
         </>
     )
+}
+
+export async function getServerSideProps(context) {
+    return {
+        props: {
+            session: await getServerSession(
+                context.req,
+                context.res,
+                authOptions
+            ),
+        },
+    }
 }
