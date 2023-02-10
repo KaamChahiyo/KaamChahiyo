@@ -19,7 +19,39 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
     where: {
       id: String(req.query.job_id),
     },
-    include: {},
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      postedBy: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      postedOn: true,
+      assignedTo: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      assignedOn: true,
+      Location: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      Category: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
   });
 
   if (job) res.json(omit(job));
