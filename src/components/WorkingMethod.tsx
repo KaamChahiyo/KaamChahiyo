@@ -41,7 +41,7 @@ const Method = ({
   description: string;
 }) => {
   return (
-    <Link href={link}>
+    <Link passHref href={link}>
       <div className="flex flex-col items-center justify-center shadow hover:shadow-lg  hover:shadow-blue-100 border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden px-10 py-36 w-96 h-56">
         <div
           className="text-6xl font-bold px-5 py-2 rounded-full

@@ -55,7 +55,7 @@ const TopEmployee = ({
   return (
     <>
       <Link
-        href={link}
+        passHref href={link}
         className="flex flex-col border container shadow-md hover:shadow-sm w-96 gap-4 p-10  rounded-lg"
       >
         <div className="flex flex-col gap-2 justify-center items-center">

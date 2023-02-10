@@ -52,7 +52,7 @@ export default function AppHeader() {
       >
         <div className="flex justify-between w-full items-center container mx-auto">
           <div className="cursor-pointer ">
-            <Link href="/" passHref>
+            <Link passHref href="/">
               <Image
                 src="/assets/img/logo-blue.png"
                 width={203}
@@ -77,7 +77,7 @@ export default function AppHeader() {
                   route.pathname === "/",
               })}
             >
-              <Link href="/" passHref>Home</Link>
+              <Link passHref href="/">Home</Link>
             </span>
             <span
               className={classNames({
@@ -85,7 +85,7 @@ export default function AppHeader() {
                   route.pathname === "/services",
               })}
             >
-              <Link href="/services" passHref>Services</Link>
+              <Link passHref href="/services">Services</Link>
             </span>
             <span
               className={classNames({
@@ -93,7 +93,7 @@ export default function AppHeader() {
                   route.pathname === "/job-listing",
               })}
             >
-              <Link href="/job-listing" passHref>Job Listing</Link>
+              <Link passHref href="/job-listing">Job Listing</Link>
             </span>
             <span
               className={classNames({
@@ -101,7 +101,7 @@ export default function AppHeader() {
                   route.pathname === "/location",
               })}
             >
-              <Link href="/location" passHref>Location</Link>
+              <Link passHref href="/location">Location</Link>
             </span>
             <span
               className={classNames({
@@ -109,7 +109,7 @@ export default function AppHeader() {
                   route.pathname === "/about",
               })}
             >
-              <Link href="/about" passHref>About</Link>
+              <Link passHref href="/about">About</Link>
             </span>
             <span
               className={classNames({
@@ -117,14 +117,14 @@ export default function AppHeader() {
                   route.pathname === "/blog",
               })}
             >
-              <Link href="/blog" passHref>Blog</Link>
+              <Link passHref href="/blog">Blog</Link>
             </span>
 
           </div>
           <div className="flex gap-8 items-center justify-center">
             {user ?
               <>
-                <Link href="/userProfile" passHref>
+                <Link passHref href="/userProfile">
                   <div className="relative ">
                     <Image
                       src={user?.image}
@@ -137,18 +137,18 @@ export default function AppHeader() {
                   </div>
                 </Link>
                 <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
-                  <Link href="/logout" passHref>Logout</Link>
+                  <Link passHref href="/logout">Logout</Link>
                 </div>
 
               </>
               :
               <>
-                <Link href="/login" passHref>
+                <Link passHref href="/login">
                   <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1]">
                     Login
                   </div>
                 </Link>
-                <Link href="/signup" passHref>
+                <Link passHref href="/signup">
                   <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
                     Signup
                   </div>
@@ -174,7 +174,7 @@ export default function AppHeader() {
           >
             <div className="bg-white  min-h-screen w-8/12 flex flex-col align-top overflow-hidden justify-start p-6">
               <div className="relative flex justify-start">
-                <Link href="/" passHref>
+                <Link passHref href="/">
                   <Image
                     src="/assets/img/logo-blue.png"
                     width={203}
@@ -192,7 +192,7 @@ export default function AppHeader() {
                 >
                   <div className="flex flex-col mb-4 ">
                     {menuName.menuItems.map((item) => (
-                      <Link href={item.link} key={item.label} passHref>
+                      <Link passHref href={item.link} key={item.label}>
                         <div className="flex flex-row gap-6 py-2 items-center cursor-pointer">
                           <span className="text-base">{item.label}</span>
                         </div>

@@ -87,7 +87,7 @@ const JobList = ({
       </div>
       <div className="flex flex-col  p-5">
         <div className="italic p-2">{locationOfPost}</div>
-        <Link href={link}>
+        <Link passHref href={link}>
           <div className="p-2 bg-emerald-500 hover:bg-emerald-400 text-lg font-bold w-fit rounded-md mx-3 my-2">
             Apply
           </div>
