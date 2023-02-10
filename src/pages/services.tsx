@@ -92,7 +92,7 @@ const AllServices = ({
 }) => {
   return (
     <Link href={link} className="flex gap-10">
-      <div className="flex flex-row w-auto gap-5 border rounded-lg shadow-lg hover:shadow-sm p-5 bg-slate-50 hover:scale-110 h-fit items-center">
+      <div className="flex flex-row w-auto gap-5 border rounded-lg shadow-lg hover:shadow-sm p-5 bg-slate-50 hover:scale-110  items-center">
         <div className="w-24 opacity-70 ">{icon}</div>
         <div className="flex flex-col">
           <div className="font-bold text-3xl w-48 pb-1">{services}</div>
