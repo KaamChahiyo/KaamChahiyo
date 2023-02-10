@@ -28,12 +28,6 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
       id: true,
       title: true,
       description: true,
-      Location: {
-        select: {
-          name: true,
-          displayName: true,
-        },
-      },
       postedBy: {
         select: {
           id: true,
@@ -48,6 +42,19 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
         },
       },
       assignedOn: true,
+      Location: {
+        select: {
+          name: true,
+          displayName: true,
+        },
+      },
+      Category: {
+        select: {
+          id: true,
+          name: true,
+          displayName: true,
+        },
+      },
     },
   });
   if (jobs) {

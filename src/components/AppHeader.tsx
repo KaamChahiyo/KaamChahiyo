@@ -1,4 +1,3 @@
-// import { MenuIcon } from "../icons";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
