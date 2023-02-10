@@ -26,12 +26,12 @@ const ItemsContainer = () => {
     <div className="grid grid-cols-4 justify-center m-auto container gap-6 px-5 py-12 text-white">
       {/* <Item Links={About} title="ABOUT" /> */}
       <div className="flex flex-col gap-5 pr-10">
-        <div className="w-40 h-20 relative">
+        <div className="w-auto h-8 relative">
           <Image
             src="/assets/img/logo-white.png"
             alt="KaamChahiyo"
             fill
-            className="object-cover"
+            className="object-contain"
           />
         </div>
         <div>

@@ -55,7 +55,7 @@ export default function AppHeader() {
           <div className="cursor-pointer ">
             <Link href="/">
               <Image
-                src="/assets/img/logo-no-background.png"
+                src="/assets/img/logo-blue.png"
                 width={203}
                 height={88}
                 className="object-cover"
@@ -177,7 +177,7 @@ export default function AppHeader() {
               <div className="relative flex justify-start">
                 <Link href="/">
                   <Image
-                    src="/assets/img/logo-no-background.png"
+                    src="/assets/img/logo-blue.png"
                     width={203}
                     height={88}
                     className="object-cover"
