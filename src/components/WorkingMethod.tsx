@@ -10,13 +10,13 @@ export default function WorkingMethod() {
           step="1"
           name={"Create Account"}
           description={"Register, Get Verified and Login to KaamChahiyo"}
-          link="#"
+          link="/signup"
         />
         <Method
           step="2"
           name={"Post / Apply for Job "}
           description={"Post Job or Apply for Job as per your need."}
-          link="#"
+          link="/post-job"
         />
         <Method
           step="3"

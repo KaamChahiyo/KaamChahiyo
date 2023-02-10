@@ -1,73 +1,75 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 export default function RecentJobPost() {
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="flex font-bold text-2xl mb-8 py-4">Recent Jobs</div>
-      <div className="flex justify-center items-center gap-4">
-        <Recentjobs
-          jobTitleOfPost="Job Title"
+    <div className="flex flex-col justify-center items-center gap-5">
+      <div className="flex font-bold text-2xl py-4">Recent Jobs</div>
+      <div className="flex flex-col justify-center items-center gap-4">
+        <JobList
           postBy="Ramesh"
-          postByPic=""
+          postByPicURL="/assets/img/profile-image.png"
           dateTimeOfPost="5 hours ago"
           catetegoryOfPost="Plumber"
           locationOfPost="Bharatpur"
+          jobTitleOfPost="Water Leakage & Tap Installation"
           link="#"
           jobDescriptionOfPost="Description of the job is wirtten here. We should write what
-          problem or solutions we need on this section. Employer posts a job
-          and this is description from that post."
+                    problem or solutions we need on this section. Employer posts a job
+                    and this is description from that post. Description of the job is wirtten here. We should write what
+                    problem or solutions we need on this section."
         />
-
-        <Recentjobs
-          jobTitleOfPost="Job Title"
-          postBy="Suresh"
-          postByPic=""
-          dateTimeOfPost="5 hours ago"
-          catetegoryOfPost="Carpenter"
-          locationOfPost="Bhaktapur"
-          link="#"
-          jobDescriptionOfPost="Description of the job is wirtten here. We should write what
-          problem or solutions we need on this section. Employer posts a job
-          and this is description from that post."
-        />
+      </div>
+      <div className="bg-[#4ed131] rounded-lg font-bold p-3">
+        <Link href="/job-listing">Show More Jobs</Link>
       </div>
     </div>
   );
 }
 
-const Recentjobs = ({
-  jobTitleOfPost,
-  postBy,
-  postByPic,
+const JobList = ({
   dateTimeOfPost,
   catetegoryOfPost,
-  jobDescriptionOfPost,
   locationOfPost,
+  jobDescriptionOfPost,
+  postBy,
+  postByPicURL,
+  jobTitleOfPost,
   link,
 }: {
-  jobTitleOfPost: string;
-  postBy: string;
-  postByPic: string;
   dateTimeOfPost: string;
   catetegoryOfPost: string;
-  jobDescriptionOfPost: string;
   locationOfPost: string;
+  jobDescriptionOfPost: string;
+  postBy: string;
+  postByPicURL: string;
+  jobTitleOfPost: string;
   link: string;
 }) => {
   return (
-    <Link href={link} className="w-1/3">
-      <div className="shadow-lg hover:shadow-sm p-5">
-        <div className="font-bold text-xl">{jobTitleOfPost}</div>
-        <div className="flex gap-4 italic p-3">
-          <p>{postBy}</p>
-          <p>{postByPic}</p>
-          <p>{dateTimeOfPost}</p>
-          <p>{catetegoryOfPost}</p>
+    <div className="w-3/5 shadow-md shadow-200 hover:shadow-sm p-3">
+      <div className="font-bold text-xl p-2">{jobTitleOfPost}</div>
+      <div className="flex gap-4 italic p-3">
+        <div className="h-7 w-7 relative rounded-full overflow-hidden ">
+          <Image src={postByPicURL} alt="Profile Image" fill />
         </div>
-        <div className="jobDetail text-lg px-3">{jobDescriptionOfPost}</div>
-        <div className="italic p-8">{locationOfPost}</div>
+        <p>{postBy}</p>
+        <p>{dateTimeOfPost}</p>
+        <p>{catetegoryOfPost}</p>
       </div>
-    </Link>
+      <div className="jobDetail text-lg px-3">
+        {jobDescriptionOfPost.substring(0, 200)}
+      </div>
+      <div className="flex mx-10 "></div>
+      <div className="flex justify-between items-center p-5">
+        <div className="italic  p-2">{locationOfPost}</div>
+        <Link href={link}>
+          <div className="p-2 bg-[#5ddd40] hover:bg-[#77e95d] text-lg font-bold">
+            Show More
+          </div>
+        </Link>
+      </div>
+    </div>
   );
 };
