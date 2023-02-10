@@ -23,10 +23,36 @@ const handlePOST = async (res: NextApiResponse, req: NextApiRequest) => {
 };
 
 const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
-  const jobs = await prisma.job.findMany({});
+  const jobs = await prisma.job.findMany({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      Location: {
+        select: {
+          name: true,
+          displayName: true,
+        },
+      },
+      postedBy: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      postedOn: true,
+      assignedTo: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+      assignedOn: true,
+    },
+  });
   if (jobs) {
     res.json({ jobs });
   } else {
-    res.status(404).json({ message: "Categories not found." });
+    res.status(404).json({ message: "Jobs not found." });
   }
 };
