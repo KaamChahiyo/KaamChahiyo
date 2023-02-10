@@ -43,12 +43,14 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
         select: {
           id: true,
           name: true,
+          displayName: true,
         },
       },
       Category: {
         select: {
           id: true,
           name: true,
+          displayName: true,
         },
       },
     },

@@ -23,11 +23,11 @@ export default function SearchBar({ locations, categories }) {
   };
 
   return (
-    <div className="flex justify-center gap-2">
+    <div className="flex justify-center gap-5">
       <div>
         <div className="flex">
           <div className="flex">
-            <select className="rounded-full rounded-r-none bg-white px-3">
+            <select className="rounded-full rounded-r-none bg-white px-8">
               <option value="categories" onClick={select}>
                 Categories
               </option>
@@ -48,44 +48,44 @@ export default function SearchBar({ locations, categories }) {
         <div className="rounded-lg border-red-700 flex flex-col overflow-hidden">
           {selectedOption === "categories"
             ? categories
-                .filter((category: ICategory) => {
-                  const SearchTerm = Values.toLowerCase();
-                  const lowerCaseData = category.displayName.toLowerCase();
+              .filter((category: ICategory) => {
+                const SearchTerm = Values.toLowerCase();
+                const lowerCaseData = category.displayName.toLowerCase();
 
-                  return (
-                    SearchTerm &&
-                    lowerCaseData.startsWith(SearchTerm) &&
-                    lowerCaseData != SearchTerm
-                  );
-                })
-                .map((category: ICategory) => (
-                  <div
-                    onClick={() => onSearch(category.displayName)}
-                    key={category.id}
-                    className="bg-white text-black mx-5 px-3 py-2 border-b flex"
-                  >
-                    {category.displayName}
-                  </div>
-                ))
+                return (
+                  SearchTerm &&
+                  lowerCaseData.startsWith(SearchTerm) &&
+                  lowerCaseData != SearchTerm
+                );
+              })
+              .map((category: ICategory) => (
+                <div
+                  onClick={() => onSearch(category.displayName)}
+                  key={category.id}
+                  className="bg-white text-black mx-5 px-3 py-2 border-b flex"
+                >
+                  {category.displayName}
+                </div>
+              ))
             : locations
-                .filter((location: ILocation) => {
-                  const SearchTerm = Values.toLowerCase();
-                  const lowerCaseData = location.displayName.toLowerCase();
-                  return (
-                    SearchTerm &&
-                    lowerCaseData.startsWith(SearchTerm) &&
-                    lowerCaseData !== SearchTerm
-                  );
-                })
-                .map((location: ILocation) => (
-                  <div
-                    onClick={() => onSearch(location.displayName)}
-                    key={location.id}
-                    className="bg-white text-black mx-5 px-3 py-2 border-b flex"
-                  >
-                    {location.displayName}
-                  </div>
-                ))}
+              .filter((location: ILocation) => {
+                const SearchTerm = Values.toLowerCase();
+                const lowerCaseData = location.displayName.toLowerCase();
+                return (
+                  SearchTerm &&
+                  lowerCaseData.startsWith(SearchTerm) &&
+                  lowerCaseData !== SearchTerm
+                );
+              })
+              .map((location: ILocation) => (
+                <div
+                  onClick={() => onSearch(location.displayName)}
+                  key={location.id}
+                  className="bg-white text-black mx-5 px-3 py-2 border-b flex"
+                >
+                  {location.displayName}
+                </div>
+              ))}
         </div>
       </div>
 
@@ -93,7 +93,7 @@ export default function SearchBar({ locations, categories }) {
         <input
           type="button"
           value="Search"
-          className="flex rounded-full bg-[#2D9515] text-white text-lg hover:bg-teal-700 px-3 py-2.5"
+          className="flex rounded-full bg-[#0063F1] text-white text-lg hover:bg-[#113d7a] px-8 py-2.5"
           onClick={() => onClickBtn(Values)}
         />
       </div>
