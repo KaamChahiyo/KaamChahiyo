@@ -16,29 +16,35 @@ export default function SearchBar({ locations, categories }) {
     console.log(SearchTerm);
   };
 
-  const [selectedOption, setSelectedOption] = useState("categories");
+  const [selectedOption, setSelectedOption] = useState(categories);
+  let val = "";
   const select = (e) => {
-    setSelectedOption(e.target.value);
-    console.log(e.target.value);
+    setValues("");
+    val = e.target.value;
+    console.log(val);
+    val == "categories"
+      ? setSelectedOption(categories)
+      : setSelectedOption(locations);
   };
+  const chooseOptions = selectedOption;
 
   return (
     <div className="flex justify-center gap-2">
       <div>
-        <div className="flex">
+        <div className="flex rounded-full border-2 focus:border-orange-400">
           <div className="flex">
-            <select className="rounded-full rounded-r-none bg-white px-3">
+            <select className="rounded-full rounded-r-none bg-white px-5">
               <option value="categories" onClick={select}>
                 Categories
               </option>
-              <option value="location" onClick={select}>
+              <option value="locations" onClick={select}>
                 Locations
               </option>
             </select>
           </div>
 
           <input
-            className="w-96 px-8 py-3 rounded-l-none rounded-full focus:outline-none focus:shadow-outline focus:border-orange-400 "
+            className="w-80 px-8 py-3 rounded-l-none rounded-full focus:outline-none "
             type="text"
             value={Values}
             onChange={onChange}
@@ -46,46 +52,26 @@ export default function SearchBar({ locations, categories }) {
           ></input>
         </div>
         <div className="rounded-lg border-red-700 flex flex-col overflow-hidden">
-          {selectedOption === "categories"
-            ? categories
-                .filter((category: ICategory) => {
-                  const SearchTerm = Values.toLowerCase();
-                  const lowerCaseData = category.displayName.toLowerCase();
+          {chooseOptions
+            .filter((chooseOption: ICategory | ILocation) => {
+              const SearchTerm = Values.toLowerCase();
+              const lowerCaseData = chooseOption.displayName.toLowerCase();
 
-                  return (
-                    SearchTerm &&
-                    lowerCaseData.startsWith(SearchTerm) &&
-                    lowerCaseData != SearchTerm
-                  );
-                })
-                .map((category: ICategory) => (
-                  <div
-                    onClick={() => onSearch(category.displayName)}
-                    key={category.id}
-                    className="bg-white text-black mx-5 px-3 py-2 border-b flex"
-                  >
-                    {category.displayName}
-                  </div>
-                ))
-            : locations
-                .filter((location: ILocation) => {
-                  const SearchTerm = Values.toLowerCase();
-                  const lowerCaseData = location.displayName.toLowerCase();
-                  return (
-                    SearchTerm &&
-                    lowerCaseData.startsWith(SearchTerm) &&
-                    lowerCaseData !== SearchTerm
-                  );
-                })
-                .map((location: ILocation) => (
-                  <div
-                    onClick={() => onSearch(location.displayName)}
-                    key={location.id}
-                    className="bg-white text-black mx-5 px-3 py-2 border-b flex"
-                  >
-                    {location.displayName}
-                  </div>
-                ))}
+              return (
+                SearchTerm &&
+                lowerCaseData.startsWith(SearchTerm) &&
+                lowerCaseData != SearchTerm
+              );
+            })
+            .map((chooseOption: ICategory | ILocation) => (
+              <div
+                onClick={() => onSearch(chooseOption.displayName)}
+                key={chooseOption.id}
+                className="bg-white text-black mx-5 px-3 py-2 border-b flex"
+              >
+                {chooseOption.displayName}
+              </div>
+            ))}
         </div>
       </div>
 
