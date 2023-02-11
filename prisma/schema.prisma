@@ -46,6 +46,9 @@ model User {
   emailVerified DateTime?
   bio           String?   @db.VarChar(255)
   password      String?
+  dob           DateTime?
+  status        String?
+  ctznimg       String?
   role          Role?     @relation(fields: [roleId], references: [id])
   roleId        String?
   createdAt     DateTime  @default(now())
