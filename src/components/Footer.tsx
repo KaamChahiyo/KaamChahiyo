@@ -28,16 +28,16 @@ export default function Footer() {
           <div>
             <div className="font-bold">CATEGORIES</div>
             <div className="text-lg">
-              <Link href="#" className="hover:text-blue-300">
+              <Link passHref href="#" className="hover:text-blue-300">
                 <ul>Plumber</ul>
               </Link>
-              <Link href="#">
+              <Link passHref href="#">
                 <ul className="hover:text-blue-300">Electrician</ul>
               </Link>
-              <Link href="#">
+              <Link passHref href="#">
                 <ul className="hover:text-blue-300">Household</ul>
               </Link>
-              <Link href="#">
+              <Link passHref href="#">
                 <ul className="hover:text-blue-300">Painter</ul>
               </Link>
             </div>
@@ -45,22 +45,22 @@ export default function Footer() {
           <div>
             <div className="font-bold">QUICKLINKS</div>
             <div className="text-lg">
-              <Link href="/">
+              <Link passHref href="/">
                 <ul className="hover:text-blue-300">Home</ul>
               </Link>
-              <Link href="/services">
+              <Link passHref href="/services">
                 <ul className="hover:text-blue-300">Services</ul>
               </Link>
-              <Link href="job-listing">
+              <Link passHref href="job-listing">
                 <ul className="hover:text-blue-300">Job Listing</ul>
               </Link>
-              <Link href="/location">
+              <Link passHref href="/location">
                 <ul className="hover:text-blue-300">Location</ul>
               </Link>
-              <Link href="/about">
+              <Link passHref href="/about">
                 <ul className="hover:text-blue-300">About</ul>
               </Link>
-              <Link href="/blog">
+              <Link passHref href="/blog">
                 <ul className="hover:text-blue-300">Blog</ul>
               </Link>
             </div>
@@ -68,7 +68,7 @@ export default function Footer() {
           <div>
             <div className="font-bold">LOCATION</div>
             <div className="text-lg">
-              <Link href="#">
+              <Link passHref href="#">
                 <ul className="hover:text-blue-300">Map Of Location</ul>
               </Link>
             </div>

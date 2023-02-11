@@ -140,7 +140,7 @@ export default function Signup() {
                             </p>
 
                             <p className="text-teal-900 font-bold text-sm text-center">
-                                <Link href="/login">Login</Link>
+                                <Link passHref href="/login">Login</Link>
                             </p>
                         </div>
                     </div>

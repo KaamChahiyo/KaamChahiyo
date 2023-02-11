@@ -16,7 +16,6 @@ export default function Profile() {
         "security-tab",
     ]);
     const { data: session } = useSession();
-    console.log(session);
     const router = useRouter();
     useEffect(() => {
         if (!session) {
@@ -118,7 +117,7 @@ export default function Profile() {
                                         className='border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md'
                                     />
                                 </div>
-                                <Link href="#">
+                                <Link passHref href="#">
                                     <button className="px-10 py-4 bg-teal-900 hover:bg-teal-700 rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline">Update</button>
                                 </Link>
                             </div>
@@ -151,11 +150,11 @@ export default function Profile() {
                                 </div>
                                 <div className="flex gap-5 flex-col">
                                     <div className=" hover:cursor-text">
-                                        <Link href="/forget-password">
+                                        <Link passHref href="/forget-password">
                                             Forgot Password?
                                         </Link>
                                     </div>
-                                    <Link href="#">
+                                    <Link passHref href="#">
                                         <button className="px-10 py-4 bg-teal-900 hover:bg-teal-700 rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline">Update</button>
                                     </Link>
                                 </div>

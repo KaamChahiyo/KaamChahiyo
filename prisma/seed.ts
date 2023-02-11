@@ -79,14 +79,6 @@ async function main() {
       displayName: "Electrician",
     },
   });
-  await prisma.category.upsert({
-    where: { name: "bharatpur" },
-    update: {},
-    create: {
-      name: "bharatpur",
-      displayName: "Bharatpur",
-    },
-  });
   await prisma.location.upsert({
     where: { name: "pokhara" },
     update: {},

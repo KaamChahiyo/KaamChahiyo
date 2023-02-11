@@ -96,12 +96,12 @@ export default function Login() {
                                 </p>
 
                                 <p className="text-teal-900 font-bold text-sm text-center">
-                                    <Link href="/signup">Signup</Link>
+                                    <Link passHref href="/signup">Signup</Link>
                                 </p>
                             </div>
                         </div>
                         {/* <div className="flex p-5 justify-center gap-5 flex-col ">
-                            <Link href="#">
+                            <Link passHref href="#">
                                 <div className="bg-teal-100 flex justify-center p-3 rounded-full" >
                                     <Image alt="" src="/assets/img/FacebookIcon.svg" width={20} height={20} />
                                 </div>
@@ -116,7 +116,7 @@ export default function Login() {
                                 </p>
 
                                 <p className="text-teal-900 font-bold text-sm text-center">
-                                    <Link href="/signup">Signup</Link>
+                                    <Link passHref href="/signup">Signup</Link>
                                 </p>
                             </div>
                         </div> */}
