@@ -33,7 +33,7 @@ const Services = ({
   link: string;
 }) => {
   return (
-    <Link href={link}>
+    <Link passHref href={link}>
       <div
         className="flex flex-col items-center justify-center shadow p-16 border rounded-md hover:opacity-60
        text-emerald-700 w-24 h-24 gap-3"

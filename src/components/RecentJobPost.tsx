@@ -22,7 +22,7 @@ export default function RecentJobPost() {
         />
       </div>
       <div className="bg-[#4ed131] rounded-lg font-bold p-3">
-        <Link href="/job-listing">Show More Jobs</Link>
+        <Link passHref href="/job-listing">Show More Jobs</Link>
       </div>
     </div>
   );
@@ -64,7 +64,7 @@ const JobList = ({
       <div className="flex mx-10 "></div>
       <div className="flex justify-between items-center p-5">
         <div className="italic  p-2">{locationOfPost}</div>
-        <Link href={link}>
+        <Link passHref href={link}>
           <div className="p-2 bg-[#5ddd40] hover:bg-[#77e95d] text-lg font-bold">
             Show More
           </div>
