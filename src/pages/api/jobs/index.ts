@@ -33,6 +33,7 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
         select: {
           id: true,
           name: true,
+          image: true,
         },
       },
       postedOn: true,
@@ -40,6 +41,7 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
         select: {
           id: true,
           name: true,
+          image: true,
         },
       },
       assignedOn: true,
