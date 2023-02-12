@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ILocation, getLocations } from "../services/locationService";
 import { ICategory, getCategories } from "../services/categoryService";
+import Button from "../components/Button";
 
 export default function SearchBar({ locations, categories }) {
   const [Values, setValues] = useState("");
@@ -76,12 +77,7 @@ export default function SearchBar({ locations, categories }) {
       </div>
 
       <div>
-        <input
-          type="button"
-          value="Search"
-          className="flex rounded-full bg-[#0063F1] text-white text-lg hover:bg-[#113d7a] px-8 py-2.5"
-          onClick={() => onClickBtn(Values)}
-        />
+        <Button onClick={() => onClickBtn(Values)}>Search</Button>
       </div>
     </div>
   );
