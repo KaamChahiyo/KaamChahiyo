@@ -1,8 +1,15 @@
-import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import Button from "./Button";
+// import Link from "next/link";
+// import { useHistory } from "react-router-dom";
 
 export default function RecentJobPost() {
+  // let history = useHistory();
+  //function handleClick() {
+    // history.push("/job-listing");
+    //window.location.href ="/job-listing";
+  //}
   return (
     <div className="flex flex-col justify-center items-center gap-5">
       <div className="flex font-bold text-2xl py-4">Recent Jobs</div>
@@ -14,16 +21,14 @@ export default function RecentJobPost() {
           catetegoryOfPost="Plumber"
           locationOfPost="Bharatpur"
           jobTitleOfPost="Water Leakage & Tap Installation"
-          link="#"
+          link="/job-listing"
           jobDescriptionOfPost="Description of the job is wirtten here. We should write what
                     problem or solutions we need on this section. Employer posts a job
                     and this is description from that post. Description of the job is wirtten here. We should write what
                     problem or solutions we need on this section."
         />
       </div>
-      <div className="bg-[#4ed131] rounded-lg font-bold p-3">
-        <Link passHref href="/job-listing">Show More Jobs</Link>
-      </div>
+      <Button value="Show More Jobs" onClick={()=> window.location.href ="/job-listing"}/>
     </div>
   );
 }
@@ -64,11 +69,12 @@ const JobList = ({
       <div className="flex mx-10 "></div>
       <div className="flex justify-between items-center p-5">
         <div className="italic  p-2">{locationOfPost}</div>
-        <Link passHref href={link}>
+        {/* <Link passHref href={link}>
           <div className="p-2 bg-[#5ddd40] hover:bg-[#77e95d] text-lg font-bold">
             Show More
           </div>
-        </Link>
+        </Link> */}
+        <Button value="Show More" onClick={()=> window.location.href =link}/>
       </div>
     </div>
   );
