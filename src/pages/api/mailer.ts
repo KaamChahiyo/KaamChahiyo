@@ -356,7 +356,7 @@ const generateEmailContent = (data) => {
                                         <tr>
                                             <td valign="top" class="headerContent">
                                                 <center>
-                                                    <a href="https://astranix.com">
+                                                    <a passHref href="https://astranix.com">
                                                         <img src="dev.astranix.com.np/_next/image?url=%2Fassets%2Fimages%2Fastranix-white-logo.png&w=3840&q=75"
                                                             id="headerImage" alt="KaamChahiyo Logo" />
                                                 </center>
@@ -385,7 +385,7 @@ const generateEmailContent = (data) => {
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
                                         <tr>
                                             <td valign="top" class="footerContent">
-                                                Copyright &copy; <a style="color:white" href="#">KaamChahiyo</a>, All rights reserved.
+                                                Copyright &copy; <a style="color:white" passHref href="#">KaamChahiyo</a>, All rights reserved.
                                             </td>
                                         </tr>
                                     </table>

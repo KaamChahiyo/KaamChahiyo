@@ -29,7 +29,7 @@ export default function SearchBar({ locations, categories }) {
   const chooseOptions = selectedOption;
 
   return (
-    <div className="flex justify-center gap-2">
+    <div className="flex justify-center gap-5">
       <div>
         <div className="flex rounded-full border-2 focus:border-orange-400">
           <div className="flex">
@@ -79,7 +79,7 @@ export default function SearchBar({ locations, categories }) {
         <input
           type="button"
           value="Search"
-          className="flex rounded-full bg-[#2D9515] text-white text-lg hover:bg-teal-700 px-3 py-2.5"
+          className="flex rounded-full bg-[#0063F1] text-white text-lg hover:bg-[#113d7a] px-8 py-2.5"
           onClick={() => onClickBtn(Values)}
         />
       </div>

@@ -13,7 +13,7 @@ export default function ErrorPage() {
                             </div>
                             <div>
                                 <p className="text-teal-900 font-bold text-sm text-center">
-                                    <Link href="/">Return Back to Home</Link>
+                                    <Link passHref href="/">Return Back to Home</Link>
                                 </p>
                             </div>
                         </div>

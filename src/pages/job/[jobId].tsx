@@ -1,15 +1,43 @@
 import { useRouter } from "next/router";
 
-const JobId = () => {
+export async function getStaticProps({ params }) {
+  const response = await fetch(`http://localhost:3000/api/jobs/${params.id}`);
+  const post = await response.json();
+
+  return {
+    props: {
+      post,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  const getJobs = await fetch("http://localhost:3000/api/jobs");
+  const jobs = await getJobs.json();
+
+  const paths = jobs?.jobs?.map((post) => ({
+    params: {
+      id: post.id.toString(123),
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export default function Post({ post }) {
   const router = useRouter();
-  const { jobId } = router.query;
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="flex justify-center items-center gap-2">
-      <h1>JobDetails: </h1>
-      <h2>{jobId}</h2>
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.body}</p>
     </div>
   );
-};
-
-export default JobId;
+}
