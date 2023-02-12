@@ -51,7 +51,7 @@ export default function Footer() {
               <Link passHref href="/services">
                 <ul className="hover:text-blue-300">Services</ul>
               </Link>
-              <Link passHref href="job-listing">
+              <Link passHref href="/jobs">
                 <ul className="hover:text-blue-300">Job Listing</ul>
               </Link>
               <Link passHref href="/location">

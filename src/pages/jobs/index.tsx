@@ -26,7 +26,7 @@ export default function jobApply({ jobs }) {
                   <div className="bg-blue-50 rounded-full px-3 ">
                     {formatDistance(new Date(job.postedOn), new Date(), {
                       addSuffix: true,
-                    })}{" "}
+                    })}
                   </div>
                   <div className="bg-blue-50 rounded-full px-3 ">
                     {job.Category.displayName}
@@ -61,7 +61,7 @@ export default function jobApply({ jobs }) {
 }
 
 export async function getServerSideProps() {
-  const getJobs = await fetch("http://localhost:3000/api/jobs/");
+  const getJobs = await fetch(`${process.env.NEXTAUTH_URL}/api/jobs/`);
   const jobs = await getJobs.json();
   return { props: { jobs } };
 }

@@ -35,8 +35,8 @@ const Services = ({
   return (
     <Link passHref href={link}>
       <div
-        className="flex flex-col items-center justify-center shadow p-16 border rounded-md hover:opacity-60
-       text-emerald-700 w-24 h-24 gap-3"
+        className="flex flex-col items-center justify-center  p-16  shadow hover:shadow-lg hover:shadow-blue-100 border hover:scale-110
+        border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden text-emerald-700 w-24 h-24 gap-3"
       >
         <div className=" h-20 w-16">{icon}</div>
         <div className="font-sm w-auto"> {services}</div>

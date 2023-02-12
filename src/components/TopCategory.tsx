@@ -35,8 +35,8 @@ const Category = ({
   return (
     <Link passHref href={link}>
       <div
-        className="flex flex-col items-center justify-center shadow p-16 border rounded-md hover:opacity-60
-       text-emerald-700 w-24 h-24 gap-3"
+        className="flex flex-col items-center justify-center shadow p-16 border  hover:shadow-lg hover:shadow-blue-100 hover:scale-110
+        border-gray-200  hover:border-cyan-600  rounded-lg overflow-hiddentext-emerald-700 w-24 h-24 gap-3"
       >
         <div className=" h-20 w-16">{icon}</div>
         <div> {services}</div>
