@@ -77,7 +77,7 @@ export default function SearchBar({ locations, categories }) {
       </div>
 
       <div>
-        <Button onClick={() => onClickBtn(Values)}>Search</Button>
+        <Button value="Search" onClick={() => onClickBtn(Values)} />
       </div>
     </div>
   );
