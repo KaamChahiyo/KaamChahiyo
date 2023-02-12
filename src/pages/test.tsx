@@ -1,19 +1,22 @@
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useState, useEffect } from 'react';
+
 
 export default function Test() {
-    const { data: session } = useSession()
-    if (session) {
-        return (
-            <>
-                Signed in as {session.user.email} <br />
-                <button onClick={() => signOut()}>Sign out</button>
-            </>
-        )
-    }
+    const [jobs, setData] = useState("");
+
+    useEffect(() => {
+        fetch('http://localhost:3000/api/jobs')
+            .then((res) => res.json())
+            .then((jobs) => {
+                setData(jobs)
+            })
+    }, [])
+
+
     return (
         <>
-            Not signed in <br />
-            <button onClick={() => signIn()}>Sign in</button>
+
         </>
-    )
+    );
+
 }
