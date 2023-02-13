@@ -5,24 +5,22 @@ import { TabPanel, useTabs } from "react-headless-tabs";
 import { TabSelector } from "../../components/TabSelector";
 import { useEffect, useState } from "react";
 
-export default function jobApply({ jobs }) {
+export default function jobApply() {
   const [selectedTab, setSelectedTab] = useTabs(["all-jobs", "recent-jobs"]);
 
   const [job, setJob] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXTAUTH_URL}/api/jobs/`, {
+    fetch(`/api/jobs/`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .then((data) => {
-        setJob(
-          data.sort(
-            (a, b) =>
-              new Date(b.postedOn).getTime() - new Date(a.postedOn).getTime()
-          )
+        const sortedData = data.jobs.sort((a, b) =>
+          b.postedOn.localeCompare(a.postedOn)
         );
+        setJob(sortedData);
         console.log(data);
       });
   }, []);
@@ -56,7 +54,7 @@ export default function jobApply({ jobs }) {
         <div className="flex flex-col w-4/5">
           <TabPanel hidden={selectedTab !== "all-jobs"}>
             <div className="flex flex-col items-center justify-center gap-4">
-              {jobs?.jobs?.map((job) => {
+              {job.map((job) => {
                 return (
                   <div key={job.id} className="p-3 w-3/5">
                     <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
@@ -108,7 +106,7 @@ export default function jobApply({ jobs }) {
           </TabPanel>
           <TabPanel hidden={selectedTab !== "recent-jobs"}>
             <div className="flex flex-col items-center justify-center gap-4">
-              {job?.slice(0, 2).map((job) => {
+              {job.slice(0, 5).map((job) => {
                 return (
                   <div key={job.id} className="p-3 w-3/5">
                     <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
@@ -162,10 +160,4 @@ export default function jobApply({ jobs }) {
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const getJobs = await fetch(`${process.env.NEXTAUTH_URL}/api/jobs/`);
-  const jobs = await getJobs.json();
-  return { props: { jobs } };
 }
