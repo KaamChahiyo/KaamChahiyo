@@ -3,15 +3,17 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { useEffect } from "react";
+import Link from "next/link";
+import Button from "../components/Button";
 
 export default function PostJob({ categories, locations }) {
   const { data: session } = useSession();
   const router = useRouter();
   useEffect(() => {
     if (!session) {
-      router.replace("/login")
+      router.replace("/login");
     }
-  }, [session])
+  }, [session]);
 
   return (
     <>
@@ -82,12 +84,9 @@ export default function PostJob({ categories, locations }) {
                     ))}
                   </select>
                 </div>
-                <button
-                  type="submit"
-                  className="px-9 py-4 bg-teal-900 hover:bg-oteal-900 rounded-lg text-white text-xl font-bold sm:w-full focus:outline-none focus:shadow-outline"
-                >
-                  Post Job
-                </button>
+                <Link href="#">
+                  <Button value="Post Job"></Button>
+                </Link>
               </div>
             </div>
           </form>
@@ -104,11 +103,9 @@ export async function getServerSideProps(context) {
   const locations = await getLocation.json();
   return {
     props: {
-      categories, locations, session: await getServerSession(
-        context.req,
-        context.res,
-        authOptions
-      ),
-    }
+      categories,
+      locations,
+      session: await getServerSession(context.req, context.res, authOptions),
+    },
   };
-}    
+}

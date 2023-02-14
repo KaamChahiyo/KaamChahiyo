@@ -29,9 +29,9 @@ export default function SearchBar({ locations, categories }) {
   };
   const chooseOptions = selectedOption;
 
-  const [showOptions, setShowOptions] = useState(false);
+  const [showInputOptions, setshowInputOptions] = useState(false);
   const handleInputClick = () => {
-    setShowOptions(!showOptions);
+    setshowInputOptions(!showInputOptions);
   };
 
   return (
@@ -60,7 +60,7 @@ export default function SearchBar({ locations, categories }) {
         </div>
         <div
           className={`rounded-lg border-red-700 flex flex-col ${
-            showOptions ? "block" : "hidden"
+            showInputOptions ? "block" : "hidden"
           }`}
         >
           {chooseOptions
