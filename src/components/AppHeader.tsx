@@ -10,7 +10,7 @@ export default function AppHeader() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const route = useRouter();
   const { data: userData } = useSession();
-  const user = userData?.user
+  const user = userData?.user;
 
   const menu = [
     {
@@ -77,7 +77,9 @@ export default function AppHeader() {
                   route.pathname === "/",
               })}
             >
-              <Link passHref href="/">Home</Link>
+              <Link passHref href="/">
+                Home
+              </Link>
             </span>
             <span
               className={classNames({
@@ -85,7 +87,9 @@ export default function AppHeader() {
                   route.pathname === "/services",
               })}
             >
-              <Link passHref href="/services">Services</Link>
+              <Link passHref href="/services">
+                Services
+              </Link>
             </span>
             <span
               className={classNames({
@@ -93,7 +97,9 @@ export default function AppHeader() {
                   route.pathname === "/job-listing",
               })}
             >
-              <Link passHref href="/job-listing">Job Listing</Link>
+              <Link passHref href="/jobs">
+                Job Listing
+              </Link>
             </span>
             <span
               className={classNames({
@@ -101,7 +107,9 @@ export default function AppHeader() {
                   route.pathname === "/location",
               })}
             >
-              <Link passHref href="/location">Location</Link>
+              <Link passHref href="/location">
+                Location
+              </Link>
             </span>
             <span
               className={classNames({
@@ -109,7 +117,9 @@ export default function AppHeader() {
                   route.pathname === "/about",
               })}
             >
-              <Link passHref href="/about">About</Link>
+              <Link passHref href="/about">
+                About
+              </Link>
             </span>
             <span
               className={classNames({
@@ -117,12 +127,13 @@ export default function AppHeader() {
                   route.pathname === "/blog",
               })}
             >
-              <Link passHref href="/blog">Blog</Link>
+              <Link passHref href="/blog">
+                Blog
+              </Link>
             </span>
-
           </div>
           <div className="flex gap-8 items-center justify-center">
-            {user ?
+            {user ? (
               <>
                 <Link passHref href="/userProfile">
                   <div className="relative ">
@@ -137,11 +148,12 @@ export default function AppHeader() {
                   </div>
                 </Link>
                 <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
-                  <Link passHref href="/logout">Logout</Link>
+                  <Link passHref href="/logout">
+                    Logout
+                  </Link>
                 </div>
-
               </>
-              :
+            ) : (
               <>
                 <Link passHref href="/login">
                   <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1]">
@@ -154,8 +166,7 @@ export default function AppHeader() {
                   </div>
                 </Link>
               </>
-
-            }
+            )}
           </div>
         </div>
 
@@ -182,7 +193,6 @@ export default function AppHeader() {
                     className="object-cover"
                     alt="KaamChahiyo"
                   />
-
                 </Link>
               </div>
               {menu.map((menuName) => (
@@ -204,7 +214,7 @@ export default function AppHeader() {
             </div>
           </div>
         </section>
-      </nav >
-    </div >
+      </nav>
+    </div>
   );
 }

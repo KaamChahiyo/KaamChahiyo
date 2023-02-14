@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ILocation, getLocations } from "../services/locationService";
 import { ICategory, getCategories } from "../services/categoryService";
+import Button from "../components/Button";
 
 export default function SearchBar({ locations, categories }) {
   const [Values, setValues] = useState("");
@@ -28,12 +29,17 @@ export default function SearchBar({ locations, categories }) {
   };
   const chooseOptions = selectedOption;
 
+  const [showInputOptions, setshowInputOptions] = useState(false);
+  const handleInputClick = () => {
+    setshowInputOptions(!showInputOptions);
+  };
+
   return (
     <div className="flex justify-center gap-5">
       <div>
         <div className="flex rounded-full border-2 focus:border-orange-400">
           <div className="flex">
-            <select className="rounded-full rounded-r-none bg-white px-5">
+            <select className="rounded-full rounded-r-none bg-white px-5 ">
               <option value="categories" onClick={select}>
                 Categories
               </option>
@@ -49,25 +55,29 @@ export default function SearchBar({ locations, categories }) {
             value={Values}
             onChange={onChange}
             placeholder="Search By Category or Location"
+            onClick={handleInputClick}
           ></input>
         </div>
-        <div className="rounded-lg border-red-700 flex flex-col overflow-hidden">
+        <div
+          className={`rounded-lg border-red-700 flex flex-col ${
+            showInputOptions ? "block" : "hidden"
+          }`}
+        >
           {chooseOptions
             .filter((chooseOption: ICategory | ILocation) => {
               const SearchTerm = Values.toLowerCase();
               const lowerCaseData = chooseOption.displayName.toLowerCase();
-
-              return (
-                SearchTerm &&
-                lowerCaseData.startsWith(SearchTerm) &&
-                lowerCaseData != SearchTerm
-              );
+              return SearchTerm == ""
+                ? lowerCaseData
+                : SearchTerm &&
+                    lowerCaseData.startsWith(SearchTerm) &&
+                    lowerCaseData != SearchTerm;
             })
             .map((chooseOption: ICategory | ILocation) => (
               <div
                 onClick={() => onSearch(chooseOption.displayName)}
                 key={chooseOption.id}
-                className="bg-white text-black mx-5 px-3 py-2 border-b flex"
+                className="flex bg-white text-black ml-36 mr-5 px-3 py-2 border-b "
               >
                 {chooseOption.displayName}
               </div>
@@ -76,12 +86,7 @@ export default function SearchBar({ locations, categories }) {
       </div>
 
       <div>
-        <input
-          type="button"
-          value="Search"
-          className="flex rounded-full bg-[#0063F1] text-white text-lg hover:bg-[#113d7a] px-8 py-2.5"
-          onClick={() => onClickBtn(Values)}
-        />
+        <Button value="Search" onClick={() => onClickBtn(Values)} />
       </div>
     </div>
   );
