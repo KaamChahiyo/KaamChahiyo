@@ -4,6 +4,7 @@ import Link from "next/link";
 import { TabPanel, useTabs } from "react-headless-tabs";
 import { TabSelector } from "../../components/TabSelector";
 import { useEffect, useState } from "react";
+import Button from "../../components/Button";
 
 export default function jobApply() {
   const [selectedTab, setSelectedTab] = useTabs(["all-jobs", "recent-jobs"]);
@@ -34,7 +35,13 @@ export default function jobApply() {
               isActive={selectedTab === "all-jobs"}
               onClick={() => setSelectedTab("all-jobs")}
             >
-              <div className="w-44 text-center bg-blue-50 rounded-lg py-2 font-semibold text-lg }">
+              <div
+                className={
+                  selectedTab == "all-jobs"
+                    ? "w-44 text-center bg-blue-500 text-white rounded-lg py-2 font-semibold text-lg "
+                    : "w-44 text-center bg-blue-300 text-black rounded-lg py-2 font-semibold text-lg"
+                }
+              >
                 All jobs
               </div>
             </TabSelector>
@@ -43,7 +50,11 @@ export default function jobApply() {
               onClick={() => setSelectedTab("recent-jobs")}
             >
               <div
-                className={`w-44 text-center bg-blue-50 rounded-lg py-2 font-semibold text-lg`}
+                className={
+                  selectedTab == "recent-jobs"
+                    ? "w-44 text-center bg-blue-500 text-white rounded-lg py-2 font-semibold text-lg "
+                    : "w-44 text-center bg-blue-300 text-black rounded-lg py-2 font-semibold text-lg"
+                }
               >
                 Recent jobs
               </div>
@@ -82,20 +93,12 @@ export default function jobApply() {
                       <div className="jobDetail text-lg px-3 w-full">
                         {job.description}
                       </div>
-                      <div className="flex flex-col gap-3">
-                        <div className="flex pt-5 px-3">
-                          <span className="font-semibold">Price:</span> &#160;
-                          {job.price}
-                        </div>
+                      <div className="flex flex-col gap-3 pt-5">
                         <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                           {job.Location.displayName}
                         </div>
                         <Link href={`jobs/${job.id}`}>
-                          <div className="p-2 bg-[#0063F1] hover:bg-[#0554c4] text-lg font-bold w-fit rounded-md">
-                            <button className="px-2 py-1 rounded-2xl text-white">
-                              Apply
-                            </button>
-                          </div>
+                          <Button value="View Job" onClick={null} />
                         </Link>
                       </div>
                     </div>
@@ -134,20 +137,14 @@ export default function jobApply() {
                       <div className="jobDetail text-lg px-3 w-full">
                         {job.description}
                       </div>
-                      <div className="flex flex-col gap-3">
-                        <div className="flex pt-5 px-3">
-                          <span className="font-semibold">Price:</span> &#160;
-                          {job.price}
-                        </div>
+                      <div className="flex flex-col gap-3 pt-5">
                         <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                           {job.Location.displayName}
                         </div>
                         <Link href={`jobs/${job.id}`}>
-                          <div className="p-2 bg-[#0063F1] hover:bg-[#0554c4] text-lg font-bold w-fit rounded-md">
-                            <button className="px-2 py-1 rounded-2xl text-white">
-                              Apply
-                            </button>
-                          </div>
+                          <Link href={`jobs/${job.id}`}>
+                            <Button value="View Job" onClick={null} />
+                          </Link>
                         </Link>
                       </div>
                     </div>
