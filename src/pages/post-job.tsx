@@ -85,7 +85,7 @@ export default function PostJob({ categories, locations }) {
                   </select>
                 </div>
                 <Link href="#">
-                  <Button value="Post Job"></Button>
+                  <Button value="Post Job" onClick={null}></Button>
                 </Link>
               </div>
             </div>

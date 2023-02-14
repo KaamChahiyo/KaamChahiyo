@@ -15,6 +15,7 @@ export default function SearchBar({ locations, categories }) {
 
   const onClickBtn = (SearchTerm: string) => {
     console.log(SearchTerm);
+    setValues("");
   };
 
   const [selectedOption, setSelectedOption] = useState(categories);
