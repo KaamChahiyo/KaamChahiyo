@@ -2,6 +2,7 @@ import { formatDistance } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Button from "../../../components/Button";
 
 export default function apply({ job, params }) {
   const jobId = params?.jobId;
@@ -40,11 +41,7 @@ export default function apply({ job, params }) {
               {job.Location.displayName}
             </div>
             <Link href={`${jobId}/apply`}>
-              <div className="p-2 bg-[#0063F1] hover:bg-[#0554c4] text-lg font-bold w-fit rounded-md">
-                <button className="px-2 py-1 rounded-2xl text-white">
-                  Apply
-                </button>
-              </div>
+              <Button value="Apply" onClick={null} />
             </Link>
           </div>
         </div>
