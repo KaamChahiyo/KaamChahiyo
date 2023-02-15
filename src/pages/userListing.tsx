@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
 
 export default function userListing() {
@@ -7,41 +7,50 @@ export default function userListing() {
   const selectedUser = Users.find((user) => user.id === selectedUserId);
   console.log("id: ", selectedUserId);
   console.log("user: ", selectedUser);
+  console.log(Boolean(selectedUserId));
 
   const [name_, setName] = useState("");
-  const changeName = (e) => {
-    setName(e.target.value);
-  };
   const [dob, setDob] = useState("");
-  const changeDob = (e) => {
-    setDob(e.target.value);
-  };
   const [address, setAddress] = useState("");
-  const changeAddress = (e) => {
-    setAddress(e.target.value);
-  };
   const [email, setEmail] = useState("");
-  const changeEmail = (e) => {
-    setEmail(e.target.value);
-  };
   const [phoneNo, setPhoneNo] = useState("");
-  const changePhoneNo = (e) => {
-    setPhoneNo(e.target.value);
-  };
   const [bloodGroup, setBloodGroup] = useState("");
-  const changeBloodGroup = (e) => {
-    setBloodGroup(e.target.value);
-  };
+
+  useEffect(() => {
+    if (selectedUserId) {
+      setName(selectedUser.name_);
+      setDob(selectedUser.dob);
+      setAddress(selectedUser.address);
+      setEmail(selectedUser.email);
+      setPhoneNo(selectedUser.phoneNo);
+      setBloodGroup(selectedUser.bloodGroup);
+    }
+  }, [selectedUserId]);
+
   const [editMode, setEditMode] = useState(false);
   const toggleEditMode = () => {
     setEditMode(!editMode);
-    setName(selectedUser.name_);
-    setDob(selectedUser.dob);
-    setAddress(selectedUser.address);
-    setEmail(selectedUser.email);
-    setPhoneNo(selectedUser.phoneNo);
-    setBloodGroup(selectedUser.bloodGroup);
   };
+
+  const changeName = (e) => {
+    setName(e.target.value);
+  };
+  const changeDob = (e) => {
+    setDob(e.target.value);
+  };
+  const changeAddress = (e) => {
+    setAddress(e.target.value);
+  };
+  const changeEmail = (e) => {
+    setEmail(e.target.value);
+  };
+  const changePhoneNo = (e) => {
+    setPhoneNo(e.target.value);
+  };
+  const changeBloodGroup = (e) => {
+    setBloodGroup(e.target.value);
+  };
+
   const handleSave = () => {
     // Save the changes to the backend or update the local state with the new values
     setEditMode(false);
@@ -74,7 +83,7 @@ export default function userListing() {
         <div className="flex flex-col gap-1">
           {selectedUser ? (
             <div key={selectedUser.id}>
-              <div className="flex flex-col gap-2 text-xl font-medium p-7">
+              <div className="flex flex-col gap-2 p-7">
                 <div className="relative h-20 w-20">
                   <Image
                     src={selectedUser.avatarURL}
@@ -84,29 +93,79 @@ export default function userListing() {
                 </div>
                 <div className="font-normal text-sm">{selectedUser.name_}</div>
                 <div className="flex gap-1">
-                  <p>Name: </p>
+                  <p className="">Name: </p>
 
-                  <input type="text" value={name_} onChange={changeName} />
+                  <input
+                    type="text"
+                    value={name_}
+                    onChange={changeName}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2"
+                        : "focus:outline-none"
+                    }
+                  />
                 </div>
                 <div className="flex gap-1">
                   <p>Date of Birth:</p>
 
-                  <input type="text" value={dob} onChange={changeDob} />
+                  <input
+                    type="text"
+                    value={dob}
+                    onChange={changeDob}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2"
+                        : "focus:outline-none"
+                    }
+                  />
                 </div>
                 <div className="flex gap-1">
                   <p>Address: </p>
 
-                  <input type="text" value={address} onChange={changeAddress} />
+                  <input
+                    type="text"
+                    value={address}
+                    onChange={changeAddress}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2"
+                        : "focus:outline-none"
+                    }
+                  />
                 </div>
                 <div className="flex gap-1">
                   <p>Email: </p>
 
-                  <input type="email" value={email} onChange={changeEmail} />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={changeEmail}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2"
+                        : "focus:outline-none"
+                    }
+                  />
                 </div>
                 <div className="flex gap-1">
                   <p>Phone: </p>
 
-                  <input type="tel" value={phoneNo} onChange={changePhoneNo} />
+                  <input
+                    type="tel"
+                    value={phoneNo}
+                    onChange={changePhoneNo}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2"
+                        : "focus:outline-none"
+                    }
+                  />
                 </div>
                 <div className="flex gap-1">
                   <p>Blood Group: </p>
@@ -115,6 +174,12 @@ export default function userListing() {
                     type="bloodGrp"
                     value={bloodGroup}
                     onChange={changeBloodGroup}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2"
+                        : "focus:outline-none"
+                    }
                   />
                 </div>
                 <Button
