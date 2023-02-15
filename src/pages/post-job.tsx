@@ -2,16 +2,41 @@ import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { authOptions } from "./api/auth/[...nextauth]";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default function PostJob({ categories, locations }) {
+export default function PostJob() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [categories, setCategories] = useState([]);
+  const [locations, setLocations] = useState([]);
+
   useEffect(() => {
     if (!session) {
-      router.replace("/login")
+      router.replace("/login");
     }
-  }, [session])
+  }, [session]);
+
+  useEffect(() => {
+    fetch(`/api/location/`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((location) => {
+        setLocations(location.locations);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(`/api/categories/`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((category) => {
+        setCategories(category.categories);
+      });
+  }, []);
 
   return (
     <>
@@ -62,8 +87,8 @@ export default function PostJob({ categories, locations }) {
                   </label>
                   <select className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md">
                     <option value="select">Select</option>
-                    {categories?.categories?.map((category) => (
-                      <option value={category.displayName}>
+                    {categories?.map((category) => (
+                      <option value={category.displayName} key={category.id}>
                         {category.displayName}
                       </option>
                     ))}
@@ -75,8 +100,9 @@ export default function PostJob({ categories, locations }) {
                   </label>
                   <select className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md">
                     <option value="select">Select</option>
-                    {locations?.locations?.map((location) => (
-                      <option value={location.displayName}>
+
+                    {locations?.map((location) => (
+                      <option value={location.displayName} key={location.id}>
                         {location.displayName}
                       </option>
                     ))}
@@ -98,17 +124,9 @@ export default function PostJob({ categories, locations }) {
 }
 
 export async function getServerSideProps(context) {
-  const getCategories = await fetch("http://localhost:3000/api/categories");
-  const getLocation = await fetch("http://localhost:3000/api/location");
-  const categories = await getCategories.json();
-  const locations = await getLocation.json();
   return {
     props: {
-      categories, locations, session: await getServerSession(
-        context.req,
-        context.res,
-        authOptions
-      ),
-    }
+      session: await getServerSession(context.req, context.res, authOptions),
+    },
   };
-}    
+}
