@@ -3,6 +3,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import Button from "../components/Button";
 
 export default function PostJob() {
   const { data: session } = useSession();
@@ -108,12 +110,9 @@ export default function PostJob() {
                     ))}
                   </select>
                 </div>
-                <button
-                  type="submit"
-                  className="px-9 py-4 bg-teal-900 hover:bg-oteal-900 rounded-lg text-white text-xl font-bold sm:w-full focus:outline-none focus:shadow-outline"
-                >
-                  Post Job
-                </button>
+                <Link href="#">
+                  <Button value="Post Job" onClick={null}></Button>
+                </Link>
               </div>
             </div>
           </form>
