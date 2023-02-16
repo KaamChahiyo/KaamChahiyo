@@ -55,8 +55,9 @@ const TopEmployee = ({
   return (
     <>
       <Link
-        passHref href={link}
-        className="flex flex-col border container shadow-md hover:shadow-sm w-96 gap-4 p-10  rounded-lg"
+        passHref
+        href={link}
+        className="flex flex-col container shadow hover:shadow-lg hover:shadow-blue-100 border border-gray-200 hover:border-cyan-600 w-96 gap-4 p-10 rounded-lg"
       >
         <div className="flex flex-col gap-2 justify-center items-center">
           <div className="h-20 w-20 relative rounded-full overflow-hidden ">
