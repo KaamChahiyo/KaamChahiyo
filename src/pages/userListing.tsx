@@ -1,13 +1,22 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Button from "../components/Button";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function userListing() {
+  const { data: session } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (!session) {
+      router.replace("/login");
+    }
+  }, [session]);
   const [selectedUserId, setSelectedUserId] = React.useState(null);
+
   const selectedUser = Users.find((user) => user.id === selectedUserId);
-  console.log("id: ", selectedUserId);
-  console.log("user: ", selectedUser);
-  console.log(Boolean(selectedUserId));
 
   const [name_, setName] = useState("");
   const [dob, setDob] = useState("");
@@ -31,7 +40,7 @@ export default function userListing() {
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
-
+  // previousSeelectedUser !== selectedUserId ? setEditMode(false) : "";
   const changeName = (e) => {
     setName(e.target.value);
   };
@@ -56,16 +65,19 @@ export default function userListing() {
     setEditMode(false);
   };
   return (
-    <div className="flex">
-      <div className="w-1/3 flex flex-col items-center">
-        <div>Users List</div>
-        <div className="flex flex-col gap-1 hover:cursor-pointer">
+    <div className="flex justify-center gap-10">
+      <div className="flex flex-col items-center ">
+        <div className="font-semibold text-lg p-3 ">Users List</div>
+        <div className="flex flex-col gap-1 hover:cursor-pointer text-lg p-3">
           {Users.map((user) => {
             return (
               <div key={user.id}>
                 <div
-                  className="flex gap-3 bg-lime-200 p-4"
-                  onClick={() => setSelectedUserId(user.id)}
+                  className="flex gap-3 p-4"
+                  onClick={() => {
+                    setSelectedUserId(user.id);
+                    setEditMode(false);
+                  }}
                 >
                   <div className="h-12 w-12 relative">
                     <Image src={user.avatarURL} alt={user.name_} fill />
@@ -78,9 +90,9 @@ export default function userListing() {
           })}
         </div>
       </div>
-      <div className="w-2/3 flex flex-col items-center">
-        <div>User Details</div>
-        <div className="flex flex-col gap-1">
+      <div className="flex flex-col items-center ">
+        <div className="font-semibold text-lg p-3 ">User Details</div>
+        <div className="flex flex-col gap-1 text-lg ">
           {selectedUser ? (
             <div key={selectedUser.id}>
               <div className="flex flex-col gap-2 p-7">
@@ -182,10 +194,17 @@ export default function userListing() {
                     }
                   />
                 </div>
-                <Button
-                  value={editMode ? "Cancel" : "Edit"}
-                  onClick={toggleEditMode}
-                ></Button>
+                <div className="flex gap-10">
+                  <Button
+                    value={editMode ? "Cancel" : "Edit"}
+                    onClick={toggleEditMode}
+                  ></Button>
+                  {editMode ? (
+                    <Button value="Update" onClick={handleSave}></Button>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </div>
           ) : (
@@ -197,6 +216,13 @@ export default function userListing() {
       </div>
     </div>
   );
+}
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      session: await getServerSession(context.req, context.res, authOptions),
+    },
+  };
 }
 
 const Users = [
