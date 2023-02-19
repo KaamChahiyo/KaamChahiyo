@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { ILocation, getLocations } from "../services/locationService";
-import { ICategory, getCategories } from "../services/categoryService";
-import Button from "../components/Button";
+import { ICategory, getCategories } from "../../services/categoryService";
+import { ILocation, getLocations } from "../../services/locationService";
+import Button from "../../components/Button";
+import Link from "next/link";
 
 export default function SearchBar({ locations, categories }) {
   const [Values, setValues] = useState("");
@@ -87,7 +88,9 @@ export default function SearchBar({ locations, categories }) {
       </div>
 
       <div>
-        <Button value="Search" onClick={() => onClickBtn(Values)} />
+        <Link href={`searchBar/${chooseOptions.id}`}>
+          <Button value="Search" onClick={() => onClickBtn(Values)} />
+        </Link>
       </div>
     </div>
   );
