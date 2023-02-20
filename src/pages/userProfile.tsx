@@ -141,7 +141,7 @@ export default function Profile() {
                   />
                 </div>
                 <Link passHref href="#">
-                  <Button value="Update" />
+                  <Button value="Update" onClick={null} />
                 </Link>
               </div>
             </div>
