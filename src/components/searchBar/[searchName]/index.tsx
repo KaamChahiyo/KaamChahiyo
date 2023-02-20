@@ -2,9 +2,10 @@ import React from "react";
 
 export default function index({ params, search }) {
   console.log("params: ", params, "search ", search);
+  console.log("searchName: ", search.name);
   return (
     <div className="flex justify-center items-center">
-      search {params.displayName}
+      <div key={search.id}>search {search.displayName}</div>
     </div>
   );
 }

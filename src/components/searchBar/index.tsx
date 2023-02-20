@@ -15,14 +15,13 @@ export default function SearchBar({ locations, categories }) {
     setValues(SearchTerm);
   };
 
-  const onClickBtn = (SearchTerm: string) => {
-    console.log("SearchTerm: ", SearchTerm);
-    // console.log("selectedOption: ", selectedOption);
+  const onClickBtn = (ClickTerm: string) => {
+    console.log("ClickTerm: ", ClickTerm);
     setValues("");
   };
-
-  const [selectedOption, setSelectedOption] = useState(categories);
   let val = "";
+  const [selectedOption, setSelectedOption] = useState(categories);
+
   const select = (e) => {
     setValues("");
     val = e.target.value;
@@ -66,29 +65,29 @@ export default function SearchBar({ locations, categories }) {
           }`}
         >
           {selectedOption
-            .filter((chooseOption: ICategory | ILocation) => {
+            .filter((selectOption: ICategory | ILocation) => {
               const SearchTerm = Values.toLowerCase();
-              const lowerCaseData = chooseOption.displayName.toLowerCase();
+              const lowerCaseData = selectOption.displayName.toLowerCase();
               return SearchTerm == ""
                 ? lowerCaseData
                 : SearchTerm &&
                     lowerCaseData.startsWith(SearchTerm) &&
                     lowerCaseData != SearchTerm;
             })
-            .map((chooseOption: ICategory | ILocation) => (
+            .map((selectOption: ICategory | ILocation) => (
               <div
-                onClick={() => onSearch(chooseOption.displayName)}
-                key={chooseOption.id}
+                onClick={() => onSearch(selectOption.displayName)}
+                key={selectOption.id}
                 className="flex bg-white text-black ml-36 mr-5 px-3 py-2 border-b "
               >
-                {chooseOption.displayName}
+                {selectOption.displayName}
               </div>
             ))}
         </div>
       </div>
       <div>
         <Link href={"#"}>
-          <Button value="Search" onClick={() => onClickBtn(Values)} />
+          <Button value="Search" onClick={() => onClickBtn(selectedOption)} />
         </Link>
       </div>
     </div>
