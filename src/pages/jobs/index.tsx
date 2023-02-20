@@ -22,7 +22,6 @@ export default function jobApply() {
           b.postedOn.localeCompare(a.postedOn)
         );
         setJob(sortedData);
-        console.log(data);
       });
   }, []);
   return (
