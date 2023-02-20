@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ICategory, getCategories } from "../../services/categoryService";
 import { ILocation, getLocations } from "../../services/locationService";
-import Button from "../../components/Button";
+import Button from "../Button";
 import Link from "next/link";
 
 export default function SearchBar({ locations, categories }) {
@@ -11,11 +11,13 @@ export default function SearchBar({ locations, categories }) {
   };
 
   const onSearch = (SearchTerm: string) => {
+    window.location.href = `/search/${SearchTerm}`;
     setValues(SearchTerm);
   };
 
   const onClickBtn = (SearchTerm: string) => {
-    console.log(SearchTerm);
+    console.log("SearchTerm: ", SearchTerm);
+    // console.log("selectedOption: ", selectedOption);
     setValues("");
   };
 
@@ -24,12 +26,10 @@ export default function SearchBar({ locations, categories }) {
   const select = (e) => {
     setValues("");
     val = e.target.value;
-    console.log(val);
     val == "categories"
       ? setSelectedOption(categories)
       : setSelectedOption(locations);
   };
-  const chooseOptions = selectedOption;
 
   const [showInputOptions, setshowInputOptions] = useState(false);
   const handleInputClick = () => {
@@ -65,7 +65,7 @@ export default function SearchBar({ locations, categories }) {
             showInputOptions ? "block" : "hidden"
           }`}
         >
-          {chooseOptions
+          {selectedOption
             .filter((chooseOption: ICategory | ILocation) => {
               const SearchTerm = Values.toLowerCase();
               const lowerCaseData = chooseOption.displayName.toLowerCase();
@@ -86,9 +86,8 @@ export default function SearchBar({ locations, categories }) {
             ))}
         </div>
       </div>
-
       <div>
-        <Link href={`searchBar/${chooseOptions.id}`}>
+        <Link href={"#"}>
           <Button value="Search" onClick={() => onClickBtn(Values)} />
         </Link>
       </div>
