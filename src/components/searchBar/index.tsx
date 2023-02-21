@@ -3,31 +3,35 @@ import { ICategory, getCategories } from "../../services/categoryService";
 import { ILocation, getLocations } from "../../services/locationService";
 import Button from "../Button";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function SearchBar({ locations, categories }) {
   const [Values, setValues] = useState("");
+
+  const [searchDomain, setSearchDomain] = useState("category");
+
+  const [searchTerm, setSearchTerm] = useState("");
+
   const onChange = (e: { target: { value: string } }) => {
     setValues(e.target.value);
   };
 
-  const onSearch = (SearchTerm: string) => {
-    window.location.href = `/search/${SearchTerm}`;
-    setValues(SearchTerm);
+  const onSearch = (SearchTerm) => {
+    setSearchTerm(SearchTerm?.name);
+    setValues(SearchTerm?.displayName);
   };
 
-  const onClickBtn = (ClickTerm: string) => {
-    console.log("ClickTerm: ", ClickTerm);
-    setValues("");
-  };
   let val = "";
   const [selectedOption, setSelectedOption] = useState(categories);
 
   const select = (e) => {
-    setValues("");
-    val = e.target.value;
-    val == "categories"
+    e.target.value == "categories"
       ? setSelectedOption(categories)
       : setSelectedOption(locations);
+
+    e.target.value == "categories"
+      ? setSearchDomain("category")
+      : setSearchDomain("location");
   };
 
   const [showInputOptions, setshowInputOptions] = useState(false);
@@ -37,6 +41,7 @@ export default function SearchBar({ locations, categories }) {
 
   return (
     <div className="flex justify-center gap-5">
+      {/* {searchParams?.category} */}
       <div>
         <div className="flex rounded-full border-2 focus:border-orange-400">
           <div className="flex">
@@ -76,7 +81,7 @@ export default function SearchBar({ locations, categories }) {
             })
             .map((selectOption: ICategory | ILocation) => (
               <div
-                onClick={() => onSearch(selectOption.displayName)}
+                onClick={() => onSearch(selectOption)}
                 key={selectOption.id}
                 className="flex bg-white text-black ml-36 mr-5 px-3 py-2 border-b "
               >
@@ -86,8 +91,8 @@ export default function SearchBar({ locations, categories }) {
         </div>
       </div>
       <div>
-        <Link href={"#"}>
-          <Button value="Search" onClick={() => onClickBtn(selectedOption)} />
+        <Link href={`/jobs/?${searchDomain}=${searchTerm}`}>
+          <Button value="Search" onClick={null} />
         </Link>
       </div>
     </div>
