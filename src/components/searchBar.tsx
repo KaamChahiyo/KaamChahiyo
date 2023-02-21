@@ -47,7 +47,7 @@ export default function SearchBar({ locations, categories }) {
   };
 
   return (
-    <div className="flex justify-center gap-5">
+    <div className="flex flex-wrap justify-center gap-5">
       {/* {searchParams?.category} */}
       <div>
         <div className="flex rounded-full border-2 focus:border-orange-400">

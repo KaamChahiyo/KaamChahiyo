@@ -10,9 +10,9 @@ import {
 
 export default function TopServices() {
   return (
-    <div className="flex m-auto container gap-36 justify-center items-center p-10">
+    <div className="flex flex-wrap m-auto container gap-36 justify-center items-center">
       <div className="text-center font-bold text-2xl">Top Services</div>
-      <div className="text-center  flex text-sm gap-10 ">
+      <div className="flex flex-wrap justify-center text-center text-sm gap-10 ">
         <Services icon={ElectricianIcon} services={"Electrician"} link="#" />
         <Services icon={PlumberIcon} services={"Plumber"} link="#" />
         <Services icon={ComputerIcon} services={"Computer Repair"} link="#" />

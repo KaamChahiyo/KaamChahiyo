@@ -3,9 +3,9 @@ import React from "react";
 
 export default function WorkingMethod() {
   return (
-    <div className="container m-auto w-full flex flex-col justify-center gap-10 mt-16 pb-10">
+    <div className="flex flex-col container m-auto w-full justify-center gap-10 mb-16">
       <div className="text-2xl text-center font-bold">Working Procedure</div>
-      <div className="gap-10 flex flex-row justify-center ">
+      <div className="flex flex-row flex-wrap gap-10 justify-center ">
         <Method
           step="1"
           name={"Create Account"}
@@ -43,9 +43,9 @@ const Method = ({
   return (
     <Link passHref href={link}>
       <div
-        className="flex flex-col items-center justify-center shadow hover:shadow-lg 
+        className="flex flex-col items-center shadow hover:shadow-lg 
        hover:shadow-blue-100 border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden
-        px-10 py-36 w-96 h-56"
+       px-10 py-10 w-96 h-72"
       >
         <div
           className="text-6xl font-bold px-5 py-2 rounded-full

@@ -4,11 +4,11 @@ import React from "react";
 
 function TopEmployees() {
   return (
-    <div className="">
-      <div className="flex justify-center font-bold text-2xl mb-8 py-4">
+    <div className="flex flex-col flex-wrap items-center gap-y-8">
+      <div className="flex justify-center font-bold text-2xl py-4">
         Top Employees
       </div>
-      <div className="flex gap-10 justify-center">
+      <div className="flex flex-wrap gap-10 justify-center ">
         <TopEmployee
           avatarURL="/assets/img/profile-image.png"
           employeeName="Ananta Raj Mishra"
@@ -57,7 +57,8 @@ const TopEmployee = ({
       <Link
         passHref
         href={link}
-        className="flex flex-col container shadow hover:shadow-lg hover:shadow-blue-100 border border-gray-200 hover:border-cyan-600 w-96 gap-4 p-10 rounded-lg"
+        className="flex flex-col container shadow hover:shadow-lg hover:shadow-blue-100 border 
+        border-gray-200 hover:border-cyan-600 gap-4 p-10 rounded-lg w-96"
       >
         <div className="flex flex-col gap-2 justify-center items-center">
           <div className="h-20 w-20 relative rounded-full overflow-hidden ">
