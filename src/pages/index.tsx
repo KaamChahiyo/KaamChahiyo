@@ -9,7 +9,6 @@ import { getCategories } from "../services/categoryService";
 import SearchBar from "../components/searchBar";
 
 export default function Home({ locations, categories }) {
-
   return (
     <>
       <div className="flex flex-col w-full">
@@ -36,7 +35,7 @@ export default function Home({ locations, categories }) {
 }
 
 export async function getServerSideProps() {
-  const categories = await getCategories() || [];
-  const locations = await getLocations() || [];
+  const categories = (await getCategories()) || [];
+  const locations = (await getLocations()) || [];
   return { props: { categories, locations } };
 }

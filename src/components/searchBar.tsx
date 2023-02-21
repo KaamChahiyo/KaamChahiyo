@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ICategory, getCategories } from "../../services/categoryService";
-import { ILocation, getLocations } from "../../services/locationService";
-import Button from "../Button";
+import { ICategory, getCategories } from "../services/categoryService";
+import { ILocation, getLocations } from "../services/locationService";
+import Button from "./Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -32,11 +32,18 @@ export default function SearchBar({ locations, categories }) {
     e.target.value == "categories"
       ? setSearchDomain("category")
       : setSearchDomain("location");
+
+    setValues("");
   };
 
   const [showInputOptions, setshowInputOptions] = useState(false);
   const handleInputClick = () => {
     setshowInputOptions(!showInputOptions);
+    if (Values == "") {
+      !showInputOptions;
+    } else {
+      setshowInputOptions(true);
+    }
   };
 
   return (
@@ -56,7 +63,7 @@ export default function SearchBar({ locations, categories }) {
           </div>
 
           <input
-            className="w-80 px-8 py-3 rounded-l-none rounded-full focus:outline-none "
+            className="px-8 py-3 rounded-l-none rounded-full focus:outline-none "
             type="text"
             value={Values}
             onChange={onChange}
@@ -72,7 +79,7 @@ export default function SearchBar({ locations, categories }) {
           {selectedOption
             .filter((selectOption: ICategory | ILocation) => {
               const SearchTerm = Values.toLowerCase();
-              const lowerCaseData = selectOption.displayName.toLowerCase();
+              const lowerCaseData = selectOption.name;
               return SearchTerm == ""
                 ? lowerCaseData
                 : SearchTerm &&
@@ -91,7 +98,7 @@ export default function SearchBar({ locations, categories }) {
         </div>
       </div>
       <div>
-        <Link href={`/jobs/?${searchDomain}=${searchTerm}`}>
+        <Link href={Values ? `/jobs/?${searchDomain}=${searchTerm}` : "/"}>
           <Button value="Search" onClick={null} />
         </Link>
       </div>
