@@ -49,8 +49,7 @@ model User {
   dob            DateTime?
   status         String?
   ctznimg        String?
-  role           Role?            @relation(fields: [roleId], references: [id])
-  roleId         String?
+  role           Roles            @default(employee)
   createdAt      DateTime         @default(now())
   updatedAt      DateTime?        @default(now())
   deletedAt      DateTime?
@@ -63,11 +62,10 @@ model User {
   jobId          String?
 }
 
-model Role {
-  id          String @id @default(cuid())
-  name        String @unique
-  displayName String
-  User        User[]
+enum Roles {
+  employee
+  employer
+  admin
 }
 
 model Location {

@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 export default function userListing() {
   const { data: session } = useSession();
   const router = useRouter();
-  console.log(session);
   useEffect(() => {
     if (!session) {
       if (session.user["role"] != "superAdmin") {

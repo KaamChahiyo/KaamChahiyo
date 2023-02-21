@@ -118,7 +118,6 @@ async function main() {
       name: "admin",
       email: "tester@tester.com",
       password: hashPassword("123"),
-      roleId: superAdminRole.id,
       bio: "SuperAdmin Bio Text Here",
     },
   });

@@ -27,20 +27,10 @@ async function handlePOST(res: NextApiResponse, req: NextApiRequest) {
     res.status(409).json({ message: "User already exists" });
   } catch (e: any) {
     if (e.name == "NotFoundError") {
-      const roleId = await prisma.role.findFirst({
-        where: {
-          name: "employee",
-        },
-        select: {
-          id: true,
-        },
-      });
-
       const user = await prisma.user.create({
         data: {
           ...req.body,
           password: hashPassword(req.body.password),
-          roleId: roleId,
         },
       });
       res.json(user);

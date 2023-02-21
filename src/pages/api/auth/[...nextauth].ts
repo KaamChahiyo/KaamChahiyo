@@ -19,7 +19,6 @@ export const authOptions: NextAuthOptions = {
     async session({ session, user }) {
       if (session?.user) {
         session.user["id"] = user.id;
-
         const updatedUser = await prisma.user.findUnique({
           where: {
             id: user.id,
@@ -28,7 +27,7 @@ export const authOptions: NextAuthOptions = {
             role: true,
           },
         });
-        session.user["role"] = updatedUser.role.name;
+        session.user["role"] = updatedUser.role;
         return session;
       }
     },

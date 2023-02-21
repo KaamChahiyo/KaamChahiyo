@@ -7,16 +7,14 @@ import { getServerSession } from 'next-auth';
 export default function index() {
     const router = useRouter();
     const { data: session } = useSession();
-    console.log(session);
-
     if (typeof window === "undefined") return null;
 
     if (session) {
-        if (session.user["role"] != "superAdmin") {
-            router.replace("../userProfile");
+        if (session.user["role"] = "admin") {
+            router.replace("../admin/dashboard");
         }
         else {
-            router.replace("../admin/userListing");
+            router.replace("/");
         }
     }
     else {
