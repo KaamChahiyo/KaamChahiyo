@@ -13,16 +13,8 @@ export default function index() {
         if (session.user["role"] = "admin") {
             router.replace("../admin/dashboard");
         }
-        else {
-            router.replace("/");
-        }
     }
-    else {
-        router.replace("../login");
-    }
-
 }
-
 export async function getServerSideProps(context) {
     return {
         props: {
