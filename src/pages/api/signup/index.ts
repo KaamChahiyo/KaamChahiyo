@@ -28,7 +28,10 @@ async function handlePOST(res: NextApiResponse, req: NextApiRequest) {
   } catch (e: any) {
     if (e.name == "NotFoundError") {
       const user = await prisma.user.create({
-        data: { ...req.body, password: hashPassword(req.body.password) },
+        data: {
+          ...req.body,
+          password: hashPassword(req.body.password),
+        },
       });
       res.json(user);
     }

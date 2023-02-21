@@ -1,12 +1,12 @@
+import { getServerSession } from 'next-auth';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
-import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { authOptions } from './api/auth/[...nextauth]';
 
 export default function Signup() {
     const { data: session } = useSession();

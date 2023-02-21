@@ -100,26 +100,6 @@ export default function Login() {
                                 </p>
                             </div>
                         </div>
-                        {/* <div className="flex p-5 justify-center gap-5 flex-col ">
-                            <Link passHref href="#">
-                                <div className="bg-teal-100 flex justify-center p-3 rounded-full" >
-                                    <Image alt="" src="/assets/img/FacebookIcon.svg" width={20} height={20} />
-                                </div>
-                            </Link>
-
-                            <button className="bg-teal-100 flex justify-center p-3 rounded-full gap-5 items-center" onClick={() => signIn("google")} >
-                                <Image alt="" src="/assets/img/GoogleIcon.svg" width={20} height={20} />
-                                <div>Signin with Google</div>
-                            </button>
-                            <div>
-                                <p className="text-center ">Don't have account ?
-                                </p>
-
-                                <p className="text-teal-900 font-bold text-sm text-center">
-                                    <Link passHref href="/signup">Signup</Link>
-                                </p>
-                            </div>
-                        </div> */}
                     </div>
                 </div >
             </div>
