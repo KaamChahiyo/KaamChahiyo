@@ -3,7 +3,6 @@ import { ICategory, getCategories } from "../services/categoryService";
 import { ILocation, getLocations } from "../services/locationService";
 import Button from "./Button";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 export default function SearchBar({ locations, categories }) {
   const [Values, setValues] = useState("");
