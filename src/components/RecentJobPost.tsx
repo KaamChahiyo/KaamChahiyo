@@ -18,7 +18,7 @@ export default function RecentJobPost() {
           b.postedOn.localeCompare(a.postedOn)
         );
         setJob(sortedData);
-        console.log(data);
+        // console.log(data);
       });
   }, []);
   return (

@@ -1,12 +1,12 @@
 import Image from "next/image";
 import TopCategory from "../components/TopCategory";
 import TopServices from "../components/TopServices";
-import SearchBar from "../components/SearchBar";
 import RecentJobPost from "../components/RecentJobPost";
 import TopEmployees from "../components/TopEmployees";
 import WorkingMethod from "../components/WorkingMethod";
 import { getLocations } from "../services/locationService";
-import { getCategories } from "../services/categoryService"
+import { getCategories } from "../services/categoryService";
+import SearchBar from "../components/searchBar";
 
 export default function Home({ locations, categories }) {
   return (
@@ -22,7 +22,6 @@ export default function Home({ locations, categories }) {
           />
           <div className="absolute top-80 flex justify-center w-full ">
             <SearchBar locations={locations} categories={categories} />
-
           </div>
         </div>
         <RecentJobPost />
