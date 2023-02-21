@@ -46,12 +46,8 @@ export default function SearchBar({ locations, categories }) {
   };
 
   return (
-<<<<<<< HEAD:src/components/searchBar.tsx
     <div className="flex flex-wrap justify-center gap-5">
       {/* {searchParams?.category} */}
-=======
-    <div className="flex justify-center gap-5">
->>>>>>> suman-main:src/components/searchBar/index.tsx
       <div>
         <div className="flex rounded-full border-2 focus:border-orange-400">
           <div className="flex">
