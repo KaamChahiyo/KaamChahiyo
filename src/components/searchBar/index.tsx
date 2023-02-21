@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ICategory, getCategories } from "../../services/categoryService";
 import { ILocation, getLocations } from "../../services/locationService";
-import Button from "../../components/Button";
+import Button from "../Button";
 import Link from "next/link";
 
 export default function SearchBar({ locations, categories }) {
@@ -11,25 +11,24 @@ export default function SearchBar({ locations, categories }) {
   };
 
   const onSearch = (SearchTerm: string) => {
+    window.location.href = `/search/${SearchTerm}`;
     setValues(SearchTerm);
   };
 
-  const onClickBtn = (SearchTerm: string) => {
-    console.log(SearchTerm);
+  const onClickBtn = (ClickTerm: string) => {
+    console.log("ClickTerm: ", ClickTerm);
     setValues("");
   };
-
-  const [selectedOption, setSelectedOption] = useState(categories);
   let val = "";
+  const [selectedOption, setSelectedOption] = useState(categories);
+
   const select = (e) => {
     setValues("");
     val = e.target.value;
-    console.log(val);
     val == "categories"
       ? setSelectedOption(categories)
       : setSelectedOption(locations);
   };
-  const chooseOptions = selectedOption;
 
   const [showInputOptions, setshowInputOptions] = useState(false);
   const handleInputClick = () => {
@@ -65,31 +64,30 @@ export default function SearchBar({ locations, categories }) {
             showInputOptions ? "block" : "hidden"
           }`}
         >
-          {chooseOptions
-            .filter((chooseOption: ICategory | ILocation) => {
+          {selectedOption
+            .filter((selectOption: ICategory | ILocation) => {
               const SearchTerm = Values.toLowerCase();
-              const lowerCaseData = chooseOption.displayName.toLowerCase();
+              const lowerCaseData = selectOption.displayName.toLowerCase();
               return SearchTerm == ""
                 ? lowerCaseData
                 : SearchTerm &&
                     lowerCaseData.startsWith(SearchTerm) &&
                     lowerCaseData != SearchTerm;
             })
-            .map((chooseOption: ICategory | ILocation) => (
+            .map((selectOption: ICategory | ILocation) => (
               <div
-                onClick={() => onSearch(chooseOption.displayName)}
-                key={chooseOption.id}
+                onClick={() => onSearch(selectOption.displayName)}
+                key={selectOption.id}
                 className="flex bg-white text-black ml-36 mr-5 px-3 py-2 border-b "
               >
-                {chooseOption.displayName}
+                {selectOption.displayName}
               </div>
             ))}
         </div>
       </div>
-
       <div>
-        <Link href={`searchBar/${chooseOptions.id}`}>
-          <Button value="Search" onClick={() => onClickBtn(Values)} />
+        <Link href={"#"}>
+          <Button value="Search" onClick={() => onClickBtn(selectedOption)} />
         </Link>
       </div>
     </div>

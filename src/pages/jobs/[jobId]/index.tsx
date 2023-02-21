@@ -6,6 +6,7 @@ import Button from "../../../components/Button";
 
 export default function apply({ job, params }) {
   const jobId = params?.jobId;
+  console.log(job.id);
   return (
     <div className="flex justify-center items-center">
       <div key={job.id} className="p-3 w-3/5 ">
