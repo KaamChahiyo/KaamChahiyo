@@ -91,7 +91,7 @@ export default function SearchBar({ locations, categories }) {
         </div>
       </div>
       <div>
-        <Link href={`/jobs/?${searchDomain}=${searchTerm}`}>
+        <Link href={Values ? `/jobs/?${searchDomain}=${searchTerm}` : "/"}>
           <Button value="Search" onClick={null} />
         </Link>
       </div>
