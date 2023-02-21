@@ -29,6 +29,18 @@ export default function AppHeader() {
           link: "/services",
         },
         {
+          label: "Job Listing",
+          link: "/jobs"
+        },
+        {
+          label: "Location",
+          link: "/location",
+        },
+        {
+          label: "About",
+          link: "/about",
+        },
+        {
           label: "Blog",
           link: "/blog",
         },
@@ -50,7 +62,7 @@ export default function AppHeader() {
           }
         )}
       >
-        <div className="flex justify-between w-full items-center container mx-auto">
+        <div className="flex justify-between w-full items-center container px-5 lg:mx-auto">
           <div className="cursor-pointer ">
             <Link passHref href="/">
               <Image
@@ -63,12 +75,6 @@ export default function AppHeader() {
             </Link>
           </div>
 
-          <div
-            className="relative flex lg:hidden justify-end"
-            onClick={() => setIsNavOpen(!isNavOpen)}
-          >
-            <div className="w-6 text-primary-0">{MenuIcon}</div>
-          </div>
 
           <div className="gap-12 justify-center font-semibold leading-7 hidden lg:flex">
             <span
@@ -94,7 +100,7 @@ export default function AppHeader() {
             <span
               className={classNames({
                 "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
-                  route.pathname === "/job-listing",
+                  route.pathname === "/jobs",
               })}
             >
               <Link passHref href="/jobs">
@@ -132,41 +138,25 @@ export default function AppHeader() {
               </Link>
             </span>
           </div>
-          <div className="flex gap-8 items-center justify-center">
-            {user ? (
-              <>
-                <Link passHref href="/userProfile">
-                  <div className="relative ">
-                    <Image
-                      src={user?.image}
-                      alt={user?.name}
-                      width={100}
-                      height={100}
-                      quality={100}
-                      className="rounded-full object-fill w-10 h-10"
-                    />
-                  </div>
-                </Link>
-                <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
-                  <Link passHref href="/logout">
-                    Logout
-                  </Link>
-                </div>
-              </>
-            ) : (
-              <>
-                <Link passHref href="/login">
-                  <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1]">
-                    Login
-                  </div>
-                </Link>
-                <Link passHref href="/signup">
-                  <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
-                    Signup
-                  </div>
-                </Link>
-              </>
-            )}
+          {user ? (
+            <Link passHref href="/user-profile">
+              <div className="relative ">
+                <Image
+                  src={user?.image}
+                  alt={user?.name}
+                  width={100}
+                  height={100}
+                  quality={100}
+                  className="rounded-full object-fill w-10 h-10"
+                />
+              </div>
+            </Link>
+          ) : ("")}
+          <div
+            className="relative flex lg:hidden justify-end"
+            onClick={() => setIsNavOpen(!isNavOpen)}
+          >
+            <div className="w-6 text-primary-0">{MenuIcon}</div>
           </div>
         </div>
 
@@ -184,6 +174,7 @@ export default function AppHeader() {
             onClick={() => setIsNavOpen(false)}
           >
             <div className="bg-white  min-h-screen w-8/12 flex flex-col align-top overflow-hidden justify-start p-6">
+
               <div className="relative flex justify-start">
                 <Link passHref href="/">
                   <Image
@@ -211,7 +202,32 @@ export default function AppHeader() {
                   </div>
                 </div>
               ))}
+              <div className="flex gap-8 items-center justify-center">
+                {user ? (
+                  <>
+                    <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
+                      <Link passHref href="/logout">
+                        Logout
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <Link passHref href="/login">
+                      <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1]">
+                        Login
+                      </div>
+                    </Link>
+                    <Link passHref href="/signup">
+                      <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
+                        Signup
+                      </div>
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
+
           </div>
         </section>
       </nav>
