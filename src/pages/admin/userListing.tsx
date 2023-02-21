@@ -45,6 +45,7 @@ export default function userListing() {
   // previousSeelectedUser !== selectedUserId ? setEditMode(false) : "";
   const changeName = (e) => {
     setName(e.target.value);
+    console.log("setName: ", e.target.value);
   };
   const changeDob = (e) => {
     setDob(e.target.value);
@@ -70,7 +71,7 @@ export default function userListing() {
     <div className="flex justify-center gap-10">
       <div className="flex flex-col items-center ">
         <div className="font-semibold text-lg p-3 ">Users List</div>
-        <div className="flex flex-col gap-1 hover:cursor-pointer text-lg p-3">
+        <div className="flex flex-col gap-1 hover:cursor-pointer text-lg  ">
           {Users.map((user) => {
             return (
               <div key={user.id}>
@@ -82,7 +83,7 @@ export default function userListing() {
                   }}
                 >
                   <div className="h-12 w-12 relative">
-                    <Image src={user.avatarURL} alt={user.name_} fill />
+                    <Image src={user.avatarURL} alt={name_} fill />
                   </div>
                   <div className="hidden">{user.id}</div>
                   <div>{user.name_}</div>
