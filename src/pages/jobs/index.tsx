@@ -42,7 +42,7 @@ export default function jobApply() {
             job
               .filter((job) => job.Category.name === searchResult)
               .map((job) => (
-                <div key={job.id} className="p-3 w-3/5">
+                <div key={job.id} className="w-full sm:w-3/5 p-1">
                   <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
                     <div className="font-bold text-xl p-2">{job.title}</div>
                     <div className="flex gap-4 italic p-3 m-auto items-center">
@@ -83,7 +83,7 @@ export default function jobApply() {
             job
               .filter((job) => job.Location.name === searchResult)
               .map((job) => (
-                <div key={job.id} className="p-3 w-3/5">
+                <div key={job.id} className="w-full sm:w-3/5 p-1">
                   <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
                     <div className="font-bold text-xl p-2">{job.title}</div>
                     <div className="flex gap-4 italic p-3 m-auto items-center">
@@ -124,7 +124,7 @@ export default function jobApply() {
             <div className="flex flex-col items-center justify-center gap-4">
               {job.map((job) => {
                 return (
-                  <div key={job.id} className="p-3 w-3/5">
+                  <div key={job.id} className="w-full sm:w-3/5 p-1">
                     <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
                       <div className="font-bold text-xl p-2">{job.title}</div>
                       <div className="flex gap-4 italic p-3 m-auto items-center">
