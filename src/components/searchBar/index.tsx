@@ -3,7 +3,6 @@ import { ICategory, getCategories } from "../../services/categoryService";
 import { ILocation, getLocations } from "../../services/locationService";
 import Button from "../Button";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 export default function SearchBar({ locations, categories }) {
   const [Values, setValues] = useState("");
@@ -41,7 +40,6 @@ export default function SearchBar({ locations, categories }) {
 
   return (
     <div className="flex justify-center gap-5">
-      {/* {searchParams?.category} */}
       <div>
         <div className="flex rounded-full border-2 focus:border-orange-400">
           <div className="flex">
