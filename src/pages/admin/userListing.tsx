@@ -1,17 +1,20 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]";
+import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function userListing() {
   const { data: session } = useSession();
   const router = useRouter();
+  console.log(session);
   useEffect(() => {
     if (!session) {
-      router.replace("/login");
+      if (session.user["role"] != "superAdmin") {
+        router.replace("/login");
+      }
     }
   }, [session]);
   const [selectedUserId, setSelectedUserId] = React.useState(null);
