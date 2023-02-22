@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import {
   ComputerIcon,
   ElectricianIcon,
@@ -12,11 +12,13 @@ import {
 } from "../icons";
 
 export default function Services() {
+  const [searchDomain] = useState("category");
+
   return (
     <div className="flex justify-center">
       <div className="grid grid-cols-1 sm:grid-cols-3 py-5 gap-12 place-content-center">
         <AllServices
-          link=""
+          link={`/jobs/?${searchDomain}=${"plumber"}`}
           icon={PlumberIcon}
           services={"Plumber"}
           activeJobs="5"
@@ -24,49 +26,49 @@ export default function Services() {
         />
 
         <AllServices
-          link=""
+          link={`/jobs/?${searchDomain}=${"electrician"}`}
           icon={ElectricianIcon}
           services={"Electrician"}
           activeJobs="5"
           rank="N/A"
         />
         <AllServices
-          link=""
+          link={`/jobs/?${searchDomain}=${"computer-repair"}`}
           icon={ComputerIcon}
           services={"Computer Repair"}
           activeJobs="5"
           rank="N/A"
         />
         <AllServices
-          link=""
+          link={`/jobs/?${searchDomain}=${"household"}`}
           icon={HomeIcon}
           services={"House Hold"}
           activeJobs="5"
           rank="N/A"
         />
         <AllServices
-          link=""
+          link={`/jobs/?${searchDomain}=${"painter"}`}
           icon={PainterIcon}
           services={"Painter"}
           activeJobs="5"
           rank="N/A"
         />
         <AllServices
-          link=""
+          link={`/jobs/?${searchDomain}=${"it-services"}`}
           icon={ItServiceIcon}
           services={"It Service"}
           activeJobs="5"
           rank="N/A"
         />
         <AllServices
-          link=""
+          link={`/jobs/?${searchDomain}=${"web-designer"}`}
           icon={WebdesignerIcon}
           services={"Web Designer"}
           activeJobs="5"
           rank="N/A"
         />
         <AllServices
-          link=""
+          link={`/jobs/?${searchDomain}=${"photographer"}`}
           icon={PhotographerIcon}
           services={"Photo Grapher"}
           activeJobs="5"

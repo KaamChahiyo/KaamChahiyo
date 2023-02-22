@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import {
   ElectricianIcon,
   PlumberIcon,
@@ -9,15 +9,37 @@ import {
 } from "../icons";
 
 export default function TopServices() {
+  const [searchDomain] = useState("category");
+
   return (
     <div className="flex flex-wrap m-auto container gap-36 justify-center items-center">
       <div className="text-center font-bold text-2xl">Top Services</div>
       <div className="flex flex-wrap justify-center text-center text-sm gap-10 ">
-        <Services icon={ElectricianIcon} services={"Electrician"} link="#" />
-        <Services icon={PlumberIcon} services={"Plumber"} link="#" />
-        <Services icon={ComputerIcon} services={"Computer Repair"} link="#" />
-        <Services icon={WebdesignerIcon} services={"Web Designer"} link="#" />
-        <Services icon={PhotographerIcon} services={"Photographer"} link="#" />
+        <Services
+          icon={ElectricianIcon}
+          services={"Electrician"}
+          link={`/jobs/?${searchDomain}=${"electrician"}`}
+        />
+        <Services
+          icon={PlumberIcon}
+          services={"Plumber"}
+          link={`/jobs/?${searchDomain}=${"plumber"}`}
+        />
+        <Services
+          icon={ComputerIcon}
+          services={"Computer Repair"}
+          link={`/jobs/?${searchDomain}=${"computer-repair"}`}
+        />
+        <Services
+          icon={WebdesignerIcon}
+          services={"Web Designer"}
+          link={`/jobs/?${searchDomain}=${"web-designer"}`}
+        />
+        <Services
+          icon={PhotographerIcon}
+          services={"Photographer"}
+          link={`/jobs/?${searchDomain}=${"photographer"}`}
+        />
       </div>
     </div>
   );
