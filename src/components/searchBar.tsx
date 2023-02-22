@@ -46,8 +46,7 @@ export default function SearchBar({ locations, categories }) {
   };
 
   return (
-    <div className="flex flex-wrap justify-center gap-5">
-      {/* {searchParams?.category} */}
+    <div className="flex flex-wrap justify-center gap-5 mx-5">
       <div>
         <div className="flex rounded-full ">
           <div className="flex">
@@ -71,9 +70,8 @@ export default function SearchBar({ locations, categories }) {
           ></input>
         </div>
         <div
-          className={`rounded-lg border-red-700 flex flex-col ${
-            showInputOptions ? "block" : "hidden"
-          }`}
+          className={`rounded-lg border-red-700 flex flex-col ${showInputOptions ? "block" : "hidden"
+            }`}
         >
           {selectedOption
             .filter((selectOption: ICategory | ILocation) => {
@@ -82,8 +80,8 @@ export default function SearchBar({ locations, categories }) {
               return SearchTerm == ""
                 ? lowerCaseData
                 : SearchTerm &&
-                    lowerCaseData.startsWith(SearchTerm) &&
-                    lowerCaseData != SearchTerm;
+                lowerCaseData.startsWith(SearchTerm) &&
+                lowerCaseData != SearchTerm;
             })
             .map((selectOption: ICategory | ILocation) => (
               <div

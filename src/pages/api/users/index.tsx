@@ -16,29 +16,30 @@ export default async function handle(
   }
 }
 const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
-  const session = await getServerSession(req, res, authOptions);
-  if (!session) {
-    res.status(401).json({ message: "Unauthorized" });
-  } else {
-    if ((session.user["role"] = "admin")) {
-      const users = await prisma.user.findMany({
-        where: {},
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          bio: true,
-          role: true,
-          status: true,
-          dob: true,
-          image: true,
-          createdAt: true,
-          updatedAt: true,
-          deletedAt: true,
-        },
-      });
-      res.status(200).json({ users });
+    const session = await getServerSession(req, res, authOptions)
+    if (!session) {
+        res.status(401).json({ message: "Unauthorized" });
     }
-    res.status(401).json({ message: "Unauthorized User" });
+    else {
+        if (session.user["role"] = "admin") {
+            const users = await prisma.user.findMany({
+                where: {},
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    bio: true,
+                    role: true,
+                    status: true,
+                    dob: true,
+                    image: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    deletedAt: true,
+                }
+            },);
+            res.status(200).json({ users });
+        }
+        res.status(401).json({ message: "Unauthorized User" });
   }
 };
