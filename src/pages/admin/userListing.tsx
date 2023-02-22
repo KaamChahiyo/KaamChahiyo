@@ -16,25 +16,42 @@ export default function userListing() {
       }
     }
   }, [session]);
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch(`/api/users`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.users);
+        setUsers(data.users);
+      });
+  }, []);
+
   const [selectedUserId, setSelectedUserId] = React.useState(null);
 
-  const selectedUser = Users.find((user) => user.id === selectedUserId);
+  const selectedUser = users.find((user) => user.id === selectedUserId);
 
   const [name_, setName] = useState("");
   const [dob, setDob] = useState("");
-  const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNo, setPhoneNo] = useState("");
-  const [bloodGroup, setBloodGroup] = useState("");
+  const [bio, setBio] = useState("");
+  const [role, setRole] = useState("");
+  const [status, setStatus] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     if (selectedUserId) {
-      setName(selectedUser.name_);
+      setName(selectedUser.name);
       setDob(selectedUser.dob);
-      setAddress(selectedUser.address);
       setEmail(selectedUser.email);
-      setPhoneNo(selectedUser.phoneNo);
-      setBloodGroup(selectedUser.bloodGroup);
+      setBio(selectedUser.bio);
+      setRole(selectedUser.role);
+      setStatus(selectedUser.status);
     }
   }, [selectedUserId]);
 
@@ -45,22 +62,27 @@ export default function userListing() {
   // previousSeelectedUser !== selectedUserId ? setEditMode(false) : "";
   const changeName = (e) => {
     setName(e.target.value);
-    console.log("setName: ", e.target.value);
+  };
+  const changeRole = (e) => {
+    setName(e.target.value);
   };
   const changeDob = (e) => {
     setDob(e.target.value);
   };
-  const changeAddress = (e) => {
-    setAddress(e.target.value);
+  const changeBio = (e) => {
+    setBio(e.target.value);
   };
   const changeEmail = (e) => {
     setEmail(e.target.value);
   };
-  const changePhoneNo = (e) => {
-    setPhoneNo(e.target.value);
+  const changeStatus = (e) => {
+    setStatus(e.target.value);
   };
-  const changeBloodGroup = (e) => {
-    setBloodGroup(e.target.value);
+  const changeAddress = (e) => {
+    setAddress(e.target.value);
+  };
+  const changePhone = (e) => {
+    setPhone(e.target.value);
   };
 
   const handleSave = () => {
@@ -68,47 +90,48 @@ export default function userListing() {
     setEditMode(false);
   };
   return (
-    <div className="flex justify-center gap-10">
+    <div className="flex justify-center gap-5">
       <div className="flex flex-col items-center ">
-        <div className="font-semibold text-lg p-3 ">Users List</div>
-        <div className="flex flex-col gap-1 hover:cursor-pointer text-lg  ">
-          {Users.map((user) => {
+        <div className="font-semibold text-lg p-3 ">USERS LIST</div>
+        <div className="flex flex-col overflow-auto gap-3 hover:cursor-pointer text-lg h-4/5">
+          {users?.map((user) => {
             return (
               <div key={user.id}>
+                {/* {JSON.stringify(user)} */}
                 <div
-                  className="flex gap-3 p-4"
+                  className="flex flex-wrap gap-3 p-3 hover:bg-blue-500 text-gray-800 hover:text-white"
                   onClick={() => {
                     setSelectedUserId(user.id);
                     setEditMode(false);
                   }}
                 >
-                  <div className="h-12 w-12 relative">
-                    <Image src={user.avatarURL} alt={name_} fill />
+                  <div className="h-12 w-12 relative rounded-full overflow-hidden">
+                    <Image src={user.image} alt={user.name} fill />
                   </div>
-                  <div className="hidden">{user.id}</div>
-                  <div>{user.name_}</div>
+                  {/* <div className="hidden">{user.id}</div> */}
+                  <div className="">{user.name}</div>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-      <div className="flex flex-col items-center ">
-        <div className="font-semibold text-lg p-3 ">User Details</div>
+      <div className="flex flex-col items-center">
+        <div className="font-semibold text-lg p-3 ">USER DETAILS</div>
         <div className="flex flex-col gap-1 text-lg ">
           {selectedUser ? (
             <div key={selectedUser.id}>
-              <div className="flex flex-col gap-2 p-7">
-                <div className="relative h-20 w-20">
+              <div className="flex flex-col gap-2 p-3 w-full">
+                <div className="relative h-20 w-20 rounded-md overflow-hidden">
                   <Image
-                    src={selectedUser.avatarURL}
+                    src={selectedUser.image}
                     alt={selectedUser.name_}
                     fill
                   />
                 </div>
                 <div className="font-normal text-sm">{selectedUser.name_}</div>
-                <div className="flex gap-1">
-                  <p className="">Name: </p>
+                <div className="flex flex-col gap-1">
+                  <SubHeading subTitle="NAME: " />
 
                   <input
                     type="text"
@@ -117,13 +140,44 @@ export default function userListing() {
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2"
-                        : "focus:outline-none"
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
+                        : "focus:outline-none text-gray-600 sm:w-96"
                     }
                   />
                 </div>
-                <div className="flex gap-1">
-                  <p>Date of Birth:</p>
+
+                <div className="flex flex-col gap-1">
+                  <SubHeading subTitle="STATUS: " />
+
+                  <input
+                    type="text"
+                    value={status}
+                    onChange={changeStatus}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
+                        : "focus:outline-none text-gray-600 sm:w-96"
+                    }
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <SubHeading subTitle="ROLE: " />
+
+                  <input
+                    type="text"
+                    value={role}
+                    onChange={changeRole}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
+                        : "focus:outline-none text-gray-600 sm:w-96"
+                    }
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <SubHeading subTitle="DATE OF BIRTH: " />
 
                   <input
                     type="text"
@@ -132,28 +186,14 @@ export default function userListing() {
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2"
-                        : "focus:outline-none"
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2"
+                        : "focus:outline-none text-gray-600 sm:w-96"
                     }
                   />
                 </div>
-                <div className="flex gap-1">
-                  <p>Address: </p>
 
-                  <input
-                    type="text"
-                    value={address}
-                    onChange={changeAddress}
-                    readOnly={editMode ? false : true}
-                    className={
-                      editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2"
-                        : "focus:outline-none"
-                    }
-                  />
-                </div>
-                <div className="flex gap-1">
-                  <p>Email: </p>
+                <div className="flex flex-col gap-1">
+                  <SubHeading subTitle="E-MAIL: " />
 
                   <input
                     type="email"
@@ -162,41 +202,58 @@ export default function userListing() {
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2"
-                        : "focus:outline-none"
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
+                        : "focus:outline-none text-gray-600 sm:w-96"
                     }
                   />
                 </div>
-                <div className="flex gap-1">
-                  <p>Phone: </p>
+                <div className="flex flex-col gap-1">
+                  <SubHeading subTitle="ADDRESS: " />
 
                   <input
-                    type="tel"
-                    value={phoneNo}
-                    onChange={changePhoneNo}
+                    type="address"
+                    value={address}
+                    onChange={changeAddress}
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2"
-                        : "focus:outline-none"
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
+                        : "focus:outline-none text-gray-600 sm:w-96"
                     }
                   />
                 </div>
-                <div className="flex gap-1">
-                  <p>Blood Group: </p>
+                <div className="flex flex-col gap-1">
+                  <SubHeading subTitle="PHONE: " />
 
                   <input
-                    type="bloodGrp"
-                    value={bloodGroup}
-                    onChange={changeBloodGroup}
+                    type="number"
+                    value={phone}
+                    onChange={changePhone}
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2"
-                        : "focus:outline-none"
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
+                        : "focus:outline-none text-gray-600 sm:w-96"
                     }
                   />
                 </div>
+
+                <div className="flex flex-col gap-1">
+                  <SubHeading subTitle="BIO: " />
+
+                  <textarea
+                    rows={7}
+                    value={bio}
+                    onChange={changeBio}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
+                        : "focus:outline-none text-gray-600 sm:w-96 "
+                    }
+                  />
+                </div>
+
                 <div className="flex gap-10">
                   <Button
                     value={editMode ? "Cancel" : "Edit"}
@@ -211,7 +268,7 @@ export default function userListing() {
               </div>
             </div>
           ) : (
-            <div className="text-center">
+            <div className="text-center ">
               Click the user to show their details
             </div>
           )}
@@ -220,6 +277,11 @@ export default function userListing() {
     </div>
   );
 }
+
+const SubHeading = (props: any) => {
+  return <div className="">{props.subTitle}</div>;
+};
+
 export async function getServerSideProps(context) {
   return {
     props: {
@@ -227,46 +289,3 @@ export async function getServerSideProps(context) {
     },
   };
 }
-
-const Users = [
-  {
-    id: "1",
-    avatarURL: "/assets/img/profile-image.png",
-    name_: "Ram Binaya Bupta",
-    dob: "2045/05/15",
-    address: "Bharatpur",
-    email: "ram@ram.com",
-    phoneNo: "9876553210",
-    bloodGroup: "O+ve",
-  },
-  {
-    id: "2",
-    avatarURL: "/assets/img/profile-image.png",
-    name_: "Samrat Pandey",
-    dob: "2045/05/15",
-    address: "Bhaktapur",
-    email: "sam@sam.com",
-    phoneNo: "9876443210",
-    bloodGroup: "A+ve",
-  },
-  {
-    id: "3",
-    avatarURL: "/assets/img/profile-image.png",
-    name_: "Era Maharjan",
-    dob: "2045/05/15",
-    address: "Gaidakot",
-    email: "era@era.com",
-    phoneNo: "9876643210",
-    bloodGroup: "B+ve",
-  },
-  {
-    id: "4",
-    avatarURL: "/assets/img/profile-image.png",
-    name_: "Laxman Mahato",
-    dob: "2045/05/15",
-    address: "Lalitpur",
-    email: "lax@lax.com",
-    phoneNo: "9876533210",
-    bloodGroup: "AB+ve",
-  },
-];
