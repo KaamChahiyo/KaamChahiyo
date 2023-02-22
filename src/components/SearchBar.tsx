@@ -13,6 +13,7 @@ export default function SearchBar({ locations, categories }) {
 
   const onChange = (e: { target: { value: string } }) => {
     setValues(e.target.value);
+    setshowInputOptions(true);
   };
 
   const onSearch = (SearchTerm) => {
@@ -37,12 +38,8 @@ export default function SearchBar({ locations, categories }) {
 
   const [showInputOptions, setshowInputOptions] = useState(false);
   const handleInputClick = () => {
+    // Values ? setshowInputOptions(true) : setshowInputOptions(!showInputOptions);
     setshowInputOptions(!showInputOptions);
-    if (Values == "") {
-      !showInputOptions;
-    } else {
-      setshowInputOptions(true);
-    }
   };
 
   return (
@@ -70,8 +67,9 @@ export default function SearchBar({ locations, categories }) {
           ></input>
         </div>
         <div
-          className={`rounded-lg border-red-700 flex flex-col ${showInputOptions ? "block" : "hidden"
-            }`}
+          className={`rounded-lg flex flex-col h-60 overflow-auto ${
+            showInputOptions ? "block" : "hidden"
+          }`}
         >
           {selectedOption
             .filter((selectOption: ICategory | ILocation) => {
@@ -80,14 +78,14 @@ export default function SearchBar({ locations, categories }) {
               return SearchTerm == ""
                 ? lowerCaseData
                 : SearchTerm &&
-                lowerCaseData.startsWith(SearchTerm) &&
-                lowerCaseData != SearchTerm;
+                    lowerCaseData.startsWith(SearchTerm) &&
+                    lowerCaseData != SearchTerm;
             })
             .map((selectOption: ICategory | ILocation) => (
               <div
                 onClick={() => onSearch(selectOption)}
                 key={selectOption.id}
-                className="flex bg-white text-black ml-36 mr-5 px-3 py-2 border-b "
+                className="flex bg-white text-black border-b ml-36 mr-5 px-3 py-2"
               >
                 {selectOption.displayName}
               </div>
