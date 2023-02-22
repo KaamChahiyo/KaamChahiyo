@@ -38,7 +38,6 @@ export default function SearchBar({ locations, categories }) {
 
   const [showInputOptions, setshowInputOptions] = useState(false);
   const handleInputClick = () => {
-    // Values ? setshowInputOptions(true) : setshowInputOptions(!showInputOptions);
     setshowInputOptions(!showInputOptions);
   };
 
