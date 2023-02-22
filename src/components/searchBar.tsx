@@ -48,7 +48,7 @@ export default function SearchBar({ locations, categories }) {
   return (
     <div className="flex flex-wrap justify-center gap-5 mx-5">
       <div>
-        <div className="flex rounded-full border-2 focus:border-orange-400">
+        <div className="flex rounded-full ">
           <div className="flex">
             <select className="rounded-full rounded-r-none bg-white px-5 ">
               <option value="categories" onClick={select}>
@@ -61,11 +61,11 @@ export default function SearchBar({ locations, categories }) {
           </div>
 
           <input
-            className="px-8 py-3 rounded-l-none rounded-full focus:outline-none "
+            className="pr-8 pl-5 w-72 py-3 rounded-l-none rounded-full focus:outline-none"
             type="text"
             value={Values}
             onChange={onChange}
-            placeholder="Search By Category or Location"
+            placeholder="Search by category or location"
             onClick={handleInputClick}
           ></input>
         </div>

@@ -5,16 +5,15 @@ import { authOptions } from "../auth/[...nextauth]";
 import { omit } from "lodash";
 
 export default async function handle(
-    req: NextApiRequest,
-    res: NextApiResponse
+  req: NextApiRequest,
+  res: NextApiResponse
 ) {
-    if (req.method === "GET") {
-        await handleGET(res, req);
-    }
-    else {
-        res.setHeader("Allow", "GET");
-        res.status(405).json({ message: "Method not found." });
-    }
+  if (req.method === "GET") {
+    await handleGET(res, req);
+  } else {
+    res.setHeader("Allow", "GET");
+    res.status(405).json({ message: "Method not found." });
+  }
 }
 const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
     const session = await getServerSession(req, res, authOptions)
@@ -42,5 +41,5 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
             res.status(200).json({ users });
         }
         res.status(401).json({ message: "Unauthorized User" });
-    }
-}
+  }
+};

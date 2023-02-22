@@ -46,7 +46,7 @@ model User {
   emailVerified  DateTime?
   bio            String?          @db.VarChar(255)
   password       String?
-  dob            DateTime?
+  dob            DateOnly?
   status         String?
   ctznimg        String?
   role           Roles            @default(employee)
