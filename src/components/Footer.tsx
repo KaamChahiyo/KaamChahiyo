@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import SocialIcons from "./SocialIcons";
 
 export default function Footer() {
+  const [searchDomain] = useState("category");
+
   return (
     <div className=" bg-[#0063F1] text-white w-full h-full">
       <div className="flex justify-center">
@@ -28,16 +30,16 @@ export default function Footer() {
           <div>
             <div className="font-bold">CATEGORIES</div>
             <div className="text-lg">
-              <Link passHref href="#" className="hover:text-blue-300">
-                <ul>Plumber</ul>
+              <Link passHref href={`/jobs/?${searchDomain}=${"plumber"}`}>
+                <ul className="hover:text-blue-300">Plumber</ul>
               </Link>
-              <Link passHref href="#">
+              <Link passHref href={`/jobs/?${searchDomain}=${"electrician"}`}>
                 <ul className="hover:text-blue-300">Electrician</ul>
               </Link>
-              <Link passHref href="#">
+              <Link passHref href={`/jobs/?${searchDomain}=${"household"}`}>
                 <ul className="hover:text-blue-300">Household</ul>
               </Link>
-              <Link passHref href="#">
+              <Link passHref href={`/jobs/?${searchDomain}=${"painter"}`}>
                 <ul className="hover:text-blue-300">Painter</ul>
               </Link>
             </div>

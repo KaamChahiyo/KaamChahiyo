@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import {
   PlumberIcon,
   ItServiceIcon,
@@ -9,15 +9,37 @@ import {
 } from "../icons";
 
 export default function TopCategory() {
+  const [searchDomain] = useState("category");
+
   return (
     <div className="flex flex-wrap m-auto container gap-36 justify-center items-center">
       <div className="flex text-center font-bold text-2xl ">Top Category</div>
       <div className="flex flex-wrap justify-center text-sm text-center gap-10  ">
-        <Category icon={ElectricianIcon} services={"Electrician"} link="#" />
-        <Category icon={PlumberIcon} services={"Plumber"} link="#" />
-        <Category icon={HomeIcon} services={"Household"} link="#" />
-        <Category icon={ItServiceIcon} services={"IT Solution"} link="#" />
-        <Category icon={PainterIcon} services={"Painter"} link="#" />
+        <Category
+          icon={ElectricianIcon}
+          services={"Electrician"}
+          link={`/jobs/?${searchDomain}=${"electrician"}`}
+        />
+        <Category
+          icon={PlumberIcon}
+          services={"Plumber"}
+          link={`/jobs/?${searchDomain}=${"plumber"}`}
+        />
+        <Category
+          icon={HomeIcon}
+          services={"Household"}
+          link={`/jobs/?${searchDomain}=${"household"}`}
+        />
+        <Category
+          icon={ItServiceIcon}
+          services={"IT Solution"}
+          link={`/jobs/?${searchDomain}=${"it-services"}`}
+        />
+        <Category
+          icon={PainterIcon}
+          services={"Painter"}
+          link={`/jobs/?${searchDomain}=${"painter"}`}
+        />
       </div>
     </div>
   );

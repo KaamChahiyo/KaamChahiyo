@@ -6,7 +6,7 @@ import TopEmployees from "../components/TopEmployees";
 import WorkingMethod from "../components/WorkingMethod";
 import { getLocations } from "../services/locationService";
 import { getCategories } from "../services/categoryService";
-import SearchBar from "../components/searchBar";
+import SearchBar from "../components/SearchBar";
 
 export default function Home({ locations, categories }) {
   return (
