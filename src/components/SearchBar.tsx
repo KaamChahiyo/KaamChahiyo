@@ -21,7 +21,6 @@ export default function SearchBar({ locations, categories }) {
     setValues(SearchTerm?.displayName);
   };
 
-  let val = "";
   const [selectedOption, setSelectedOption] = useState(categories);
 
   const select = (e) => {
