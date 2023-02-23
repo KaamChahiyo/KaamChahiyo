@@ -39,33 +39,42 @@ model Session {
 }
 
 model User {
-  id             String           @id @default(cuid())
-  name           String
-  image          String?
-  email          String           @unique
-  emailVerified  DateTime?
-  bio            String?          @db.VarChar(255)
-  password       String?
-  dob            DateOnly?
-  status         String?
-  ctznimg        String?
-  role           Roles            @default(employee)
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime?        @default(now())
-  deletedAt      DateTime?
-  AssignedOn     Job[]            @relation("Assigned")
-  PostedOn       Job[]            @relation("Posted")
-  Account        Account[]
-  Session        Session[]
-  JobApplication JobApplication[]
-  Job            Job?             @relation(fields: [jobId], references: [id])
-  jobId          String?
+  id                String           @id @default(cuid())
+  name              String
+  image             String?
+  email             String           @unique
+  emailVerified     DateTime?
+  isVerified        Boolean          @default(false)
+  bio               String?          @db.VarChar(255)
+  password          String?
+  dob               DateTime?
+  temporaryAddress  String?
+  permananetAddress String?
+  phoneNumber       String?
+  status            Status           @default(active)
+  ctznimg           String?
+  role              Roles            @default(employee)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime?        @default(now())
+  deletedAt         DateTime?
+  AssignedOn        Job[]            @relation("Assigned")
+  PostedOn          Job[]            @relation("Posted")
+  Account           Account[]
+  Session           Session[]
+  JobApplication    JobApplication[]
+  Job               Job?             @relation(fields: [jobId], references: [id])
+  jobId             String?
 }
 
 enum Roles {
   employee
   employer
   admin
+}
+
+enum Status {
+  active
+  inactive
 }
 
 model Location {
