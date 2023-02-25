@@ -47,7 +47,7 @@ export default function userListing() {
   useEffect(() => {
     if (selectedUserId) {
       setName(selectedUser.name);
-      setDob(selectedUser.dob);
+      setDob(selectedUser.dob.substring(0, 10));
       setEmail(selectedUser.email);
       setBio(selectedUser.bio);
       setRole(selectedUser.role);
@@ -63,9 +63,9 @@ export default function userListing() {
   const changeName = (e) => {
     setName(e.target.value);
   };
-  const changeRole = (e) => {
-    setName(e.target.value);
-  };
+  // const changeRole = (e) => {
+  //   setRole(e.target.value);
+  // };
   const changeDob = (e) => {
     setDob(e.target.value);
   };
@@ -75,9 +75,9 @@ export default function userListing() {
   const changeEmail = (e) => {
     setEmail(e.target.value);
   };
-  const changeStatus = (e) => {
-    setStatus(e.target.value);
-  };
+  // const changeStatus = (e) => {
+  //   setStatus(e.target.value);
+  // };
   const changeAddress = (e) => {
     setAddress(e.target.value);
   };
@@ -90,25 +90,23 @@ export default function userListing() {
     setEditMode(false);
   };
   return (
-    <div className="flex justify-center gap-5">
-      <div className="flex flex-col items-center ">
-        <div className="font-semibold text-lg p-3 ">USERS LIST</div>
+    <div className="flex  gap-5 justify-center pb-5">
+      <div className="flex flex-wrap flex-col items-center">
+        <div className="font-semibold text-2xl p-3 ">USERS LIST</div>
         <div className="flex flex-col overflow-auto gap-3 hover:cursor-pointer text-lg h-4/5">
           {users?.map((user) => {
             return (
               <div key={user.id}>
-                {/* {JSON.stringify(user)} */}
                 <div
-                  className="flex flex-wrap gap-3 p-3 hover:bg-blue-500 text-gray-800 hover:text-white"
+                  className="flex flex-wrap gap-3 p-3 bg-gray-50 hover:bg-blue-200 text-gray-800 hover:text-black"
                   onClick={() => {
                     setSelectedUserId(user.id);
                     setEditMode(false);
                   }}
                 >
-                  <div className="h-12 w-12 relative rounded-full overflow-hidden">
+                  <div className="h-12 w-12  relative rounded-full overflow-hidden">
                     <Image src={user.image} alt={user.name} fill />
                   </div>
-                  {/* <div className="hidden">{user.id}</div> */}
                   <div className="">{user.name}</div>
                 </div>
               </div>
@@ -116,20 +114,28 @@ export default function userListing() {
           })}
         </div>
       </div>
-      <div className="flex flex-col items-center">
-        <div className="font-semibold text-lg p-3 ">USER DETAILS</div>
-        <div className="flex flex-col gap-1 text-lg ">
+      <div className="flex flex-col items-center sm:w-1/2 rounded-xl shadow-xl">
+        <div className="font-semibold text-3xl p-3 ">USER DETAILS</div>
+        <div className="flex flex-col gap-1 text-lg sm:w-9/12">
           {selectedUser ? (
             <div key={selectedUser.id}>
               <div className="flex flex-col gap-2 p-3 w-full">
-                <div className="relative h-20 w-20 rounded-md overflow-hidden">
-                  <Image
-                    src={selectedUser.image}
-                    alt={selectedUser.name_}
-                    fill
-                  />
+                <div className="flex gap-8">
+                  <div className="relative h-20 w-20 rounded-md overflow-hidden">
+                    <Image
+                      src={selectedUser.image}
+                      alt={selectedUser.name_}
+                      fill
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <div className="bg-blue-50 rounded-full px-3 w-fit">
+                      {status}
+                    </div>
+                    <div className="bg-blue-50 rounded-full px-3">{role}</div>
+                  </div>
                 </div>
-                <div className="font-normal text-sm">{selectedUser.name_}</div>
+
                 <div className="flex flex-col gap-1">
                   <SubHeading subTitle="NAME: " />
 
@@ -140,42 +146,12 @@ export default function userListing() {
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
-                        : "focus:outline-none text-gray-600 sm:w-96"
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
+                        : "focus:outline-none border-2 p-2 border-gray-200 text-gray-600"
                     }
                   />
                 </div>
 
-                <div className="flex flex-col gap-1">
-                  <SubHeading subTitle="STATUS: " />
-
-                  <input
-                    type="text"
-                    value={status}
-                    onChange={changeStatus}
-                    readOnly={editMode ? false : true}
-                    className={
-                      editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
-                        : "focus:outline-none text-gray-600 sm:w-96"
-                    }
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <SubHeading subTitle="ROLE: " />
-
-                  <input
-                    type="text"
-                    value={role}
-                    onChange={changeRole}
-                    readOnly={editMode ? false : true}
-                    className={
-                      editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
-                        : "focus:outline-none text-gray-600 sm:w-96"
-                    }
-                  />
-                </div>
                 <div className="flex flex-col gap-1">
                   <SubHeading subTitle="DATE OF BIRTH: " />
 
@@ -187,7 +163,7 @@ export default function userListing() {
                     className={
                       editMode
                         ? "focus:outline-none focus:border-orange-600 border-2 p-2"
-                        : "focus:outline-none text-gray-600 sm:w-96"
+                        : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                     }
                   />
                 </div>
@@ -202,8 +178,8 @@ export default function userListing() {
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
-                        : "focus:outline-none text-gray-600 sm:w-96"
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
+                        : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                     }
                   />
                 </div>
@@ -217,8 +193,8 @@ export default function userListing() {
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
-                        : "focus:outline-none text-gray-600 sm:w-96"
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
+                        : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                     }
                   />
                 </div>
@@ -232,8 +208,8 @@ export default function userListing() {
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
-                        : "focus:outline-none text-gray-600 sm:w-96"
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
+                        : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                     }
                   />
                 </div>
@@ -242,14 +218,14 @@ export default function userListing() {
                   <SubHeading subTitle="BIO: " />
 
                   <textarea
-                    rows={7}
+                    rows={5}
                     value={bio}
                     onChange={changeBio}
                     readOnly={editMode ? false : true}
                     className={
                       editMode
-                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 sm:w-96"
-                        : "focus:outline-none text-gray-600 sm:w-96 "
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
+                        : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600  "
                     }
                   />
                 </div>
