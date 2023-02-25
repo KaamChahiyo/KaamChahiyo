@@ -135,17 +135,17 @@ export default function Signup() {
                                 <div className='flex flex-1 items-center justify-center'>Continue with Google</div>
                             </button>
                         </div>
-                        <div>
-                            <p className="text-center ">Already have account ?
-                            </p>
+                    </div>
+                    <div>
+                        <p className="text-center ">Already have account ?
+                        </p>
 
-                            <p className="text-teal-900 font-bold text-sm text-center">
-                                <Link passHref href="/login">Login</Link>
-                            </p>
-                        </div>
+                        <p className="text-teal-900 font-bold text-sm text-center">
+                            <Link passHref href="/login">Login</Link>
+                        </p>
                     </div>
                 </div>
-            </div >
+            </div>
         </>
     )
 }
