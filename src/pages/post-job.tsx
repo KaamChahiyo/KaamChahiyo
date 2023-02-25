@@ -5,12 +5,32 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Button from "../components/Button";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
 
 export default function PostJob() {
   const { data: session } = useSession();
+  const { enqueueSnackbar } = useSnackbar();
+
   const router = useRouter();
   const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
+
+  const {
+    handleSubmit,
+    register,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+
+  let defaultBody = {
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+  };
+
 
   useEffect(() => {
     if (!session) {
@@ -29,6 +49,52 @@ export default function PostJob() {
       });
   }, []);
 
+
+  async function onSubmit(values) {
+    try {
+      const body = { ...defaultBody, ...values };
+      await fetch(
+        `/api/jobs`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            accept: "application/json",
+          },
+          body: Object.entries(body)
+            .map((e) => e.join("="))
+            .join("&"),
+        },
+      )
+        .then(async (res) => {
+          if (!res.ok) {
+            const errorResp = await res.json();
+            throw Error(errorResp.message);
+          }
+          res.json();
+          enqueueSnackbar("Job Posted Successfully.", {
+            variant: "success",
+          });
+          router.replace("/");
+        })
+        .catch((err) => {
+          enqueueSnackbar("Failed to post a job.", {
+            variant: "error",
+          });
+          setError("submit", {
+            type: "server",
+            message: err.message,
+          });
+          return null;
+        });
+    }
+    catch (error) {
+      setError('submit', {
+        type: "server",
+        message: 'Unable to connect to the server properly!!',
+      });
+    }
+  }
   useEffect(() => {
     fetch(`/api/categories/`, {
       method: "GET",
@@ -44,7 +110,7 @@ export default function PostJob() {
     <>
       <div className="flex justify-center items-center my-36">
         <div className="flex flex-col w-1/3 relative justify-center gap-6 p-10 bg-white rounded-3xl md:shadow-[0_3px_25px_-10px_rgba(0,0,0,0.3)] ">
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className=" flex flex-col gap-5 ">
               <div className="flex flex-col gap-3">
                 <p className=" font-bold text-4xl text-center "> Post a Job</p>
@@ -59,6 +125,7 @@ export default function PostJob() {
                   </label>
                   <input
                     type="text"
+                    {...register("title")}
                     placeholder="Job Title"
                     className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
                   />
@@ -68,6 +135,7 @@ export default function PostJob() {
                     Description
                   </label>
                   <textarea
+                    {...register("description")}
                     placeholder="Description of Job"
                     rows={4}
                     className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
@@ -79,6 +147,7 @@ export default function PostJob() {
                   </label>
                   <input
                     type="number"
+                    {...register("price")}
                     placeholder="Price in NPR"
                     className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
                   />
@@ -87,7 +156,9 @@ export default function PostJob() {
                   <label className=" text-gray-500 font-semibold text-sm uppercase  tracking-[2.78px] ">
                     Category
                   </label>
-                  <select className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md">
+                  <select
+                    {...register("Category")}
+                    className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md">
                     <option value="select">Select</option>
                     {categories?.map((category) => (
                       <option value={category.displayName} key={category.id}>
@@ -100,7 +171,9 @@ export default function PostJob() {
                   <label className=" text-gray-500 font-semibold text-sm uppercase  tracking-[2.78px] ">
                     Location
                   </label>
-                  <select className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md">
+                  <select
+                    {...register("Location")}
+                    className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md">
                     <option value="select">Select</option>
 
                     {locations?.map((location) => (
@@ -110,18 +183,16 @@ export default function PostJob() {
                     ))}
                   </select>
                 </div>
-                <Link href="#">
-                  <Button value="Post Job" onClick={null}></Button>
-                </Link>
+                <Button value={isSubmitting ? " Posting..." : "Post"} onClick={null}>
+                </Button>
               </div>
             </div>
           </form>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 }
-
 export async function getServerSideProps(context) {
   return {
     props: {

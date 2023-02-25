@@ -51,7 +51,7 @@ model User {
   temporaryAddress  String?
   permananetAddress String?
   phoneNumber       String?
-  status            Status           @default(active)
+  status            UserStatus       @default(active)
   ctznimg           String?
   role              Roles            @default(employee)
   createdAt         DateTime         @default(now())
@@ -72,14 +72,14 @@ enum Roles {
   admin
 }
 
-enum Status {
+enum UserStatus {
   active
   inactive
 }
 
 model Location {
-  id          String  @id @default(cuid())
-  name        String? @unique
+  id          String @id @default(cuid())
+  name        String @unique
   displayName String
   Job         Job[]
 }
@@ -117,21 +117,30 @@ model JobApplication {
 
 model Job {
   id           String           @id @default(cuid())
-  title        String?
+  title        String
   isVerified   Boolean          @default(false)
   description  String           @db.VarChar(255)
-  price        Float?
-  status       String?
+  price        Float
+  status       JobStatus        @default(pendingApproval)
   postedBy     User             @relation("Posted", fields: [postedById], references: [id])
   postedById   String
   postedOn     DateTime         @default(now())
-  assignedTo   User             @relation("Assigned", fields: [assignedToId], references: [id])
+  assignedTo   User?            @relation("Assigned", fields: [assignedToId], references: [id])
   assignedToId String
-  assignedOn   DateTime
+  assignedOn   DateTime?
   Category     Category         @relation(fields: [categoryId], references: [id])
   categoryId   String
-  Location     Location?        @relation(fields: [locationId], references: [id])
-  locationId   String?
+  Location     Location         @relation(fields: [locationId], references: [id])
+  locationId   String
   User         User[]
   appliedBy    JobApplication[]
+}
+
+enum JobStatus {
+  approved
+  pendingApproval
+  rejected
+  completed
+  cancelled
+  inProgress
 }
