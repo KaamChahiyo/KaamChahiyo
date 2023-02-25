@@ -13,7 +13,7 @@ export default function Button({ value, onClick }: any) {
   return (
     <div>
       <input
-        type="button"
+        type="submit"
         value={value}
         className={className}
         onClick={onClick}
