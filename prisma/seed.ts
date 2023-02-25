@@ -7,30 +7,6 @@ const hashPassword = (password: string) => {
 };
 
 async function main() {
-  const superAdminRole = await prisma.role.upsert({
-    where: { name: "superAdmin" },
-    update: {},
-    create: {
-      name: "superAdmin",
-      displayName: "Super Admin",
-    },
-  });
-  await prisma.role.upsert({
-    where: { name: "employee" },
-    update: {},
-    create: {
-      name: "employee",
-      displayName: "Employee",
-    },
-  });
-  await prisma.role.upsert({
-    where: { name: "employer" },
-    update: {},
-    create: {
-      name: "employer",
-      displayName: "Employeer",
-    },
-  });
   await prisma.paymentMethod.upsert({
     where: { name: "esewa" },
     update: {},
@@ -79,38 +55,6 @@ async function main() {
       displayName: "Electrician",
     },
   });
-  await prisma.location.upsert({
-    where: { name: "pokhara" },
-    update: {},
-    create: {
-      name: "pokhara",
-      displayName: "Pokhara",
-    },
-  });
-  await prisma.location.upsert({
-    where: { name: "kathmandu" },
-    update: {},
-    create: {
-      name: "kathmandu",
-      displayName: "Kathmandu",
-    },
-  });
-  await prisma.location.upsert({
-    where: { name: "bhaktapur" },
-    update: {},
-    create: {
-      name: "bhaktapur",
-      displayName: "Bhaktapur",
-    },
-  });
-  await prisma.location.upsert({
-    where: { name: "Pyuthan" },
-    update: {},
-    create: {
-      name: "pyuthan",
-      displayName: "Pyuthan",
-    },
-  });
   await prisma.user.upsert({
     where: { email: "tester@tester.com" },
     update: {},
@@ -119,6 +63,7 @@ async function main() {
       email: "tester@tester.com",
       password: hashPassword("123"),
       bio: "SuperAdmin Bio Text Here",
+      role: "admin",
     },
   });
 }
