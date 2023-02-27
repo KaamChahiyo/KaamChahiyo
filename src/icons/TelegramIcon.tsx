@@ -1,5 +1,5 @@
 export const TelegramIcon = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <svg viewBox="0 0 48 48">
     <path fill="none" d="M24 4A20 20 0 1 0 24 44A20 20 0 1 0 24 4Z" />
     <path
       fill="currentColor"

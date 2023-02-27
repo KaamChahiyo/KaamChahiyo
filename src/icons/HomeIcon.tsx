@@ -1,10 +1,5 @@
 export const HomeIcon = (
-  <svg
-    id="Layer_1"
-    data-name="Layer 1"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 122.88 114.82"
-  >
+  <svg viewBox="0 0 122.88 114.82">
     <defs></defs>
     <title>home-office</title>
     <path

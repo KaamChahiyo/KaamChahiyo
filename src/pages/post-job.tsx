@@ -3,7 +3,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Button from "../components/Button";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
@@ -11,11 +10,10 @@ import { useForm } from "react-hook-form";
 export default function PostJob() {
   const { data: session } = useSession();
   const { enqueueSnackbar } = useSnackbar();
-
   const router = useRouter();
   const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
-
+  const [user, setUser] = useState([]);
   const {
     handleSubmit,
     register,
@@ -23,14 +21,12 @@ export default function PostJob() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-
   let defaultBody = {
     title: "",
     description: "",
     price: "",
     category: "",
   };
-
 
   useEffect(() => {
     if (!session) {
@@ -49,23 +45,48 @@ export default function PostJob() {
       });
   }, []);
 
+  useEffect(() => {
+    fetch(`/api/categories/`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((category) => {
+        setCategories(category.categories);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(`/api/userProfile/`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((user) => {
+        setUser(user.name);
+      });
+  }, []);
 
   async function onSubmit(values) {
     try {
-      const body = { ...defaultBody, ...values };
-      await fetch(
-        `/api/jobs`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            accept: "application/json",
-          },
-          body: Object.entries(body)
-            .map((e) => e.join("="))
-            .join("&"),
+      const body = {
+        ...defaultBody,
+        title: values?.title,
+        description: values?.description,
+        price: parseFloat(values?.price),
+        category: values?.category,
+        locations: values?.location,
+      };
+      await fetch(`/api/jobs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          accept: "application/json",
         },
-      )
+        body: Object.entries(body)
+          .map((e) => e.join("="))
+          .join("&"),
+      })
         .then(async (res) => {
           if (!res.ok) {
             const errorResp = await res.json();
@@ -87,28 +108,17 @@ export default function PostJob() {
           });
           return null;
         });
-    }
-    catch (error) {
-      setError('submit', {
+    } catch (error) {
+      setError("submit", {
         type: "server",
-        message: 'Unable to connect to the server properly!!',
+        message: "Unable to connect to the server properly!!",
       });
     }
   }
-  useEffect(() => {
-    fetch(`/api/categories/`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((category) => {
-        setCategories(category.categories);
-      });
-  }, []);
 
   return (
     <>
-      <div className="flex justify-center items-center my-36">
+      <div className="flex justify-center items-center mt-36 mb-10">
         <div className="flex flex-col w-1/3 relative justify-center gap-6 p-10 bg-white rounded-3xl md:shadow-[0_3px_25px_-10px_rgba(0,0,0,0.3)] ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className=" flex flex-col gap-5 ">
@@ -158,10 +168,11 @@ export default function PostJob() {
                   </label>
                   <select
                     {...register("Category")}
-                    className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md">
+                    className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
+                  >
                     <option value="select">Select</option>
                     {categories?.map((category) => (
-                      <option value={category.displayName} key={category.id}>
+                      <option value={category.name} key={category.id}>
                         {category.displayName}
                       </option>
                     ))}
@@ -173,26 +184,33 @@ export default function PostJob() {
                   </label>
                   <select
                     {...register("Location")}
-                    className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md">
+                    className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
+                  >
                     <option value="select">Select</option>
 
                     {locations?.map((location) => (
-                      <option value={location.displayName} key={location.id}>
+                      <option value={location.id} key={location.id}>
                         {location.displayName}
                       </option>
                     ))}
                   </select>
                 </div>
-                <Button value={isSubmitting ? " Posting..." : "Post"} onClick={null}>
-                </Button>
+                <div className="hidden">
+                  <input type="text" value={user} {...register("postedBy")} />
+                </div>
+                <Button
+                  value={isSubmitting ? " Posting..." : "Post"}
+                  onClick={null}
+                ></Button>
               </div>
             </div>
           </form>
-        </div >
-      </div >
+        </div>
+      </div>
     </>
   );
 }
+
 export async function getServerSideProps(context) {
   return {
     props: {

@@ -14,3 +14,5 @@ export * from "./WebdesignerIcon";
 export * from "./HomeIcon";
 export * from "./PasswordIcon";
 export * from "./ProfileIcon";
+export * from "./TickIcon";
+export * from "./ExclamationIcon";
