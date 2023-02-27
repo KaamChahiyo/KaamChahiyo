@@ -1,5 +1,5 @@
 export const FacebookIcon = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <svg viewBox="0 0 48 48">
     <linearGradient
       id="Ld6sqrtcxMyckEl6xeDdMa"
       x1="9.993"

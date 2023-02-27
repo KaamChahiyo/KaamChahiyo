@@ -1,14 +1,5 @@
 export const ElectricianIcon = (
-  <svg
-    version="1.1"
-    id="Layer_1"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    x="0px"
-    y="0px"
-    viewBox="0 0 512 512"
-    xmlSpace="preserve"
-  >
+  <svg x="0px" y="0px" viewBox="0 0 512 512">
     <path
       className="st0"
       d="M206,166c0,5.5-4.5,10-10,10s-10-4.5-10-10s4.5-10,10-10S206,160.5,206,166z"

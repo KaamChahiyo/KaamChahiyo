@@ -57,7 +57,7 @@ CREATE TABLE `User` (
 -- CreateTable
 CREATE TABLE `Location` (
     `id` VARCHAR(191) NOT NULL,
-    `name` VARCHAR(191) NULL,
+    `name` VARCHAR(191) NOT NULL,
     `displayName` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Location_name_key`(`name`),
@@ -105,17 +105,17 @@ CREATE TABLE `JobApplication` (
 -- CreateTable
 CREATE TABLE `Job` (
     `id` VARCHAR(191) NOT NULL,
-    `title` VARCHAR(191) NULL,
+    `title` VARCHAR(191) NOT NULL,
     `isVerified` BOOLEAN NOT NULL DEFAULT false,
     `description` VARCHAR(255) NOT NULL,
-    `price` DOUBLE NULL,
-    `status` VARCHAR(191) NULL,
+    `price` DOUBLE NOT NULL,
+    `status` ENUM('approved', 'pendingApproval', 'rejected', 'completed', 'cancelled', 'inProgress') NOT NULL DEFAULT 'pendingApproval',
     `postedById` VARCHAR(191) NOT NULL,
     `postedOn` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `assignedToId` VARCHAR(191) NOT NULL,
-    `assignedOn` DATETIME(3) NOT NULL,
+    `assignedToId` VARCHAR(191) NULL,
+    `assignedOn` DATETIME(3) NULL,
     `categoryId` VARCHAR(191) NOT NULL,
-    `locationId` VARCHAR(191) NULL,
+    `locationId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -142,10 +142,10 @@ ALTER TABLE `JobApplication` ADD CONSTRAINT `JobApplication_userId_fkey` FOREIGN
 ALTER TABLE `Job` ADD CONSTRAINT `Job_postedById_fkey` FOREIGN KEY (`postedById`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Job` ADD CONSTRAINT `Job_assignedToId_fkey` FOREIGN KEY (`assignedToId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Job` ADD CONSTRAINT `Job_assignedToId_fkey` FOREIGN KEY (`assignedToId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Job` ADD CONSTRAINT `Job_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Category`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Job` ADD CONSTRAINT `Job_locationId_fkey` FOREIGN KEY (`locationId`) REFERENCES `Location`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Job` ADD CONSTRAINT `Job_locationId_fkey` FOREIGN KEY (`locationId`) REFERENCES `Location`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

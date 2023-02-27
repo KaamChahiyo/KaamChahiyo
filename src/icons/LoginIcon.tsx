@@ -1,9 +1,5 @@
 export const LoginIcon = (
-  <svg
-    viewBox="0 0 13 16"
-    fill="currentColor"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg viewBox="0 0 13 16" fill="currentColor">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
