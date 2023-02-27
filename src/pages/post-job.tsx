@@ -28,6 +28,34 @@ export default function PostJob() {
     category: "",
   };
 
+  const {
+    handleSubmit,
+    register,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  let defaultBody = {
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+  };
+
+  const {
+    handleSubmit,
+    register,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  let defaultBody = {
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+  };
+
   useEffect(() => {
     if (!session) {
       router.replace("/login");
@@ -45,6 +73,47 @@ export default function PostJob() {
       });
   }, []);
 
+  async function onSubmit(values) {
+    try {
+      const body = { ...defaultBody, ...values };
+      await fetch(`/api/jobs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          accept: "application/json",
+        },
+        body: Object.entries(body)
+          .map((e) => e.join("="))
+          .join("&"),
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            const errorResp = await res.json();
+            throw Error(errorResp.message);
+          }
+          res.json();
+          enqueueSnackbar("Job Posted Successfully.", {
+            variant: "success",
+          });
+          router.replace("/");
+        })
+        .catch((err) => {
+          enqueueSnackbar("Failed to post a job.", {
+            variant: "error",
+          });
+          setError("submit", {
+            type: "server",
+            message: err.message,
+          });
+          return null;
+        });
+    } catch (error) {
+      setError("submit", {
+        type: "server",
+        message: "Unable to connect to the server properly!!",
+      });
+    }
+  }
   useEffect(() => {
     fetch(`/api/categories/`, {
       method: "GET",
@@ -195,9 +264,6 @@ export default function PostJob() {
                     ))}
                   </select>
                 </div>
-                <div className="hidden">
-                  <input type="text" value={user} {...register("postedBy")} />
-                </div>
                 <Button
                   value={isSubmitting ? " Posting..." : "Post"}
                   onClick={null}
@@ -210,7 +276,6 @@ export default function PostJob() {
     </>
   );
 }
-
 export async function getServerSideProps(context) {
   return {
     props: {

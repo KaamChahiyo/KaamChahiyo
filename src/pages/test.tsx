@@ -45,7 +45,7 @@ export default function test({ locations, categories }) {
     setValues("");
   };
   return (
-    <div className="flex gap-5 justify-center">
+    <div className="flex gap-5 justify-center bg-blue-200">
       <div>
         <div className="flex items-center rounded-full">
           <div
@@ -64,10 +64,11 @@ export default function test({ locations, categories }) {
             onClick={handleInputClick}
           ></input>
         </div>
+
         <div className="flex gap-10">
           <div
-            className={`flex flex-col w-32 p-3 hover:cursor-pointer overflow-hidden ${
-              click ? "bg-white rounded-md" : ""
+            className={`flex flex-col w-32 h-20 p-3 hover:cursor-pointer overflow-hidden ${
+              click ? "bg-white" : ""
             }`}
           >
             {click ? (
@@ -81,7 +82,7 @@ export default function test({ locations, categories }) {
           </div>
           <div className="">
             <div
-              className={`rounded-lg flex flex-col h-60 overflow-auto ${
+              className={`rounded-b-lg flex flex-col h-60 overflow-auto ${
                 showInputOptions ? "block" : "hidden"
               }`}
             >
@@ -99,7 +100,7 @@ export default function test({ locations, categories }) {
                   <div
                     onClick={() => onSearch(selectOption)}
                     key={selectOption.id}
-                    className="flex bg-white text-black border-b px-3 py-2"
+                    className="flex bg-white text-black border-b px-3 py-2 w-60"
                   >
                     {selectOption.displayName}
                   </div>
