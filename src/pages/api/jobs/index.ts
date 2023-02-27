@@ -24,6 +24,11 @@ const handlePOST = async (res: NextApiResponse, req: NextApiRequest) => {
 
 const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
   const jobs = await prisma.job.findMany({
+    // where: {
+    //   NOT: {
+    //     assignedTo: null,
+    //   },
+    // },
     select: {
       id: true,
       title: true,
@@ -37,14 +42,6 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
         },
       },
       postedOn: true,
-      assignedTo: {
-        select: {
-          id: true,
-          name: true,
-          image: true,
-        },
-      },
-      assignedOn: true,
       Location: {
         select: {
           name: true,
