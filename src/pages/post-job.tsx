@@ -42,6 +42,20 @@ export default function PostJob() {
     category: "",
   };
 
+  const {
+    handleSubmit,
+    register,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  let defaultBody = {
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+  };
+
   useEffect(() => {
     if (!session) {
       router.replace("/login");
@@ -249,9 +263,6 @@ export default function PostJob() {
                       </option>
                     ))}
                   </select>
-                </div>
-                <div className="hidden">
-                  <input type="text" value={user} {...register("postedBy")} />
                 </div>
                 <Button
                   value={isSubmitting ? " Posting..." : "Post"}
