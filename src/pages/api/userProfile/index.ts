@@ -30,6 +30,7 @@ const handleViewUser = async (res, req) => {
       select: {
         id: true,
         name: true,
+        dob: true,
         email: true,
         bio: true,
         role: true,
