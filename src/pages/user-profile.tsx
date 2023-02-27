@@ -33,6 +33,21 @@ export default function Profile() {
     setUserName(e.target.value);
   };
 
+  const [userDOB, setUserDOB] = useState("");
+  const DOBChange = (e) => {
+    setUserName(e.target.value);
+  };
+
+  const [userAddress, setUserAddress] = useState("");
+  const AddressChange = (e) => {
+    setUserName(e.target.value);
+  };
+
+  const [userPhone, setUserPhone] = useState("");
+  const PhoneChange = (e) => {
+    setUserName(e.target.value);
+  };
+
   const [userBio, setUserBio] = useState("");
   const bioChange = (e) => {
     setUserBio(e.target.value);
@@ -57,6 +72,9 @@ export default function Profile() {
       .then((data) => {
         setUserEmail(data.email);
         setUserName(data.name);
+        setUserDOB(data.dob.substring(0, 10));
+        // setUserAddress(data.dob.substring(0, 10));
+        // setUserPhone(data.dobsubstring(0, 10));
         setUserBio(data.bio);
         setUserImage(data.image);
       });
@@ -92,7 +110,7 @@ export default function Profile() {
         <div className="w-3/4 ">
           <TabPanel hidden={selectedTab !== "profile-tab"}>
             <div className="p-10">
-              <div className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl h-[672px]">
+              <div className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl">
                 <div className="flex flex-col gap-3">
                   <p className="font-bold text-4xl text-center p-4">
                     Update your profile
@@ -130,6 +148,37 @@ export default function Profile() {
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
+                <div className="flex flex-col gap-1 text-gray-500">
+                  <label className="text-grey">Phone:</label>
+                  <input
+                    type="text"
+                    placeholder="981234567"
+                    value={userPhone}
+                    onChange={PhoneChange}
+                    className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
+                  />
+                </div>
+                <div className="flex flex-col gap-1 text-gray-500">
+                  <label className="text-grey">DOB:</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 1999-01-01"
+                    value={userDOB}
+                    onChange={DOBChange}
+                    className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
+                  />
+                </div>
+                <div className="flex flex-col gap-1 text-gray-500">
+                  <label className="text-grey">Permanent Address:</label>
+                  <input
+                    type="text"
+                    placeholder="Buddha-Chowk, Bharatpur-7"
+                    value={userAddress}
+                    onChange={AddressChange}
+                    className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
+                  />
+                </div>
+
                 <div className="flex flex-col gap-1 text-gray-500">
                   <label>Bio:</label>
                   <textarea
@@ -188,9 +237,7 @@ export default function Profile() {
                     </Link>
                   </div>
                   <Link passHref href="#">
-                    <button className="px-10 py-4 bg-teal-900 hover:bg-teal-700 rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline">
-                      Update
-                    </button>
+                    <Button value="Update"></Button>
                   </Link>
                 </div>
               </div>
