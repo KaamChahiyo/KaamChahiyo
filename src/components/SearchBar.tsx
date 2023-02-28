@@ -52,7 +52,8 @@ export default function test({ locations, categories }) {
             onClick={onClickChooseType}
             className="flex rounded-l-full w-40 bg-white p-3 px-6 hover:cursor-pointer"
           >
-            <div>{option + "  ▼"}</div>
+            <div className="w-24">{option}</div>
+            <div>∨</div>
           </div>
 
           <input
