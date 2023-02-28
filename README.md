@@ -8,7 +8,7 @@ KaamChahiyo- Final Year Project (FYP)
 
 ## Supervisor
 
--[@sushilsubedi](https://github.com/samratsuzil)
+- [@sushilsubedi](https://github.com/samratsuzil)
 
 ## Getting Started
 
