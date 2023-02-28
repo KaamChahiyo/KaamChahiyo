@@ -35,17 +35,20 @@ export default function Profile() {
 
   const [userDOB, setUserDOB] = useState("");
   const DOBChange = (e) => {
-    setUserName(e.target.value);
+    setUserDOB(e.target.value);
   };
 
-  const [userAddress, setUserAddress] = useState("");
-  const AddressChange = (e) => {
-    setUserName(e.target.value);
+  const [userPermAddress, setUserPermAddress] = useState("");
+  const permAddressChange = (e) => {
+    setUserPermAddress(e.target.value);
   };
-
+  const [userTempAddress, setUserTempAddress] = useState("");
+  const tempAddressChange = (e) => {
+    setUserTempAddress(e.target.value);
+  };
   const [userPhone, setUserPhone] = useState("");
   const PhoneChange = (e) => {
-    setUserName(e.target.value);
+    setUserPhone(e.target.value);
   };
 
   const [userBio, setUserBio] = useState("");
@@ -73,8 +76,9 @@ export default function Profile() {
         setUserEmail(data.email);
         setUserName(data.name);
         setUserDOB(data.dob.substring(0, 10));
-        // setUserAddress(data.dob.substring(0, 10));
-        // setUserPhone(data.dobsubstring(0, 10));
+        setUserPermAddress(data.permananetAddress);
+        setUserTempAddress(data.temporaryAddress);
+        setUserPhone(data.phoneNumber);
         setUserBio(data.bio);
         setUserImage(data.image);
       });
@@ -173,12 +177,21 @@ export default function Profile() {
                   <input
                     type="text"
                     placeholder="Buddha-Chowk, Bharatpur-7"
-                    value={userAddress}
-                    onChange={AddressChange}
+                    value={userPermAddress}
+                    onChange={permAddressChange}
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
-
+                <div className="flex flex-col gap-1 text-gray-500">
+                  <label className="text-grey">Temporary Address:</label>
+                  <input
+                    type="text"
+                    placeholder="Buddha-Chowk, Bharatpur-7"
+                    value={userTempAddress}
+                    onChange={tempAddressChange}
+                    className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
+                  />
+                </div>
                 <div className="flex flex-col gap-1 text-gray-500">
                   <label>Bio:</label>
                   <textarea
