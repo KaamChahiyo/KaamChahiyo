@@ -6,6 +6,10 @@ KaamChahiyo- Final Year Project (FYP)
 - [@acdepak](https://github.com/acdepak/)
 - [@sumanchalise](https://github.com/sumanchalise)
 
+## Supervisor
+
+- [@sushilsubedi](https://github.com/samratsuzil)
+
 ## Getting Started
 
 First, run the development server:
