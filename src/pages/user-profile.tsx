@@ -9,12 +9,16 @@ import { TabSelector } from "../components/TabSelector";
 import { PasswordIcon, ProfileIcon } from "../icons";
 import { authOptions } from "./api/auth/[...nextauth]";
 import Button from "../components/Button";
+import { formatDistance } from "date-fns";
 
 export default function Profile() {
   const [selectedTab, setSelectedTab] = useTabs([
     "profile-tab",
     "security-tab",
+    "posted-job",
+    "applied-job",
   ]);
+
   const { data: session } = useSession();
   const router = useRouter();
   useEffect(() => {
@@ -22,6 +26,9 @@ export default function Profile() {
       router.replace("/login");
     }
   }, [session]);
+
+  const { data: userData } = useSession();
+  const user = userData?.user;
 
   const [userEmail, setUserEmail] = useState("");
   const emailChange = (e) => {
@@ -84,6 +91,21 @@ export default function Profile() {
       });
   }, []);
 
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    fetch(`/api/jobs/`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.jobs);
+        setJobs(data.jobs);
+        // data.jobs.postedBy.id;
+      });
+  });
+
   return (
     <div className="container mt-20 flex flex-col gap-12 z-10">
       <div className="container flex lg:flex-row flex-col-reverse">
@@ -95,7 +117,7 @@ export default function Profile() {
             <div className="hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14 text-red rounded-full">
               <div className=" w-6 text-white">{ProfileIcon}</div>
             </div>
-            <div className="font-medium text-lg lg:text-2xl text-gray-600 flex items-center">
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
               Profile
             </div>
           </TabSelector>
@@ -106,10 +128,36 @@ export default function Profile() {
             <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
               <div className=" w-6 text-white">{PasswordIcon}</div>
             </div>
-            <div className="font-medium text-lg lg:text-2xl text-gray-600 flex items-center">
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
               Security
             </div>
           </TabSelector>
+          {/* applied job for both employer and employee */}
+          <TabSelector
+            isActive={selectedTab === "applied-job"}
+            onClick={() => setSelectedTab("applied-job")}
+          >
+            <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
+              <div className=" w-6 text-white">{PasswordIcon}</div>
+            </div>
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
+              Applied Job
+            </div>
+          </TabSelector>
+          {/* posted Job only for employer */}
+          {user?.["role"] === "employer" && (
+            <TabSelector
+              isActive={selectedTab === "posted-job"}
+              onClick={() => setSelectedTab("posted-job")}
+            >
+              <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
+                <div className=" w-6 text-white">{PasswordIcon}</div>
+              </div>
+              <div className="font-medium text-lg lg:text-2xl flex items-center">
+                Posted Job
+              </div>
+            </TabSelector>
+          )}
         </div>
         <div className="w-3/4 ">
           <TabPanel hidden={selectedTab !== "profile-tab"}>
@@ -256,16 +304,98 @@ export default function Profile() {
               </div>
             </div>
           </TabPanel>
+
+          <TabPanel hidden={selectedTab !== "applied-job"}>
+            {jobs
+              ?.filter((job) => job.assignedToId?.id === user?.["id"])
+              .map((job) => (
+                <div key={job?.id} className="p-1">
+                  <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
+                    <div className="font-bold text-xl p-2">{job?.title}</div>
+                    <div className="flex gap-4 italic p-3 m-auto items-center">
+                      <div>
+                        {/* {user?.["id"]} */}
+                        <Image
+                          src={job?.postedBy?.image}
+                          alt={job?.postedBy?.name}
+                          width={20}
+                          height={20}
+                          className="rounded-full"
+                        />
+                      </div>
+                      <div>{job?.postedBy?.name}</div>
+                      <div className="bg-blue-50 rounded-full px-3 ">
+                        {formatDistance(new Date(job.postedOn), new Date(), {
+                          addSuffix: true,
+                        })}
+                      </div>
+                      <div className="bg-blue-50 rounded-full px-3 ">
+                        {job.Category.displayName}
+                      </div>
+                    </div>
+                    <div className="jobDetail text-lg px-3 w-full">
+                      {job.description}
+                    </div>
+                    <div className="flex flex-col gap-3 pt-5">
+                      <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
+                        {job.Location.displayName}
+                      </div>
+                      <Link href={`jobs/${job.id}`}>
+                        <Button value="View Job" onClick={null} />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </TabPanel>
+
+          {user?.["role"] === "employer" && (
+            <TabPanel hidden={selectedTab !== "posted-job"}>
+              {jobs
+                ?.filter((job) => job.postedBy?.id === user?.["id"])
+                .map((job) => (
+                  <div key={job?.id} className="p-1">
+                    <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
+                      <div className="font-bold text-xl p-2">{job?.title}</div>
+                      <div className="flex gap-4 italic p-3 m-auto items-center">
+                        <div>
+                          {/* {user?.["id"]} */}
+                          <Image
+                            src={job?.postedBy?.image}
+                            alt={job?.postedBy?.name}
+                            width={20}
+                            height={20}
+                            className="rounded-full"
+                          />
+                        </div>
+                        <div>{job?.postedBy?.name}</div>
+                        <div className="bg-blue-50 rounded-full px-3 ">
+                          {formatDistance(new Date(job.postedOn), new Date(), {
+                            addSuffix: true,
+                          })}
+                        </div>
+                        <div className="bg-blue-50 rounded-full px-3 ">
+                          {job.Category.displayName}
+                        </div>
+                      </div>
+                      <div className="jobDetail text-lg px-3 w-full">
+                        {job.description}
+                      </div>
+                      <div className="flex flex-col gap-3 pt-5">
+                        <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
+                          {job.Location.displayName}
+                        </div>
+                        <Link href={`jobs/${job.id}`}>
+                          <Button value="View Job" onClick={null} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </TabPanel>
+          )}
         </div>
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      session: await getServerSession(context.req, context.res, authOptions),
-    },
-  };
 }
