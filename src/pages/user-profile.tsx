@@ -6,7 +6,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { TabPanel, useTabs } from "react-headless-tabs";
 import { TabSelector } from "../components/TabSelector";
-import { PasswordIcon, ProfileIcon } from "../icons";
+import {
+  AppliedJobIcon,
+  PasswordIcon,
+  PostedJobIcon,
+  ProfileIcon,
+} from "../icons";
 import { authOptions } from "./api/auth/[...nextauth]";
 import Button from "../components/Button";
 import { formatDistance } from "date-fns";
@@ -138,7 +143,7 @@ export default function Profile() {
             onClick={() => setSelectedTab("applied-job")}
           >
             <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
-              <div className=" w-6 text-white">{PasswordIcon}</div>
+              <div className=" w-6 text-white">{AppliedJobIcon}</div>
             </div>
             <div className="font-medium text-lg lg:text-2xl flex items-center">
               Applied Job
@@ -151,7 +156,7 @@ export default function Profile() {
               onClick={() => setSelectedTab("posted-job")}
             >
               <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
-                <div className=" w-6 text-white">{PasswordIcon}</div>
+                <div className=" w-6 text-white">{PostedJobIcon}</div>
               </div>
               <div className="font-medium text-lg lg:text-2xl flex items-center">
                 Posted Job
