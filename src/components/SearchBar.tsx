@@ -69,7 +69,7 @@ export default function test({ locations, categories }) {
         <div className="flex gap-10">
           <div
             className={`flex flex-col w-32 h-20 p-3 rounded-b-lg hover:cursor-pointer overflow-hidden ${
-              click ? "bg-white" : ""
+              click && "bg-white"
             }`}
           >
             {click ? (
