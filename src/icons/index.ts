@@ -19,3 +19,5 @@ export * from "./ExclamationIcon";
 export * from "./CrossIcon";
 export * from "./InProgressIcon";
 export * from "./CompletedIcon";
+export * from "./AppliedJobIcon";
+export * from "./PostedJobIcon";
