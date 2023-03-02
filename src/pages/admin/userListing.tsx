@@ -41,7 +41,8 @@ export default function userListing() {
   const [bio, setBio] = useState("");
   const [role, setRole] = useState("");
   const [status, setStatus] = useState("");
-  const [address, setAddress] = useState("");
+  const [permAddress, setPermAddress] = useState("");
+  const [tempAddress, setTempAddress] = useState("");
   const [phone, setPhone] = useState("");
 
   useEffect(() => {
@@ -52,6 +53,9 @@ export default function userListing() {
       setBio(selectedUser.bio);
       setRole(selectedUser.role);
       setStatus(selectedUser.status);
+      setPermAddress(selectedUser.permananetAddress);
+      setTempAddress(selectedUser.temporaryAddress);
+      setPhone(selectedUser.phoneNumber);
     }
   }, [selectedUserId]);
 
@@ -75,11 +79,11 @@ export default function userListing() {
   const changeEmail = (e) => {
     setEmail(e.target.value);
   };
-  // const changeStatus = (e) => {
-  //   setStatus(e.target.value);
-  // };
-  const changeAddress = (e) => {
-    setAddress(e.target.value);
+  const changePermAddress = (e) => {
+    setPermAddress(e.target.value);
+  };
+  const changeTempAddress = (e) => {
+    setTempAddress(e.target.value);
   };
   const changePhone = (e) => {
     setPhone(e.target.value);
@@ -184,12 +188,27 @@ export default function userListing() {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <SubHeading subTitle="ADDRESS: " />
+                  <SubHeading subTitle="Permanent Address: " />
 
                   <input
                     type="address"
-                    value={address}
-                    onChange={changeAddress}
+                    value={permAddress}
+                    onChange={changePermAddress}
+                    readOnly={editMode ? false : true}
+                    className={
+                      editMode
+                        ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
+                        : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
+                    }
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <SubHeading subTitle="Temporary Address: " />
+
+                  <input
+                    type="address"
+                    value={tempAddress}
+                    onChange={changeTempAddress}
                     readOnly={editMode ? false : true}
                     className={
                       editMode

@@ -16,3 +16,8 @@ export * from "./PasswordIcon";
 export * from "./ProfileIcon";
 export * from "./TickIcon";
 export * from "./ExclamationIcon";
+export * from "./CrossIcon";
+export * from "./InProgressIcon";
+export * from "./CompletedIcon";
+export * from "./AppliedJobIcon";
+export * from "./PostedJobIcon";

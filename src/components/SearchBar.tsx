@@ -52,7 +52,8 @@ export default function test({ locations, categories }) {
             onClick={onClickChooseType}
             className="flex rounded-l-full w-40 bg-white p-3 px-6 hover:cursor-pointer"
           >
-            <div>{option + "  ▼"}</div>
+            <div className="w-24">{option}</div>
+            <div>∨</div>
           </div>
 
           <input
@@ -68,7 +69,7 @@ export default function test({ locations, categories }) {
         <div className="flex gap-10">
           <div
             className={`flex flex-col w-32 h-20 p-3 rounded-b-lg hover:cursor-pointer overflow-hidden ${
-              click ? "bg-white" : ""
+              click && "bg-white"
             }`}
           >
             {click ? (
