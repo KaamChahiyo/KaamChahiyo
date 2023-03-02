@@ -12,7 +12,6 @@ function TopEmployees() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.users);
         setUsers(data.users);
       });
   }, []);
