@@ -195,6 +195,9 @@ export default function PostJob() {
                     ))}
                   </select>
                 </div>
+                <div className="hidden">
+                  <input type="hidden" {...register("postedBy")} value={user} />
+                </div>
                 <Button
                   value={isSubmitting ? " Posting..." : "Post"}
                   onClick={null}

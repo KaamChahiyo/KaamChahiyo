@@ -11,7 +11,11 @@ export const TabSelector = ({
 }) => (
   <div>
     <div
-      className="hidden lg:flex lg:bg-gray-50 w-5/6 p-2 gap-0 lg:gap-5 rounded-md cursor-pointer"
+      className={`hidden group lg:flex lg:bg-gray-50 w-5/6 p-2 gap-0 lg:gap-5 rounded-md cursor-pointer ${
+        isActive
+          ? "lg:bg-blue-400 lg:text-white text-white"
+          : "lg:bg-gray-100 text-gray-600"
+      }`}
       onClick={onClick}
     >
       {children}
