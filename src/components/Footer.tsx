@@ -29,7 +29,7 @@ export default function Footer() {
           </div>
           <div>
             <div className="font-bold">CATEGORIES</div>
-            <div className="text-lg">
+            <div className="text-lg w-fit">
               <Link passHref href={`/jobs/?${searchDomain}=${"plumber"}`}>
                 <ul className="hover:text-blue-300">Plumber</ul>
               </Link>
@@ -46,7 +46,7 @@ export default function Footer() {
           </div>
           <div>
             <div className="font-bold">QUICKLINKS</div>
-            <div className="text-lg">
+            <div className="text-lg w-fit">
               <Link passHref href="/">
                 <ul className="hover:text-blue-300">Home</ul>
               </Link>
@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
           <div>
             <div className="font-bold">LOCATION</div>
-            <div className="text-lg">
+            <div className="text-lg w-fit">
               <Link passHref href="#">
                 <ul className="hover:text-blue-300">Map Of Location</ul>
               </Link>

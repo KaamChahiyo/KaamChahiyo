@@ -8,7 +8,13 @@ import { TabSelector } from "../../components/TabSelector";
 import Button from "../../components/Button";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { formatDistance } from "date-fns";
-import { ExclamationIcon, TickIcon } from "../../icons";
+import {
+  CompletedIcon,
+  CrossIcon,
+  ExclamationIcon,
+  InProgressIcon,
+  TickIcon,
+} from "../../icons";
 
 export default function approveJob() {
   const [job, setJob] = useState([]);
@@ -30,6 +36,10 @@ export default function approveJob() {
   const [selectedTab, setSelectedTab] = useTabs([
     "Approved",
     "PendingApproval",
+    "Rejected",
+    "Completed",
+    "Cancelled",
+    "inProgress",
   ]);
 
   const { data: session } = useSession();
@@ -43,7 +53,7 @@ export default function approveJob() {
   }, [session]);
 
   return (
-    <div className="flex flex-col justify-center ">
+    <div className="flex flex-col justify-center">
       <div className="flex ">
         <div className="flex flex-row lg:flex-col w-1/5 gap-3 m-10">
           <TabSelector
@@ -53,7 +63,7 @@ export default function approveJob() {
             <div className="hidden lg:flex justify-center items-center bg-[#0064f1] p-3 w-14 h-14 text-red rounded-full">
               <div className="w-12 text-white">{TickIcon}</div>
             </div>
-            <div className="font-medium text-lg lg:text-2xl text-gray-600 flex items-center">
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
               Approved
             </div>
           </TabSelector>
@@ -64,16 +74,60 @@ export default function approveJob() {
             <div className="hidden lg:flex justify-center bg-[#0064f1] items-center p-3 w-14 h-14 text-red rounded-full">
               <div className="w-12 text-white">{ExclamationIcon}</div>
             </div>
-            <div className="font-medium text-lg lg:text-2xl text-gray-600 flex items-center">
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
               Pending Approval
             </div>
           </TabSelector>
+          <TabSelector
+            isActive={selectedTab === "Rejected"}
+            onClick={() => setSelectedTab("Rejected")}
+          >
+            <div className="hidden lg:flex justify-center items-center bg-[#0064f1] p-3 w-14 h-14 text-red rounded-full">
+              <div className="w-12 text-white">{CrossIcon}</div>
+            </div>
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
+              Rejected
+            </div>
+          </TabSelector>
+          <TabSelector
+            isActive={selectedTab === "Completed"}
+            onClick={() => setSelectedTab("Completed")}
+          >
+            <div className="hidden lg:flex justify-center items-center bg-[#0064f1] p-3 w-14 h-14 text-red rounded-full">
+              <div className="w-12 text-white">{CompletedIcon}</div>
+            </div>
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
+              Completed
+            </div>
+          </TabSelector>
+          <TabSelector
+            isActive={selectedTab === "Cancelled"}
+            onClick={() => setSelectedTab("Cancelled")}
+          >
+            <div className="hidden lg:flex justify-center items-center bg-[#0064f1] p-3 w-14 h-14 text-red rounded-full">
+              <div className="w-12 text-white">{CrossIcon}</div>
+            </div>
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
+              Cancelled
+            </div>
+          </TabSelector>
+          <TabSelector
+            isActive={selectedTab === "inProgress"}
+            onClick={() => setSelectedTab("inProgress")}
+          >
+            <div className="hidden lg:flex justify-center bg-[#0064f1] items-center p-3 w-14 h-14 text-red rounded-full">
+              <div className="w-12 text-white">{InProgressIcon}</div>
+            </div>
+            <div className="font-medium text-lg lg:text-2xl  flex items-center">
+              InProgress
+            </div>
+          </TabSelector>
         </div>
-        <div className="w-3/4">
+        <div className="w-3/4 mt-10">
           <TabPanel hidden={selectedTab !== "Approved"}>
             <div className="flex flex-col gap-4 w-3/4">
               {job
-                .filter((job) => job.status === "Approved")
+                .filter((job) => job.status === "approved")
                 .map((job) => {
                   return (
                     <div key={job.id} className="p-1">
@@ -106,7 +160,11 @@ export default function approveJob() {
                         <div className="jobDetail text-lg px-3 w-full">
                           {job.description}
                         </div>
-                        <div className="flex flex-col gap-3 pt-5">
+                        <div className="flex flex-col gap-3 pt-5 px-3">
+                          <div>
+                            <span className="font-semibold">Price:</span> &#160;{" "}
+                            {job.price}
+                          </div>
                           <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                             {job.Location.displayName}
                           </div>
@@ -153,11 +211,226 @@ export default function approveJob() {
                         <div className="jobDetail text-lg px-3 w-full">
                           {job.description}
                         </div>
-                        <div className="flex flex-col gap-3 pt-5 ">
+                        <div className="flex flex-col gap-3 pt-5 px-3 ">
+                          <div>
+                            <span className="font-semibold">Price:</span> &#160;{" "}
+                            {job.price}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
+                            {job.Location.displayName}
+                          </div>
+                          <div className="flex gap-2">
+                            <Button value="Approve" onClick={null} />
+                            <Button value="Reject" onClick={null} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </TabPanel>
+          <TabPanel hidden={selectedTab !== "Rejected"}>
+            <div className="flex flex-col gap-4 w-3/4">
+              {job
+                .filter((job) => job.status === "rejected")
+                .map((job) => {
+                  return (
+                    <div key={job.id} className="p-1">
+                      <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
+                        <div className="font-bold text-xl p-2">{job.title}</div>
+                        <div className="flex gap-4 italic p-3 m-auto items-center">
+                          <div>
+                            <Image
+                              src={job?.postedBy?.image}
+                              alt={job?.postedBy?.name}
+                              width={20}
+                              height={20}
+                              className="rounded-full"
+                            />
+                          </div>
+                          <div>{job.postedBy.name}</div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {formatDistance(
+                              new Date(job.postedOn),
+                              new Date(),
+                              {
+                                addSuffix: true,
+                              }
+                            )}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {job.Category.displayName}
+                          </div>
+                        </div>
+                        <div className="jobDetail text-lg px-3 w-full">
+                          {job.description}
+                        </div>
+                        <div className="flex flex-col gap-3 pt-5 px-3">
+                          <div>
+                            <span className="font-semibold">Price:</span> &#160;{" "}
+                            {job.price}
+                          </div>
                           <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                             {job.Location.displayName}
                           </div>
                           <Button value="Approve" onClick={null} />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </TabPanel>
+          <TabPanel hidden={selectedTab !== "Completed"}>
+            <div className="flex flex-col gap-4 w-3/4">
+              {job
+                .filter((job) => job.status === "completed")
+                .map((job) => {
+                  return (
+                    <div key={job.id} className="p-1 gap-3">
+                      <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
+                        <div className="font-bold text-xl p-2">{job.title}</div>
+                        <div className="flex gap-4 italic p-3 m-auto items-center">
+                          <div>
+                            <Image
+                              src={job?.postedBy?.image}
+                              alt={job?.postedBy?.name}
+                              width={20}
+                              height={20}
+                              className="rounded-full"
+                            />
+                          </div>
+                          <div>{job.postedBy.name}</div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {formatDistance(
+                              new Date(job.postedOn),
+                              new Date(),
+                              {
+                                addSuffix: true,
+                              }
+                            )}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {job.Category.displayName}
+                          </div>
+                        </div>
+                        <div className="jobDetail text-lg px-3 w-full">
+                          {job.description}
+                        </div>
+                        <div className="flex flex-col gap-3 pt-5 px-3">
+                          <div>
+                            <span className="font-semibold">Price:</span> &#160;{" "}
+                            {job.price}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
+                            {job.Location.displayName}
+                          </div>
+                          {/* <Button value="Approve" onClick={null} /> */}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </TabPanel>
+          <TabPanel hidden={selectedTab !== "Cancelled"}>
+            <div className="flex flex-col gap-4 w-3/4">
+              {job
+                .filter((job) => job.status === "cancelled")
+                .map((job) => {
+                  return (
+                    <div key={job.id} className="p-1 gap-3">
+                      <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
+                        <div className="font-bold text-xl p-2">{job.title}</div>
+                        <div className="flex gap-4 italic p-3 m-auto items-center">
+                          <div>
+                            <Image
+                              src={job?.postedBy?.image}
+                              alt={job?.postedBy?.name}
+                              width={20}
+                              height={20}
+                              className="rounded-full"
+                            />
+                          </div>
+                          <div>{job.postedBy.name}</div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {formatDistance(
+                              new Date(job.postedOn),
+                              new Date(),
+                              {
+                                addSuffix: true,
+                              }
+                            )}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {job.Category.displayName}
+                          </div>
+                        </div>
+                        <div className="jobDetail text-lg px-3 w-full">
+                          {job.description}
+                        </div>
+                        <div className="flex flex-col gap-3 pt-5 px-3 ">
+                          <div>
+                            <span className="font-semibold">Price:</span> &#160;{" "}
+                            {job.price}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
+                            {job.Location.displayName}
+                          </div>
+                          <Button value="Approve" onClick={null} />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </TabPanel>
+          <TabPanel hidden={selectedTab !== "inProgress"}>
+            <div className="flex flex-col gap-4 w-3/4">
+              {job
+                .filter((job) => job.status === "inProgress")
+                .map((job) => {
+                  return (
+                    <div key={job.id} className="p-1 gap-3">
+                      <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
+                        <div className="font-bold text-xl p-2">{job.title}</div>
+                        <div className="flex gap-4 italic p-3 m-auto items-center">
+                          <div>
+                            <Image
+                              src={job?.postedBy?.image}
+                              alt={job?.postedBy?.name}
+                              width={20}
+                              height={20}
+                              className="rounded-full"
+                            />
+                          </div>
+                          <div>{job.postedBy.name}</div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {formatDistance(
+                              new Date(job.postedOn),
+                              new Date(),
+                              {
+                                addSuffix: true,
+                              }
+                            )}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {job.Category.displayName}
+                          </div>
+                        </div>
+                        <div className="jobDetail text-lg px-3 w-full">
+                          {job.description}
+                        </div>
+                        <div className="flex flex-col gap-3 pt-5 px-3">
+                          <div>
+                            <span className="font-semibold">Price:</span> &#160;{" "}
+                            {job.price}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
+                            {job.Location.displayName}
+                          </div>
+                          {/* <Button value="Approve" onClick={null} /> */}
                         </div>
                       </div>
                     </div>
