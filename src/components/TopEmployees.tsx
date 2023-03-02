@@ -1,80 +1,53 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function TopEmployees() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch(`/api/users`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.users);
+        setUsers(data.users);
+      });
+  }, []);
   return (
     <div className="flex flex-col flex-wrap items-center gap-y-8">
       <div className="flex justify-center font-bold text-2xl py-4">
         Top Employees
       </div>
-      <div className="flex flex-wrap gap-10 justify-center ">
-        <TopEmployee
-          avatarURL="/assets/img/profile-image.png"
-          employeeName="Ananta Raj Mishra"
-          employeeDescription="Hello I am top employee. I did many good jobs so I became top
-employee."
-          employeeTag="Software Engineer"
-          link="#"
-        />
-        <TopEmployee
-          avatarURL="/assets/img/profile-image.png"
-          employeeName="Suman Chalise"
-          employeeDescription="Hello I am top employee. I did many good jobs so I became top
-employee."
-          employeeTag="Software Engineer"
-          link="#"
-        />
-        <TopEmployee
-          avatarURL="/assets/img/profile-image.png"
-          employeeName="Deepak Acharya"
-          employeeDescription="Hello I am top employee. I did many good jobs so I became top
-employee."
-          employeeTag="Software Engineer"
-          link="#"
-        />
+      <div className="flex gap-10">
+        {users?.slice(0, 3).map((user) => {
+          return (
+            <div
+              key={user.id}
+              className="flex flex-col container shadow hover:shadow-lg hover:shadow-blue-100 border 
+        border-gray-200 hover:border-cyan-600 gap-4 p-10 rounded-lg w-96"
+            >
+              <div className="flex flex-col gap-2 justify-center items-center">
+                <div className="h-20 w-20 relative rounded-full overflow-hidden ">
+                  <Image src={user.image} alt={user.name} fill />
+                </div>
+                <div className="text-lg text-center font-bold">{user.name}</div>
+              </div>
+              <div className="flex flex-col justify-center items-center text-center gap-2">
+                <div className="text-lg">{user.bio}</div>
+                {/* <div className="flex">
+                <div key="" className="rounded-2xl bg-slate-100 p-2 text-sm">
+                  {""}
+                </div>
+              </div> */}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 export default TopEmployees;
-
-const TopEmployee = ({
-  avatarURL,
-  employeeName,
-  employeeDescription,
-  employeeTag,
-  link,
-}: {
-  avatarURL: string;
-  employeeName: string;
-  employeeDescription: string;
-  employeeTag: string;
-  link: string;
-}) => {
-  return (
-    <>
-      <Link
-        passHref
-        href={link}
-        className="flex flex-col container shadow hover:shadow-lg hover:shadow-blue-100 border 
-        border-gray-200 hover:border-cyan-600 gap-4 p-10 rounded-lg w-96"
-      >
-        <div className="flex flex-col gap-2 justify-center items-center">
-          <div className="h-20 w-20 relative rounded-full overflow-hidden ">
-            <Image src={avatarURL} alt="Profile Image" fill />
-          </div>
-          <div className="text-lg text-center font-bold">{employeeName}</div>
-        </div>
-        <div className="flex flex-col justify-center items-center text-center gap-2">
-          <div className="text-lg">{employeeDescription}</div>
-          <div className="flex">
-            <div key="" className="rounded-2xl bg-slate-100 p-2 text-sm">
-              {employeeTag}
-            </div>
-          </div>
-        </div>
-      </Link>
-    </>
-  );
-};
