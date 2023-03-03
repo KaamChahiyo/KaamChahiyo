@@ -105,7 +105,7 @@ export default function Profile() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.jobs);
+        // console.log(data.jobs);
         setJobs(data.jobs);
         // data.jobs.postedBy.id;
       });
@@ -359,40 +359,50 @@ export default function Profile() {
               {jobs
                 ?.filter((job) => job.postedBy?.id === user?.["id"])
                 .map((job) => (
-                  <div key={job?.id} className="p-1">
-                    <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
-                      <div className="font-bold text-xl p-2">{job?.title}</div>
-                      <div className="flex gap-4 italic p-3 m-auto items-center">
-                        <div>
-                          {/* {user?.["id"]} */}
-                          <Image
-                            src={job?.postedBy?.image}
-                            alt={job?.postedBy?.name}
-                            width={20}
-                            height={20}
-                            className="rounded-full"
-                          />
+                  <div className="flex justify-center items-center">
+                    <div key={job.id} className="w-full p-1">
+                      <div className=" shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
+                        <div className="font-bold text-xl p-2">{job.title}</div>
+                        <div className="flex gap-4 italic p-3 m-auto items-center">
+                          <div>
+                            <Image
+                              src={job?.postedBy?.image}
+                              alt={job?.postedBy?.name}
+                              width={20}
+                              height={20}
+                              className="rounded-full"
+                            />
+                          </div>
+                          <div>{job.postedBy.name}</div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {formatDistance(
+                              new Date(job.postedOn),
+                              new Date(),
+                              {
+                                addSuffix: true,
+                              }
+                            )}{" "}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {job.Category.displayName}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 ">
+                            {job.status}
+                          </div>
                         </div>
-                        <div>{job?.postedBy?.name}</div>
-                        <div className="bg-blue-50 rounded-full px-3 ">
-                          {formatDistance(new Date(job.postedOn), new Date(), {
-                            addSuffix: true,
-                          })}
+                        <div className="jobDetail text-lg px-3 w-full">
+                          {job.description}
                         </div>
-                        <div className="bg-blue-50 rounded-full px-3 ">
-                          {job.Category.displayName}
+                        <div className="flex flex-col gap-3 pl-3">
+                          <div className="flex pt-5">
+                            <span className="font-semibold">Price:</span> &#160;
+                            {job.price}
+                          </div>
+                          <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
+                            {job.Location.displayName}
+                          </div>
+                          <Button value="Delete" />
                         </div>
-                      </div>
-                      <div className="jobDetail text-lg px-3 w-full">
-                        {job.description}
-                      </div>
-                      <div className="flex flex-col gap-3 pt-5">
-                        <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
-                          {job.Location.displayName}
-                        </div>
-                        <Link href={`jobs/${job.id}`}>
-                          <Button value="View Job" onClick={null} />
-                        </Link>
                       </div>
                     </div>
                   </div>

@@ -1,7 +1,24 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function WorkingMethod() {
+  const { data: userData } = useSession();
+  const user = userData?.user;
+  const [description, setDescription] = useState("");
+  const [link, setLink] = useState("");
+
+  let hello = user?.["role"];
+
+  useEffect(() => {
+    if (hello == "employer") {
+      setDescription("Post Job");
+      setLink("/post-job");
+    } else {
+      setDescription("Apply for Job");
+      setLink("/jobs");
+    }
+  }, []);
   return (
     <div className="flex flex-col container m-auto w-full justify-center gap-10 mb-16">
       <div className="text-2xl text-center font-bold">Working Procedure</div>
@@ -12,11 +29,12 @@ export default function WorkingMethod() {
           description={"Register, Get Verified and Login to KaamChahiyo"}
           link="/signup"
         />
+
         <Method
           step="2"
-          name={"Post / Apply for Job "}
-          description={"Post Job or Apply for Job as per your need."}
-          link="/post-job"
+          name={description}
+          description={description}
+          link={link}
         />
         <Method
           step="3"
