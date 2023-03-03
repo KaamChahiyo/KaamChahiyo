@@ -19,19 +19,15 @@ const hashPassword = (password: string) => {
 };
 
 async function handlePOST(res: NextApiResponse, req: NextApiRequest) {
-  const user = await prisma.user.findUnique({
-    where: { email: req.body.email },
+  const user = await prisma.user.findFirst({
+    where: { email: req.body.username },
     select: {
       id: true,
       name: true,
       email: true,
       password: true,
-      bio: true,
       role: true,
       image: true,
-      createdAt: true,
-      updatedAt: true,
-      deletedAt: true,
     },
   });
   if (user && user.password == hashPassword(req.body.password)) {

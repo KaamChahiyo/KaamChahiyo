@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prismadb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-import { omit } from "lodash";
+
 
 export default async function handle(
   req: NextApiRequest,
@@ -10,7 +10,9 @@ export default async function handle(
 ) {
   if (req.method === "GET") {
     await handleGET(res, req);
-  } else {
+  }
+
+  else {
     res.setHeader("Allow", "GET");
     res.status(405).json({ message: "Method not found." });
   }
@@ -20,7 +22,7 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
   if (!session) {
     res.status(401).json({ message: "Unauthorized" });
   } else {
-    if ((session.user["role"] = "admin")) {
+    if (session.user["role"] = "admin") {
       const users = await prisma.user.findMany({
         where: {},
         select: {
