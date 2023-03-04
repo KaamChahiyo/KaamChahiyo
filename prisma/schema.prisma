@@ -126,8 +126,8 @@ model Job {
   postedById   String
   postedOn     DateTime         @default(now())
   assignedTo   User?            @relation("Assigned", fields: [assignedToId], references: [id])
-  assignedToId String?
-  assignedOn   DateTime?
+  assignedToId String?         
+  assignedOn   DateTime?   
   Category     Category         @relation(fields: [categoryId], references: [id])
   categoryId   String
   Location     Location         @relation(fields: [locationId], references: [id])
