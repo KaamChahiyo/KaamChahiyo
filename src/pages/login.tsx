@@ -3,7 +3,6 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { authOptions } from "./api/auth/[...nextauth]";
@@ -17,28 +16,11 @@ export default function Login() {
     formState: { isSubmitting },
   } = useForm();
 
-  let defaultBody = {
-    grant_type: "",
-    username: "",
-    password: "",
-    scope: "",
-    client_id: "",
-    client_secret: "",
-  };
-  const { enqueueSnackbar } = useSnackbar();
-
   async function onSubmit(values) {
-    try {
-      const body = { ...defaultBody, ...values };
-      await signIn("credentials", {
-        ...body,
-        callbackUrl: router.query.callbackUrl,
-      });
-    } catch (error) {
-      enqueueSnackbar("Login failed", {
-        variant: "error",
-      });
-    }
+    const res = await signIn("credentials", {
+      ...values,
+      callbackUrl: router.query.callbackUrl
+    });
   }
 
   useEffect(() => {
@@ -46,6 +28,7 @@ export default function Login() {
       router.replace("/");
     }
   }, [session]);
+
 
   return (
     <>
@@ -65,7 +48,7 @@ export default function Login() {
                     Email
                   </label>
                   <input
-                    {...register("email")}
+                    {...register("username")}
                     type="email"
                     placeholder="Email"
                     className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
@@ -84,7 +67,6 @@ export default function Login() {
                 </div>
                 <button
                   type="submit"
-                  onClick={() => signIn("credentials")}
                   className="px-9 py-4 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold sm:w-full focus:outline-none focus:shadow-outline"
                 >
                   {isSubmitting ? <>Signing In</> : <>Sign In</>}

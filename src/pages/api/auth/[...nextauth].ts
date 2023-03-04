@@ -16,12 +16,12 @@ export const authOptions: NextAuthOptions = {
     signOut: "/logout",
   },
   callbacks: {
-    async session({ session, user }) {
+    async session({ session, token }) {
       if (session?.user) {
-        session.user["id"] = user.id;
+        session.user["id"] = token.sub;
         const updatedUser = await prisma.user.findUnique({
           where: {
-            id: user.id,
+            id: token.sub,
           },
           select: {
             role: true,
@@ -33,6 +33,9 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token }) {
       return token;
+    },
+    async signIn() {
+      return true;
     },
   },
   providers: [
@@ -71,6 +74,7 @@ export const authOptions: NextAuthOptions = {
             return null;
           });
         if (user) {
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>User", user);
           return user;
         } else {
           return null;
@@ -78,6 +82,10 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  session: {
+    // Set to jwt in order to CredentialsProvider works properly
+    strategy: "jwt",
+  },
 };
 
 export default NextAuth(authOptions);
