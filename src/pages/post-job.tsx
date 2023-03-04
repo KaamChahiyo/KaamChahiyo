@@ -120,7 +120,7 @@ export default function PostJob() {
                     Category
                   </label>
                   <select
-                    {...register("Category")}
+                    {...register("categoryId")}
                     className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
                   >
                     <option value="select">Select</option>
@@ -139,7 +139,7 @@ export default function PostJob() {
                     Location
                   </label>
                   <select
-                    {...register("Location")}
+                    {...register("locationId")}
                     id="location-select"
                     className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md max-h-32 overflow-y-auto"
                   >
