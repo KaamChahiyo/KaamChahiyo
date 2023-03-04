@@ -74,7 +74,6 @@ export const authOptions: NextAuthOptions = {
             return null;
           });
         if (user) {
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>User", user);
           return user;
         } else {
           return null;
