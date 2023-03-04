@@ -29,7 +29,6 @@ export default function Users() {
       .then((data) => {
         console.log(data.users);
         setUsers(data.users);
-
       });
   }, []);
 
@@ -37,7 +36,7 @@ export default function Users() {
     handleSubmit,
     register,
     setValue,
-    formState: { isSubmitting }
+    formState: { isSubmitting },
   } = useForm({
     defaultValues: {
       name: "",
@@ -46,11 +45,9 @@ export default function Users() {
       bio: "",
       temporaryAddress: "",
       permananetAddress: "",
-      phoneNumber: ""
-    }
-  }
-  );
-
+      phoneNumber: "",
+    },
+  });
 
   const [selectedUserId, setSelectedUserId] = useState(null);
 
@@ -59,29 +56,29 @@ export default function Users() {
   const [role, setRole] = useState("");
   const [status, setStatus] = useState("");
 
-
   useEffect(() => {
     if (selectedUserId) {
       const selected_user = users.find((user) => user.id === selectedUserId);
-      setValue('name', selected_user.name);
-      setValue('bio', selected_user.bio);
-      setValue('dob', selected_user.dob.substring(0, 10));
-      setValue('email', selected_user.email);
-      setValue('temporaryAddress', selected_user.temporaryAddress);
-      setValue('permananetAddress', selected_user.permananetAddress);
-      setValue('phoneNumber', selected_user.phoneNumber);
+      setValue("name", selected_user.name);
+      setValue("bio", selected_user.bio);
+      setValue("dob", selected_user.dob.substring(0, 10));
+      setValue("email", selected_user.email);
+      setValue("temporaryAddress", selected_user.temporaryAddress);
+      setValue("permananetAddress", selected_user.permananetAddress);
+      setValue("phoneNumber", selected_user.phoneNumber);
       setSelectedUser(selected_user);
+      setRole(selected_user.role);
+      setStatus(selected_user.status);
     }
   }, [selectedUserId]);
+
   useEffect(() => {
-
-    console.log(selectedUser)
-
+    console.log(selectedUser);
   }, [selectedUser]);
 
   async function onSubmit(data, e) {
     try {
-      console.log(data);
+      // console.log(data);
       await fetch(`/api/users/${selectedUserId}`, {
         method: "PUT",
         headers: {
@@ -90,9 +87,8 @@ export default function Users() {
         },
         body: JSON.stringify({ ...data, dob: new Date(data.dob) }),
       });
-    }
-    catch (error) {
-      null
+    } catch (error) {
+      null;
     }
   }
 
@@ -108,7 +104,6 @@ export default function Users() {
                   className="flex flex-wrap gap-3 p-3 bg-gray-50 hover:bg-blue-200 text-gray-800 hover:text-black"
                   onClick={() => {
                     setSelectedUserId(user.id);
-
                   }}
                 >
                   <div className="h-12 w-12  relative rounded-full overflow-hidden">
@@ -124,7 +119,7 @@ export default function Users() {
       <div className="flex flex-col items-center sm:w-1/2 rounded-xl shadow-xl">
         <div className="font-semibold text-3xl p-3 ">USER DETAILS</div>
         <div className="flex flex-col gap-1 text-lg sm:w-9/12">
-          {selectedUser ? (
+          {selectedUser && (
             <div key={selectedUser.id}>
               <div className="flex flex-col gap-2 p-3 w-full">
                 <div className="flex gap-8">
@@ -142,16 +137,19 @@ export default function Users() {
                     <div className="bg-blue-50 rounded-full px-3">{role}</div>
                   </div>
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2" >
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="flex flex-col gap-2"
+                >
                   <div className="flex flex-col gap-1">
                     <SubHeading subTitle="NAME: " />
 
                     <input
                       type="text"
                       {...register("name")}
-
                       className={
-                        "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "}
+                        "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
+                      }
                     />
                   </div>
 
@@ -161,7 +159,6 @@ export default function Users() {
                     <input
                       type="date"
                       {...register("dob")}
-
                       className={
                         "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
@@ -172,7 +169,6 @@ export default function Users() {
                     <input
                       type="email"
                       {...register("email")}
-
                       className={
                         "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
@@ -184,8 +180,6 @@ export default function Users() {
                     <input
                       type="address"
                       {...register("permananetAddress")}
-
-
                       className={
                         "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
@@ -197,7 +191,6 @@ export default function Users() {
                     <input
                       type="address"
                       {...register("temporaryAddress")}
-
                       className={
                         "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
@@ -209,9 +202,7 @@ export default function Users() {
                     <input
                       type="number"
                       {...register("phoneNumber")}
-
                       className={
-
                         "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
                     />
@@ -223,7 +214,6 @@ export default function Users() {
                       {...register("bio")}
                       rows={5}
                       className={
-
                         "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
                     />
@@ -236,10 +226,6 @@ export default function Users() {
                   </button>
                 </form>
               </div>
-            </div>
-          ) : (
-            <div className="text-center ">
-              Click the user to show their details
             </div>
           )}
         </div>
