@@ -1,10 +1,12 @@
-import { getServerSession } from "next-auth";
+import { formatDistance } from "date-fns";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { TabPanel, useTabs } from "react-headless-tabs";
+import { useForm } from "react-hook-form";
+import Button from "../components/Button";
 import { TabSelector } from "../components/TabSelector";
 import {
   AppliedJobIcon,
@@ -12,11 +14,20 @@ import {
   PostedJobIcon,
   ProfileIcon,
 } from "../icons";
-import { authOptions } from "./api/auth/[...nextauth]";
-import Button from "../components/Button";
-import { formatDistance } from "date-fns";
 
 export default function Profile() {
+  const { data: session } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (!session) {
+      router.replace("/login");
+    } else {
+      const userId = session.user["id"];
+      console.log("userId: " + userId);
+      setId(userId);
+    }
+  }, [session]);
+
   const [selectedTab, setSelectedTab] = useTabs([
     "profile-tab",
     "security-tab",
@@ -24,59 +35,35 @@ export default function Profile() {
     "applied-job",
   ]);
 
-  const { data: session } = useSession();
-  const router = useRouter();
-  useEffect(() => {
-    if (!session) {
-      router.replace("/login");
-    }
-  }, [session]);
+  const [id, setId] = useState("");
 
   const { data: userData } = useSession();
   const user = userData?.user;
 
-  const [userEmail, setUserEmail] = useState("");
-  const emailChange = (e) => {
-    setUserEmail(e.target.value);
-  };
-
-  const [userName, setUserName] = useState("");
-  const nameChange = (e) => {
-    setUserName(e.target.value);
-  };
-
-  const [userDOB, setUserDOB] = useState("");
-  const DOBChange = (e) => {
-    setUserDOB(e.target.value);
-  };
-
-  const [userPermAddress, setUserPermAddress] = useState("");
-  const permAddressChange = (e) => {
-    setUserPermAddress(e.target.value);
-  };
-  const [userTempAddress, setUserTempAddress] = useState("");
-  const tempAddressChange = (e) => {
-    setUserTempAddress(e.target.value);
-  };
-  const [userPhone, setUserPhone] = useState("");
-  const PhoneChange = (e) => {
-    setUserPhone(e.target.value);
-  };
-
-  const [userBio, setUserBio] = useState("");
-  const bioChange = (e) => {
-    setUserBio(e.target.value);
-  };
-
   const [userImage, setUserImage] = useState("");
-  const imageChange = (e) => {
-    setUserImage(e.target.value);
-  };
+  const [userName, setUserName] = useState("");
 
   const [userPassword, setUserPassword] = useState("");
   const passwordChange = (e) => {
     setUserPassword(e.target.value);
   };
+
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { isSubmitting },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      dob: "",
+      email: "",
+      bio: "",
+      temporaryAddress: "",
+      permananetAddress: "",
+      phoneNumber: "",
+    },
+  });
 
   useEffect(() => {
     fetch("/api/userProfile", {
@@ -85,16 +72,47 @@ export default function Profile() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setUserEmail(data.email);
-        setUserName(data.name);
-        setUserDOB(data.dob.substring(0, 10));
-        setUserPermAddress(data.permananetAddress);
-        setUserTempAddress(data.temporaryAddress);
-        setUserPhone(data.phoneNumber);
-        setUserBio(data.bio);
+        setValue("email", data.email);
+        setValue("name", data.name);
+        setValue("dob", data.dob.substring(0, 10));
+        setValue("permananetAddress", data.permananetAddress);
+        setValue("temporaryAddress", data.temporaryAddress);
+        setValue("phoneNumber", data.phoneNumber);
+        setValue("bio", data.bio);
         setUserImage(data.image);
+        setUserName(data.name);
       });
   }, []);
+
+  // useEffect(() => {
+  //   const newUserId = session.user["id"];
+  //   setValue("name", newUser.name);
+  //   setValue("bio", selected_user.bio);
+  //   setValue("dob", selected_user.dob.substring(0, 10));
+  //   setValue("email", selected_user.email);
+  //   setValue("temporaryAddress", selected_user.temporaryAddress);
+  //   setValue("permananetAddress", selected_user.permananetAddress);
+  //   setValue("phoneNumber", selected_user.phoneNumber);
+  //   setSelectedUser(selected_user);
+  //   setRole(selected_user.role);
+  //   setStatus(selected_user.status);
+  // }, []);
+
+  async function onSubmit(data, e) {
+    try {
+      console.log(data);
+      await fetch(`/api/users/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({ ...data, dob: new Date(data.dob) }),
+      });
+    } catch (error) {
+      null;
+    }
+  }
 
   const [jobs, setJobs] = useState([]);
 
@@ -167,7 +185,10 @@ export default function Profile() {
         <div className="w-3/4 ">
           <TabPanel hidden={selectedTab !== "profile-tab"}>
             <div className="p-10">
-              <div className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl"
+              >
                 <div className="flex flex-col gap-3">
                   <p className="font-bold text-4xl text-center p-4">
                     Update your profile
@@ -183,15 +204,13 @@ export default function Profile() {
                       quality={100}
                     />
                   </div>
-                  <div>{userName}</div>
                 </div>
                 <div className="flex flex-col gap-1 text-gray-500">
-                  <label className="text-grey">Name:</label>
+                  <label>Name:</label>
                   <input
                     type="text"
+                    {...register("name")}
                     placeholder="Name"
-                    value={userName}
-                    onChange={nameChange}
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
@@ -199,66 +218,62 @@ export default function Profile() {
                   <label>Email:</label>
                   <input
                     type="text"
+                    {...register("email")}
                     placeholder="Email"
-                    value={userEmail}
-                    onChange={emailChange}
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col gap-1 text-gray-500">
-                  <label className="text-grey">Phone:</label>
+                  <label>Phone:</label>
                   <input
-                    type="text"
+                    type="number"
+                    {...register("phoneNumber")}
                     placeholder="981234567"
-                    value={userPhone}
-                    onChange={PhoneChange}
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col gap-1 text-gray-500">
-                  <label className="text-grey">DOB:</label>
+                  <label>DOB:</label>
                   <input
-                    type="text"
+                    type="dob"
+                    {...register("dob")}
                     placeholder="e.g. 1999-01-01"
-                    value={userDOB}
-                    onChange={DOBChange}
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col gap-1 text-gray-500">
-                  <label className="text-grey">Permanent Address:</label>
+                  <label>Permanent Address:</label>
                   <input
-                    type="text"
+                    type="address"
+                    {...register("permananetAddress")}
                     placeholder="Buddha-Chowk, Bharatpur-7"
-                    value={userPermAddress}
-                    onChange={permAddressChange}
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col gap-1 text-gray-500">
-                  <label className="text-grey">Temporary Address:</label>
+                  <label>Temporary Address:</label>
                   <input
-                    type="text"
+                    type="address"
+                    {...register("temporaryAddress")}
                     placeholder="Buddha-Chowk, Bharatpur-7"
-                    value={userTempAddress}
-                    onChange={tempAddressChange}
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
                 <div className="flex flex-col gap-1 text-gray-500">
                   <label>Bio:</label>
                   <textarea
+                    {...register("bio")}
                     rows={3}
-                    value={userBio}
-                    placeholder={userBio}
-                    onChange={bioChange}
                     className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
                   />
                 </div>
-                <Link passHref href="#">
-                  <Button value="Update" onClick={null} />
-                </Link>
-              </div>
+                <button
+                  type="submit"
+                  className="px-5 py-4 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold w-1/3 focus:outline-none focus:shadow-outline"
+                >
+                  {isSubmitting ? <>Updating</> : <>Update</>}
+                </button>
+              </form>
             </div>
           </TabPanel>
           <TabPanel hidden={selectedTab !== "security-tab"}>
