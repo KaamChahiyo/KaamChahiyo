@@ -72,13 +72,11 @@ export default function test({ locations, categories }) {
             className={`flex flex-col w-32 h-20 p-3 rounded-b-lg hover:cursor-pointer overflow-hidden ${click && "bg-white"
               }`}
           >
-            {click ? (
+            {click && (
               <div className="flex flex-col gap-2">
                 <div onClick={setType1}>{"Catergories"}</div>
                 <div onClick={setType2}>{"Locations"}</div>
               </div>
-            ) : (
-              ""
             )}
           </div>
           <div className="">

@@ -311,6 +311,9 @@ export default function Profile() {
           </TabPanel>
 
           <TabPanel hidden={selectedTab !== "applied-job"}>
+            <div className="text-4xl font-bold text-center m-20">
+              Jobs you Applied
+            </div>
             {jobs
               ?.filter((job) => job.assignedToId?.id === user?.["id"])
               .map((job) => (
@@ -356,6 +359,9 @@ export default function Profile() {
 
           {user?.["role"] === "employer" && (
             <TabPanel hidden={selectedTab !== "posted-job"}>
+              <div className="text-4xl font-bold text-center m-20">
+                Jobs you Posted
+              </div>
               {jobs
                 ?.filter((job) => job.postedBy?.id === user?.["id"])
                 .map((job) => (
