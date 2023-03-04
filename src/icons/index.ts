@@ -21,3 +21,4 @@ export * from "./InProgressIcon";
 export * from "./CompletedIcon";
 export * from "./AppliedJobIcon";
 export * from "./PostedJobIcon";
+export * from "./CheveronDownIcon";

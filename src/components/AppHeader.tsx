@@ -11,7 +11,7 @@ export default function AppHeader() {
   const route = useRouter();
   const { data: userData } = useSession();
   const user = userData?.user;
-  const userId = userData?.user["id"];
+  const userRole = userData?.user["role"];
 
   const menu = [
     {
@@ -138,7 +138,7 @@ export default function AppHeader() {
                 Blog
               </Link>
             </span>
-            {userId === "admin" ? (
+            {userRole === "admin" ? (
               <span
                 className={classNames({
                   "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
@@ -146,7 +146,7 @@ export default function AppHeader() {
                 })}
               >
                 <Link passHref href="/admin/users">
-                  Manager User
+                  Manage User
                 </Link>
               </span>
             ) : ("")}
