@@ -72,13 +72,11 @@ export default function test({ locations, categories }) {
               click && "bg-white"
             }`}
           >
-            {click ? (
+            {click && (
               <div className="flex flex-col gap-2">
                 <div onClick={setType1}>{"Catergories"}</div>
                 <div onClick={setType2}>{"Locations"}</div>
               </div>
-            ) : (
-              ""
             )}
           </div>
           <div className="">
