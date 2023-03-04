@@ -11,6 +11,7 @@ export default function AppHeader() {
   const route = useRouter();
   const { data: userData } = useSession();
   const user = userData?.user;
+  const userId = userData?.user["id"];
 
   const menu = [
     {
@@ -137,6 +138,18 @@ export default function AppHeader() {
                 Blog
               </Link>
             </span>
+            {userId === "admin" ? (
+              <span
+                className={classNames({
+                  "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
+                    route.pathname === "/admin/users",
+                })}
+              >
+                <Link passHref href="/admin/users">
+                  Manager User
+                </Link>
+              </span>
+            ) : ("")}
           </div>
           <div className="flex items-center gap-8">
             {user ? (
@@ -256,7 +269,7 @@ export default function AppHeader() {
 
           </div>
         </section>
-      </nav>
-    </div>
+      </nav >
+    </div >
   );
 }

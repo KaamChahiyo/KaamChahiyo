@@ -1,20 +1,20 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import Button from "../../components/Button";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
-export default function userListing() {
+export default function UserListing() {
   const { data: session } = useSession();
   const router = useRouter();
   useEffect(() => {
     if (!session) {
-      if (session.user["role"] != "superAdmin") {
-        router.replace("/login");
-      }
+      router.replace("/login");
+    }
+    if (session && session.user["role"] != "admin") {
+      router.replace("/userProfile");
     }
   }, [session]);
 
@@ -29,86 +29,107 @@ export default function userListing() {
       .then((data) => {
         console.log(data.users);
         setUsers(data.users);
+
       });
   }, []);
-
-  const [selectedUserId, setSelectedUserId] = React.useState(null);
-
-  const selectedUser = users.find((user) => user.id === selectedUserId);
-
-  const [name_, setName] = useState("");
-  const [dob, setDob] = useState("");
-  const [email, setEmail] = useState("");
-  const [bio, setBio] = useState("");
-  const [role, setRole] = useState("");
-  const [status, setStatus] = useState("");
-  const [permAddress, setPermAddress] = useState("");
-  const [tempAddress, setTempAddress] = useState("");
-  const [phone, setPhone] = useState("");
-
-  useEffect(() => {
-    if (selectedUserId) {
-      setName(selectedUser.name);
-      setDob(selectedUser.dob.substring(0, 10));
-      setEmail(selectedUser.email);
-      setBio(selectedUser.bio);
-      setRole(selectedUser.role);
-      setStatus(selectedUser.status);
-      setPermAddress(selectedUser.permananetAddress);
-      setTempAddress(selectedUser.temporaryAddress);
-      setPhone(selectedUser.phoneNumber);
-    }
-  }, [selectedUserId]);
-
-  const [editMode, setEditMode] = useState(false);
-  const toggleEditMode = () => {
-    setEditMode(!editMode);
-  };
-
-  const changeName = (e) => {
-    setName(e.target.value);
-  };
-
-  const changeDob = (e) => {
-    setDob(e.target.value);
-  };
-  const changeBio = (e) => {
-    setBio(e.target.value);
-  };
-  const changeEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const changePermAddress = (e) => {
-    setPermAddress(e.target.value);
-  };
-  const changeTempAddress = (e) => {
-    setTempAddress(e.target.value);
-  };
-  const changePhone = (e) => {
-    setPhone(e.target.value);
-  };
-
 
   const {
     handleSubmit,
     register,
+    setValue,
     formState: { isSubmitting }
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: "",
+      dob: "",
+      email: "",
+      bio: "",
+      temporaryAddress: "",
+      permananetAddress: "",
+      phoneNumber: ""
+    }
+  }
+  );
 
 
-  async function onSubmit(values) {
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const [role, setRole] = useState("");
+  const [status, setStatus] = useState("");
+
+
+  useEffect(() => {
+    if (selectedUserId) {
+      const selected_user = users.find((user) => user.id === selectedUserId);
+      setValue('name', selected_user.name);
+      setValue('bio', selected_user.bio);
+      setValue('dob', selected_user.dob.substring(0, 10));
+      setValue('email', selected_user.email);
+      setValue('temporaryAddress', selected_user.temporaryAddress);
+      setValue('permananetAddress', selected_user.permananetAddress);
+      setValue('phoneNumber', selected_user.phoneNumber);
+      setSelectedUser(selected_user);
+
+      // setName(selectedUser.name);
+      // setDob(selectedUser.dob.substring(0, 10));
+      // setEmail(selectedUser.email);
+      // setBio(selectedUser.bio);
+      // setRole(selectedUser.role);
+      // setStatus(selectedUser.status);
+      // setPermAddress(selectedUser.permananetAddress);
+      // setTempAddress(selectedUser.temporaryAddress);
+      // setPhone(selectedUser.phoneNumber);
+    }
+  }, [selectedUserId]);
+  useEffect(() => {
+
+    console.log(selectedUser)
+
+  }, [selectedUser]);
+
+  // const [editMode, setEditMode] = useState(false);
+  // const toggleEditMode = () => {
+  //   setEditMode(!editMode);
+  // };
+
+  // const changeName = (e) => {
+  //   setName(e.target.value);
+  // };
+
+  // const changeDob = (e) => {
+  //   setDob(e.target.value);
+  // };
+  // const changeBio = (e) => {
+  //   setBio(e.target.value);
+  // };
+  // const changeEmail = (e) => {
+  //   setEmail(e.target.value);
+  // };
+  // const changePermAddress = (e) => {
+  //   setPermAddress(e.target.value);
+  // };
+  // const changeTempAddress = (e) => {
+  //   setTempAddress(e.target.value);
+  // };
+  // const changePhone = (e) => {
+  //   setPhone(e.target.value);
+  // };
+
+
+
+  async function onSubmit(data, e) {
     try {
-      const body = { ...values };
-      await fetch("/api/users/${userid}"), {
+      console.log(data);
+      await fetch(`/api/users/${selectedUserId}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
           accept: "application/json",
         },
-        body: Object.entries(body)
-          .map((e) => e.join("="))
-          .join("&"),
-      }
+        body: JSON.stringify({ ...data, dob: new Date(data.dob) }),
+      });
     }
     catch (error) {
       null
@@ -127,7 +148,7 @@ export default function userListing() {
                   className="flex flex-wrap gap-3 p-3 bg-gray-50 hover:bg-blue-200 text-gray-800 hover:text-black"
                   onClick={() => {
                     setSelectedUserId(user.id);
-                    setEditMode(false);
+
                   }}
                 >
                   <div className="h-12 w-12  relative rounded-full overflow-hidden">
@@ -168,14 +189,9 @@ export default function userListing() {
                     <input
                       type="text"
                       {...register("name")}
-                      value={name_}
-                      onChange={changeName}
 
                       className={
-                        editMode
-                          ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
-                          : "focus:outline-none border-2 p-2 border-gray-200 text-gray-600"
-                      }
+                        "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "}
                     />
                   </div>
 
@@ -183,32 +199,22 @@ export default function userListing() {
                     <SubHeading subTitle="DATE OF BIRTH: " />
 
                     <input
-                      type="text"
+                      type="date"
                       {...register("dob")}
-                      value={dob}
-                      onChange={changeDob}
 
                       className={
-                        editMode
-                          ? "focus:outline-none focus:border-orange-600 border-2 p-2"
-                          : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
+                        "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
                     />
                   </div>
-
                   <div className="flex flex-col gap-1">
                     <SubHeading subTitle="E-MAIL: " />
-
                     <input
                       type="email"
                       {...register("email")}
-                      value={email}
-                      onChange={changeEmail}
 
                       className={
-                        editMode
-                          ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
-                          : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
+                        "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
                     />
                   </div>
@@ -218,13 +224,10 @@ export default function userListing() {
                     <input
                       type="address"
                       {...register("permananetAddress")}
-                      value={permAddress}
-                      onChange={changePermAddress}
+
 
                       className={
-                        editMode
-                          ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
-                          : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
+                        "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
                     />
                   </div>
@@ -234,13 +237,9 @@ export default function userListing() {
                     <input
                       type="address"
                       {...register("temporaryAddress")}
-                      value={tempAddress}
-                      onChange={changeTempAddress}
 
                       className={
-                        editMode
-                          ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
-                          : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
+                        "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
                     />
                   </div>
@@ -250,13 +249,10 @@ export default function userListing() {
                     <input
                       type="number"
                       {...register("phoneNumber")}
-                      value={phone}
-                      onChange={changePhone}
 
                       className={
-                        editMode
-                          ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
-                          : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
+
+                        "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
                     />
                   </div>
@@ -266,13 +262,9 @@ export default function userListing() {
                     <textarea
                       {...register("bio")}
                       rows={5}
-                      value={bio}
-                      onChange={changeBio}
-
                       className={
-                        editMode
-                          ? "focus:outline-none focus:border-orange-600 border-2 p-2 "
-                          : "focus:outline-none border-2 border-gray-200 p-2 text-gray-600  "
+
+                        "focus:outline-none border-2 border-gray-200 p-2 text-gray-600 "
                       }
                     />
                   </div>
