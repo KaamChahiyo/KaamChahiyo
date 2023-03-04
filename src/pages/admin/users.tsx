@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
-export default function UserListing() {
+export default function Users() {
   const { data: session } = useSession();
   const router = useRouter();
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function UserListing() {
       router.replace("/login");
     }
     if (session && session.user["role"] != "admin") {
-      router.replace("/userProfile");
+      router.replace("/user-profile");
     }
   }, [session]);
 
@@ -71,16 +71,6 @@ export default function UserListing() {
       setValue('permananetAddress', selected_user.permananetAddress);
       setValue('phoneNumber', selected_user.phoneNumber);
       setSelectedUser(selected_user);
-
-      // setName(selectedUser.name);
-      // setDob(selectedUser.dob.substring(0, 10));
-      // setEmail(selectedUser.email);
-      // setBio(selectedUser.bio);
-      // setRole(selectedUser.role);
-      // setStatus(selectedUser.status);
-      // setPermAddress(selectedUser.permananetAddress);
-      // setTempAddress(selectedUser.temporaryAddress);
-      // setPhone(selectedUser.phoneNumber);
     }
   }, [selectedUserId]);
   useEffect(() => {
@@ -88,36 +78,6 @@ export default function UserListing() {
     console.log(selectedUser)
 
   }, [selectedUser]);
-
-  // const [editMode, setEditMode] = useState(false);
-  // const toggleEditMode = () => {
-  //   setEditMode(!editMode);
-  // };
-
-  // const changeName = (e) => {
-  //   setName(e.target.value);
-  // };
-
-  // const changeDob = (e) => {
-  //   setDob(e.target.value);
-  // };
-  // const changeBio = (e) => {
-  //   setBio(e.target.value);
-  // };
-  // const changeEmail = (e) => {
-  //   setEmail(e.target.value);
-  // };
-  // const changePermAddress = (e) => {
-  //   setPermAddress(e.target.value);
-  // };
-  // const changeTempAddress = (e) => {
-  //   setTempAddress(e.target.value);
-  // };
-  // const changePhone = (e) => {
-  //   setPhone(e.target.value);
-  // };
-
-
 
   async function onSubmit(data, e) {
     try {
