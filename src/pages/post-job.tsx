@@ -14,25 +14,38 @@ export default function PostJob() {
   const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
   const [user, setUser] = useState([]);
-  const {
-    handleSubmit,
-    register,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm();
-
-  let defaultBody = {
-    title: "",
-    description: "",
-    price: "",
-    category: "",
-  };
 
   useEffect(() => {
     if (!session) {
       router.replace("/login");
     }
   }, [session]);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { isSubmitting },
+  } = useForm();
+
+  async function onSubmit(values) {
+    console.log(values);
+    try {
+      await fetch(`/api/jobs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({
+          ...values,
+          price: parseFloat(values.price),
+          postedById: session.user["id"],
+        }),
+      });
+    } catch (error) {
+      return null;
+    }
+  }
 
   useEffect(() => {
     fetch(`/api/location/`, {
@@ -55,66 +68,6 @@ export default function PostJob() {
         setCategories(category.categories);
       });
   }, []);
-
-  useEffect(() => {
-    fetch(`/api/userProfile/`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((user) => {
-        setUser(user.name);
-      });
-  }, []);
-
-  async function onSubmit(values) {
-    try {
-      const body = {
-        ...defaultBody,
-        title: values?.title,
-        description: values?.description,
-        price: parseFloat(values?.price),
-        category: values?.category,
-        locations: values?.location,
-      };
-      await fetch(`/api/jobs`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          accept: "application/json",
-        },
-        body: Object.entries(body)
-          .map((e) => e.join("="))
-          .join("&"),
-      })
-        .then(async (res) => {
-          if (!res.ok) {
-            const errorResp = await res.json();
-            throw Error(errorResp.message);
-          }
-          res.json();
-          enqueueSnackbar("Job Posted Successfully.", {
-            variant: "success",
-          });
-          router.replace("/");
-        })
-        .catch((err) => {
-          enqueueSnackbar("Failed to post a job.", {
-            variant: "error",
-          });
-          setError("submit", {
-            type: "server",
-            message: err.message,
-          });
-          return null;
-        });
-    } catch (error) {
-      setError("submit", {
-        type: "server",
-        message: "Unable to connect to the server properly!!",
-      });
-    }
-  }
 
   return (
     <>
@@ -167,41 +120,37 @@ export default function PostJob() {
                     Category
                   </label>
                   <select
-                    {...register("Category")}
+                    {...register("categoryId")}
                     className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
                   >
                     <option value="select">Select</option>
                     {categories?.map((category) => (
-                      <option value={category.name} key={category.id}>
+                      <option value={category.id} key={category.id}>
                         {category.displayName}
                       </option>
                     ))}
                   </select>
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className=" text-gray-500 font-semibold text-sm uppercase  tracking-[2.78px] ">
+                  <label
+                    htmlFor="location-select"
+                    className="text-gray-500 font-semibold text-sm uppercase tracking-[2.78px]"
+                  >
                     Location
                   </label>
                   <select
-                    {...register("Location")}
-                    className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
+                    {...register("locationId")}
+                    className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md max-h-32 overflow-y-auto"
                   >
                     <option value="select">Select</option>
-
                     {locations?.map((location) => (
-                      <option value={location.id} key={location.id}>
+                      <option key={location.id} value={location.id}>
                         {location.displayName}
                       </option>
                     ))}
                   </select>
                 </div>
-                <div className="hidden">
-                  <input type="hidden" {...register("postedBy")} value={user} />
-                </div>
-                <Button
-                  value={isSubmitting ? " Posting..." : "Post"}
-                  onClick={null}
-                ></Button>
+                <Button value={isSubmitting ? " Posting..." : "Post"}></Button>
               </div>
             </div>
           </form>
