@@ -16,8 +16,33 @@ import {
   TickIcon,
 } from "../../icons";
 
-export default function approveJob() {
+export default function jobs() {
+  const { data: session } = useSession();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!session) {
+      router.replace("/login");
+    }
+  }, [session]);
+
   const [job, setJob] = useState([]);
+
+  const updateJobStatusById = async (id: string, status: string) => {
+    try {
+      await fetch(`/api/jobs/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({ status: status }),
+      });
+    } catch (error) {
+      null;
+    }
+  };
 
   useEffect(() => {
     fetch(`/api/jobs/`, {
@@ -31,7 +56,7 @@ export default function approveJob() {
         );
         setJob(sortedData);
       });
-  }, []);
+  }, [updateJobStatusById]);
 
   const [selectedTab, setSelectedTab] = useTabs([
     "Approved",
@@ -42,20 +67,10 @@ export default function approveJob() {
     "inProgress",
   ]);
 
-  const { data: session } = useSession();
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!session) {
-      router.replace("/login");
-    }
-  }, [session]);
-
   return (
     <div className="flex flex-col justify-center">
       <div className="flex ">
-        <div className="flex flex-row lg:flex-col w-1/5 gap-3 m-10">
+        <div className="flex flex-col md:flex-row lg:flex-col w-1/5 gap-3 m-10">
           <TabSelector
             isActive={selectedTab === "Approved"}
             onClick={() => setSelectedTab("Approved")}
@@ -220,8 +235,22 @@ export default function approveJob() {
                             {job.Location.displayName}
                           </div>
                           <div className="flex gap-2">
-                            <Button value="Approve" onClick={null} />
-                            <Button value="Reject" onClick={null} />
+                            <button
+                              onClick={() =>
+                                updateJobStatusById(job.id, "approved")
+                              }
+                              className="px-5 py-3 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-lg font-bold  focus:outline-none focus:shadow-outline"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() =>
+                                updateJobStatusById(job.id, "rejected")
+                              }
+                              className="px-5 py-3 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-lg font-bold  focus:outline-none focus:shadow-outline"
+                            >
+                              Reject
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -274,7 +303,14 @@ export default function approveJob() {
                           <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                             {job.Location.displayName}
                           </div>
-                          <Button value="Approve" onClick={null} />
+                          <button
+                            onClick={() =>
+                              updateJobStatusById(job.id, "approved")
+                            }
+                            className="w-fit px-5 py-3 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-lg font-bold  focus:outline-none focus:shadow-outline"
+                          >
+                            Approve
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -378,7 +414,12 @@ export default function approveJob() {
                           <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                             {job.Location.displayName}
                           </div>
-                          <Button value="Approve" onClick={null} />
+                          <Button
+                            value="Approve"
+                            onClick={() =>
+                              updateJobStatusById(job.id, "approved")
+                            }
+                          />
                         </div>
                       </div>
                     </div>

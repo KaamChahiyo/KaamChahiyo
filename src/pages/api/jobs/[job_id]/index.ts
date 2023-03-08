@@ -8,8 +8,11 @@ export default async function handle(
 ) {
   if (req.method === "GET") {
     await handleGET(res, req);
+  }
+  if (req.method === "PUT") {
+    await handlePUT(res, req);
   } else {
-    res.setHeader("Allow", ["GET"]);
+    res.setHeader("Allow", ["GET", "PUT"]);
     res.status(405).json({ message: "Method not found." });
   }
 }
@@ -61,4 +64,14 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
 
   if (job) res.json(omit(job));
   else res.status(404).json({ message: "Post not found!" });
+};
+
+const handlePUT = async (res: NextApiResponse, req: NextApiRequest) => {
+  const job = await prisma.job.update({
+    where: {
+      id: String(req.query.job_id),
+    },
+    data: req.body,
+  });
+  res.json(job);
 };
