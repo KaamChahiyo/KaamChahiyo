@@ -40,6 +40,4 @@ next-env.d.ts
 .prettierrc
 
 # test files
-test_by_deepak.tsx
-test-suman.tsx
-test2.tsx
+test1.tsx
