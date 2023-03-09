@@ -58,10 +58,10 @@ export default function Profile() {
       name: "",
       dob: "",
       email: "",
-      bio: "",
       temporaryAddress: "",
       permananetAddress: "",
       phoneNumber: "",
+      bio: "",
     },
   });
 
