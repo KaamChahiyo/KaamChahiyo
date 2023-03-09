@@ -13,7 +13,7 @@ export default function ChangePassword() {
       router.replace(`/test/`);
     } else {
       const userId = session.user["id"];
-      // console.log("userId: " + userId);
+      // console.log("userId : " + userId);
       setId(userId);
     }
   }, [session]);
@@ -29,6 +29,11 @@ export default function ChangePassword() {
     setConfirmNewPassword(e.target.value);
   };
 
+  const [typeCurrentPassword, setTypeCurrentPassword] = useState("");
+  const handleTypeCurrentPassword = (e) => {
+    setTypeCurrentPassword(e.target.value);
+  };
+
   const {
     register,
     handleSubmit,
@@ -37,7 +42,7 @@ export default function ChangePassword() {
     formState: { isSubmitting, errors },
   } = useForm({});
 
-  const verifyPassword = getValues("typeCurrentPassword");
+  // const verifyPassword = getValues("typeCurrentPassword");
   // const newPassword = getValues("newPassword");
   // const confirmPassword = getValues("confirmNewPassword");
 
@@ -52,28 +57,30 @@ export default function ChangePassword() {
       .then((res) => res.json())
       .then((data) => {
         setGetCurrentPassword(data?.user?.password);
-        setValue(postNewPassword, data?.user?.password);
+        console.log("data  1:", data);
       });
   }, []);
 
   async function onSubmit(data) {
     try {
-      const typedPassword = SHA256(verifyPassword).toString();
-      console.log(getCurrentPassword);
-      if (getCurrentPassword === typedPassword) {
+      console.log("get password:", getCurrentPassword);
+      if (getCurrentPassword === SHA256(typeCurrentPassword).toString()) {
         if (newPassword === confirmNewPassword) {
           {
-            setPostNewPassword(SHA256(confirmNewPassword).toString());
+            // setPostNewPassword(SHA256(confirmNewPassword).toString());
+            // console.log("data 2: ", data);
             await fetch(`/api/users/${id}`, {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
                 accept: "application/json",
               },
-              body: JSON.stringify({ ...data }),
+              body: JSON.stringify({
+                password: SHA256(confirmNewPassword).toString(),
+              }),
             });
             console.log(
-              "Password Verified sucessfully , please enter new password"
+              "Password Verified sucessfully, please enter new password"
             );
           }
         } else {
@@ -89,6 +96,10 @@ export default function ChangePassword() {
 
   return (
     <div className="flex justify-center ">
+      <h1>{id}</h1>
+
+      <h1>{getCurrentPassword}</h1>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl h-[672px]"
@@ -105,14 +116,17 @@ export default function ChangePassword() {
             type="password"
             placeholder="Enter current Password"
             className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
-            {...register("typeCurrentPassword")}
+            // {...register("typeCurrentPassword")}
+            value={typeCurrentPassword}
+            onChange={handleTypeCurrentPassword}
+            onError={() => console.log("password error")}
           />
-          {errors.typeCurrentPassword && (
+          {/* {errors.typeCurrentPassword && (
             <p className="text-red-500">Current password is required</p>
           )}
           {errors.typeCurrentPassword && (
             <p className="text-red-500">Password is incorrect</p>
-          )}
+          )} */}
         </div>
 
         <div className="flex flex-col gap-1 text-gray-500">
@@ -140,6 +154,11 @@ export default function ChangePassword() {
             placeholder="Confirm new password"
             className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
           />
+          {/* <input
+            type="hidden"
+            value={confirmNewPassword}
+            {...register("confirmNewPassword")}
+          /> */}
         </div>
         <div className="flex gap-5 flex-col">
           <div className=" hover:cursor-text">

@@ -69,7 +69,7 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
           deletedAt: true,
         },
       });
-      res.status(200).json({ user });
+      res.status(200).json(user);
     }
     res.status(401).json({ message: "Unauthorized User" });
   }

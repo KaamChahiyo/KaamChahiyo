@@ -65,6 +65,24 @@ export default function Profile() {
     },
   });
 
+  const {
+    handleSubmit: handleSecurity,
+    register: registerSecurity,
+    setValue: setSecurity,
+    setError,
+    formState: { isSubmitting: isSecuritySubmitting, errors: securityErrors },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      dob: "",
+      email: "",
+      temporaryAddress: "",
+      permananetAddress: "",
+      phoneNumber: "",
+      bio: "",
+    },
+  });
+
   useEffect(() => {
     fetch("/api/userProfile", {
       method: "GET",
@@ -74,7 +92,7 @@ export default function Profile() {
       .then((data) => {
         setValue("email", data.email);
         setValue("name", data.name);
-        setValue("dob", data.dob.substring(0, 10));
+        setValue("dob", data?.dob?.substring(0, 10));
         setValue("permananetAddress", data.permananetAddress);
         setValue("temporaryAddress", data.temporaryAddress);
         setValue("phoneNumber", data.phoneNumber);
@@ -330,9 +348,10 @@ export default function Profile() {
               Jobs you Applied
             </div>
             {jobs
-              ?.filter((job) => job.assignedToId?.id === user?.["id"])
+              ?.filter((job) => job.assignedTo?.id === user?.["id"])
               .map((job) => (
                 <div key={job?.id} className="p-1">
+                  {/* {JSON.stringify(job)} */}
                   <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
                     <div className="font-bold text-xl p-2">{job?.title}</div>
                     <div className="flex gap-4 italic p-3 m-auto items-center">
@@ -363,9 +382,7 @@ export default function Profile() {
                       <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                         {job.Location.displayName}
                       </div>
-                      <Link href={`jobs/${job.id}`}>
-                        <Button value="View Job" onClick={null} />
-                      </Link>
+                      <Button value="Cancel" onClick={null} />
                     </div>
                   </div>
                 </div>
@@ -382,6 +399,7 @@ export default function Profile() {
                 .map((job) => (
                   <div className="flex justify-center items-center">
                     <div key={job.id} className="w-full p-1">
+                      {JSON.stringify(job)}
                       <div className=" shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
                         <div className="font-bold text-xl p-2">{job.title}</div>
                         <div className="flex gap-4 italic p-3 m-auto items-center">
