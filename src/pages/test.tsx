@@ -46,59 +46,73 @@ export default function ChangePassword() {
   // const newPassword = getValues("newPassword");
   // const confirmPassword = getValues("confirmNewPassword");
 
-  const [getCurrentPassword, setGetCurrentPassword] = useState("");
+  // const [getCurrentPassword, setGetCurrentPassword] = useState("");
   let [postNewPassword, setPostNewPassword] = useState("");
+  const getCurrentPassword=async()=>{return await fetch(`/api/users/${id}`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("DATA",data)
+      return data?.user?.password
+     
+    });}
 
-  useEffect(() => {
-    fetch(`/api/users/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setGetCurrentPassword(data?.user?.password);
-        console.log("data  1:", data);
-      });
-  }, []);
+  const currentPassword=getCurrentPassword()
+
+
+
+  // useEffect(() => {
+  //   fetch(`/api/users/${id}`, {
+  //     method: "GET",
+  //     headers: { "Content-Type": "application/json" },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setGetCurrentPassword(data?.user?.password);
+  //       console.log("data  1:", data);
+  //     });
+  // }, []);
 
   async function onSubmit(data) {
-    try {
-      console.log("get password:", getCurrentPassword);
-      if (getCurrentPassword === SHA256(typeCurrentPassword).toString()) {
-        if (newPassword === confirmNewPassword) {
-          {
-            // setPostNewPassword(SHA256(confirmNewPassword).toString());
-            // console.log("data 2: ", data);
-            await fetch(`/api/users/${id}`, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                accept: "application/json",
-              },
-              body: JSON.stringify({
-                password: SHA256(confirmNewPassword).toString(),
-              }),
-            });
-            console.log(
-              "Password Verified sucessfully, please enter new password"
-            );
-          }
-        } else {
-          console.log("input password not match");
-        }
-      } else {
-        console.log("Password is incorrect");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   console.log("get password:", getCurrentPassword);
+    //   if (getCurrentPassword === SHA256(typeCurrentPassword).toString()) {
+    //     if (newPassword === confirmNewPassword) {
+    //       {
+    //         // setPostNewPassword(SHA256(confirmNewPassword).toString());
+    //         // console.log("data 2: ", data);
+    //         await fetch(`/api/users/${id}`, {
+    //           method: "PUT",
+    //           headers: {
+    //             "Content-Type": "application/json",
+    //             accept: "application/json",
+    //           },
+    //           body: JSON.stringify({
+    //             password: SHA256(confirmNewPassword).toString(),
+    //           }),
+    //         });
+    //         console.log(
+    //           "Password Verified sucessfully, please enter new password"
+    //         );
+    //       }
+    //     } else {
+    //       console.log("input password not match");
+    //     }
+    //   } else {
+    //     console.log("Password is incorrect");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
   return (
     <div className="flex justify-center ">
       <h1>{id}</h1>
 
-      <h1>{getCurrentPassword}</h1>
+      <h1>{JSON.stringify(currentPassword)}</h1>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -116,17 +130,14 @@ export default function ChangePassword() {
             type="password"
             placeholder="Enter current Password"
             className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
-            // {...register("typeCurrentPassword")}
-            value={typeCurrentPassword}
-            onChange={handleTypeCurrentPassword}
-            onError={() => console.log("password error")}
+            {...register("typeCurrentPassword")}
           />
-          {/* {errors.typeCurrentPassword && (
+          {errors.typeCurrentPassword && (
             <p className="text-red-500">Current password is required</p>
           )}
           {errors.typeCurrentPassword && (
             <p className="text-red-500">Password is incorrect</p>
-          )} */}
+          )}
         </div>
 
         <div className="flex flex-col gap-1 text-gray-500">

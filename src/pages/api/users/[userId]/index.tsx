@@ -3,6 +3,14 @@ import prisma from "../../../../lib/prismadb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
 
+import sha256 from "crypto-js/sha256";
+import { omit } from "lodash";
+
+const hashPassword = (password: string) => {
+  return sha256(password).toString();
+};
+
+
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
@@ -31,11 +39,10 @@ const handlePUT = async (res: NextApiResponse, req: NextApiRequest) => {
           id: String(req.query.userId),
         },
         data: {
-          ...req.body,
+          ...req.body,password:hashPassword(req.body.password)
         },
       });
-      console.log(user);
-      res.json(user);
+      res.json(omit(user, "password"));
     }
   }
 };
