@@ -1,8 +1,9 @@
 import { formatDistance } from "date-fns";
+import { now } from "lodash";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { register } from "ts-node";
-import Button from "../../../components/Button";
+import { useForm } from "react-hook-form";
 
 export default function apply({ job, params }) {
   const jobId = params?.jobId;
@@ -11,12 +12,27 @@ export default function apply({ job, params }) {
   const toggleApply = () => {
     setApply(!apply);
   };
-  const handleSubmit = () => {
-    setApply(false);
-  };
+
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
+    defaultValues: {
+      assignedToId: "",
+    },
+  });
+
   const [userEmail, setUserEmail] = useState("");
 
   const [userName, setUserName] = useState("");
+
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [userAddress, setUserAddress] = useState("");
+
+  const [userId, setUserId] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     fetch("/api/userProfile", {
@@ -27,13 +43,40 @@ export default function apply({ job, params }) {
       .then((data) => {
         setUserEmail(data.email);
         setUserName(data.name);
+        setPhoneNumber(data.phoneNumber);
+        setUserAddress(data.temporaryAddress);
+        setUserId(data.id);
       });
   }, []);
+
+  async function onSubmit(data, e) {
+    try {
+      console.log(data);
+      await fetch(`/api/jobs/${job.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({
+          assignedToId: userId,
+          status: "inProgress",
+          assignedOn: new Date(now()),
+        }),
+      });
+      router.push(`/jobs/`);
+    } catch (error) {
+      null;
+    }
+  }
 
   return (
     <div className="flex justify-center items-center">
       <div key={job.id} className="w-full sm:w-3/5 p-1">
-        <form className=" shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
+        <div
+          onSubmit={handleSubmit(onSubmit)}
+          className=" shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3"
+        >
           <div className="font-bold text-xl p-2">{job.title}</div>
           <div className="flex gap-4 italic p-3 m-auto items-center">
             <div>
@@ -68,7 +111,7 @@ export default function apply({ job, params }) {
               {apply ? (
                 <div className="flex justify-start">
                   <div className="flex flex-col  relative justify-center gap-6 w-2/3 ">
-                    <div className=" flex flex-col gap-5 ">
+                    <form className=" flex flex-col gap-5 ">
                       <div className="flex flex-col gap-3">
                         <p className=" font-bold text-4xl text-center ">
                           Apply For a Job
@@ -109,8 +152,9 @@ export default function apply({ job, params }) {
                           <input
                             type="text"
                             placeholder="Enter your phone number"
+                            value={phoneNumber}
                             className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
-                            required
+                            readOnly={true}
                           />
                         </div>
 
@@ -120,28 +164,45 @@ export default function apply({ job, params }) {
                           </label>
                           <input
                             type="text"
+                            value={userAddress}
                             placeholder="Enter Your Local Address"
                             className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
-                            required
+                            readOnly={true}
                           />
                         </div>
                       </div>
-                    </div>
+
+                      <div className="flex gap-5">
+                        <button className="px-5 py-4 w-fit border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline">
+                          {isSubmitting ? <>Submitting</> : <>Submit</>}
+                        </button>
+                        {apply && (
+                          <button
+                            className="px-5 py-4 w-fit border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline"
+                            onClick={() => setApply(false)}
+                          >
+                            Cancel
+                          </button>
+                        )}
+                      </div>
+                    </form>
                   </div>
                 </div>
               ) : (
                 ""
               )}
-              <div className="flex gap-5">
-                {apply && <Button value="Submit" onClick={handleSubmit} />}
-                <Button
-                  value={apply ? "Cancel" : "Apply"}
-                  onClick={toggleApply}
-                />
-              </div>
+
+              {!apply && (
+                <button
+                  className="px-5 py-4 w-fit border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline"
+                  onClick={() => setApply(true)}
+                >
+                  Apply
+                </button>
+              )}
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
