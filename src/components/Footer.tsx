@@ -70,9 +70,12 @@ export default function Footer() {
           <div>
             <div className="font-bold">LOCATION</div>
             <div className="text-lg w-fit">
-              <Link passHref href="#">
-                <ul className="hover:text-blue-300">Map Of Location</ul>
-              </Link>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3533.630908875153!2d84.42117241549484!3d27.66688888280882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjfCsDQwJzAwLjgiTiA4NMKwMjUnMjQuMSJF!5e0!3m2!1sen!2snp!4v1678363405943!5m2!1sen!2snp"
+                width="450"
+                height="250"
+                loading="lazy"
+              ></iframe>
             </div>
           </div>
         </div>
