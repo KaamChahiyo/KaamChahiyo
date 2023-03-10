@@ -41,10 +41,10 @@ export default function Profile() {
   const [userImage, setUserImage] = useState("");
   const [userName, setUserName] = useState("");
 
-  const [userPassword, setUserPassword] = useState("");
-  const passwordChange = (e) => {
-    setUserPassword(e.target.value);
-  };
+  // const [userPassword, setUserPassword] = useState("");
+  // const passwordChange = (e) => {
+  //   setUserPassword(e.target.value);
+  // };
 
   const {
     handleSubmit,
@@ -88,7 +88,7 @@ export default function Profile() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("HERE", data);
+        // console.log("HERE", data);
         setSecurity("currentPassword", data?.password);
         setValue("email", data.email);
         setValue("name", data.name);
@@ -128,7 +128,7 @@ export default function Profile() {
         body: JSON.stringify({ ...data, dob: new Date(data.dob) }),
       });
     } catch (error) {
-      null;
+      console.log(error);
     }
   }
 
@@ -265,7 +265,7 @@ export default function Profile() {
                   <input
                     type="number"
                     {...register("phoneNumber")}
-                    placeholder="981234567"
+                    placeholder="Phone Number"
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
@@ -283,7 +283,7 @@ export default function Profile() {
                   <input
                     type="address"
                     {...register("permananetAddress")}
-                    placeholder="Buddha-Chowk, Bharatpur-7"
+                    placeholder="Permanent Address"
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
@@ -292,7 +292,7 @@ export default function Profile() {
                   <input
                     type="address"
                     {...register("temporaryAddress")}
-                    placeholder="Buddha-Chowk, Bharatpur-7"
+                    placeholder="Temporary Address"
                     className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
                   />
                 </div>
@@ -300,6 +300,7 @@ export default function Profile() {
                   <label>Bio:</label>
                   <textarea
                     {...register("bio")}
+                    placeholder="Bio"
                     rows={3}
                     className="border-2 focus:outline-none focus:shadow-outline px-3 py-3 border-gray-300 text-gray-700 leading-tight w-full rounded-md"
                   />
