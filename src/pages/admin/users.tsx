@@ -85,7 +85,7 @@ export default function Users() {
           "Content-Type": "application/json",
           accept: "application/json",
         },
-        body: JSON.stringify({ ...data, dob: new Date(data.dob) }),
+        body: JSON.stringify({ ...data, dob: new Date(data?.dob || "") }),
       });
     } catch (error) {
       null;

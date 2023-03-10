@@ -33,6 +33,7 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
           role: true,
           status: true,
           dob: true,
+          password:true,
           temporaryAddress: true,
           permananetAddress: true,
           phoneNumber: true,

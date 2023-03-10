@@ -15,16 +15,19 @@ import {
   ProfileIcon,
 } from "../icons";
 
+import sha256 from "crypto-js/sha256";
+
+const hashPassword = (password: string) => {
+  return sha256(password).toString();
+};
+
 export default function Profile() {
   const { data: session } = useSession();
+
   const router = useRouter();
   useEffect(() => {
     if (!session) {
       router.replace("/login");
-    } else {
-      const userId = session.user["id"];
-      console.log("userId: " + userId);
-      setId(userId);
     }
   }, [session]);
 
@@ -34,11 +37,6 @@ export default function Profile() {
     "posted-job",
     "applied-job",
   ]);
-
-  const [id, setId] = useState("");
-
-  const { data: userData } = useSession();
-  const user = userData?.user;
 
   const [userImage, setUserImage] = useState("");
   const [userName, setUserName] = useState("");
@@ -52,16 +50,34 @@ export default function Profile() {
     handleSubmit,
     register,
     setValue,
+    getValues,
     formState: { isSubmitting },
   } = useForm({
     defaultValues: {
       name: "",
       dob: "",
       email: "",
-      bio: "",
       temporaryAddress: "",
       permananetAddress: "",
       phoneNumber: "",
+      bio: "",
+    },
+  });
+
+  const {
+    handleSubmit: handleSecurity,
+    register: registerSecurity,
+    setValue: setSecurity,
+    setError: setSecurityError,
+    getValues: getSecurity,
+    clearErrors: clearSecurityErrors,
+    formState: { isSubmitting: isSecuritySubmitting, errors: securityErrors },
+  } = useForm({
+    defaultValues: {
+      currentPassword: "",
+      typedCurrentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
     },
   });
 
@@ -72,9 +88,11 @@ export default function Profile() {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("HERE", data);
+        setSecurity("currentPassword", data?.password);
         setValue("email", data.email);
         setValue("name", data.name);
-        setValue("dob", data.dob.substring(0, 10));
+        setValue("dob", data?.dob?.substring(0, 10));
         setValue("permananetAddress", data.permananetAddress);
         setValue("temporaryAddress", data.temporaryAddress);
         setValue("phoneNumber", data.phoneNumber);
@@ -101,13 +119,30 @@ export default function Profile() {
   async function onSubmit(data, e) {
     try {
       console.log(data);
-      await fetch(`/api/users/${id}`, {
+      await fetch(`/api/users/${session.user["id"]}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
         },
         body: JSON.stringify({ ...data, dob: new Date(data.dob) }),
+      });
+    } catch (error) {
+      null;
+    }
+  }
+
+  async function onSecuritySubmit(data, e) {
+    console.log("SECURITY SUBMIT", data);
+    try {
+      console.log(data);
+      await fetch(`/api/users/${session.user["id"]}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({ password: data?.newPassword }),
       });
     } catch (error) {
       null;
@@ -127,7 +162,7 @@ export default function Profile() {
         setJobs(data.jobs);
         // data.jobs.postedBy.id;
       });
-  });
+  }, []);
 
   return (
     <div className="container mt-20 flex flex-col gap-12 z-10">
@@ -168,7 +203,7 @@ export default function Profile() {
             </div>
           </TabSelector>
           {/* posted Job only for employer */}
-          {user?.["role"] === "employer" && (
+          {session?.user?.["role"] === "employer" && (
             <TabSelector
               isActive={selectedTab === "posted-job"}
               onClick={() => setSelectedTab("posted-job")}
@@ -195,15 +230,17 @@ export default function Profile() {
                   </p>
                 </div>
                 <div className="flex flex-col">
-                  <div className="w-20 h-20">
-                    <Image
-                      src={userImage}
-                      alt={userName}
-                      width={100}
-                      height={100}
-                      quality={100}
-                    />
-                  </div>
+                  {userImage && (
+                    <div className="w-20 h-20">
+                      <Image
+                        src={userImage}
+                        alt={userName}
+                        width={100}
+                        height={100}
+                        quality={100}
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col gap-1 text-gray-500">
                   <label>Name:</label>
@@ -278,50 +315,112 @@ export default function Profile() {
           </TabPanel>
           <TabPanel hidden={selectedTab !== "security-tab"}>
             <div className="p-10">
-              <div className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl h-[672px]">
-                <div className="flex flex-col gap-3">
-                  <p className="font-bold text-4xl text-center p-4">
-                    Change your password
-                  </p>
-                </div>
-
-                <div className="flex flex-col gap-1 text-gray-500">
-                  <label>Current Password:</label>
-                  <input
-                    type="password"
-                    placeholder="Enter current Password"
-                    value={userPassword}
-                    onChange={passwordChange}
-                    className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
-                  />
-                </div>
-                <div className="flex flex-col gap-1 text-gray-500">
-                  <label>New password:</label>
-                  <input
-                    type="password"
-                    placeholder="Type new password"
-                    className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
-                  />
-                </div>
-                <div className="flex flex-col gap-1 text-gray-500">
-                  <label>Retype new password:</label>
-                  <input
-                    type="password"
-                    placeholder="Re-type password"
-                    className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
-                  />
-                </div>
-                <div className="flex gap-5 flex-col">
-                  <div className=" hover:cursor-text">
-                    <Link passHref href="/forget-password">
-                      Forgot Password?
-                    </Link>
+              <form
+                onSubmit={handleSecurity(onSecuritySubmit)}
+                className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl"
+              >
+                <div className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl h-[672px]">
+                  <div className="flex flex-col gap-3">
+                    <p className="font-bold text-4xl text-center p-4">
+                      Change your password
+                    </p>
                   </div>
-                  <Link passHref href="#">
+
+                  <div className="flex flex-col gap-1 text-gray-500">
+                    <label>Current Password:</label>
+                    <h1>asd:{getSecurity("currentPassword")}</h1>
+                    <input
+                      type="password"
+                      placeholder="Enter current Password"
+                      {...registerSecurity("typedCurrentPassword", {
+                        onChange: (e) => {
+                          if (
+                            hashPassword(e.target.value) !=
+                            getSecurity("currentPassword")
+                          ) {
+                            setSecurityError("typedCurrentPassword", {
+                              message: "CurrentPassord doesn't match",
+                            });
+                          } else clearSecurityErrors("typedCurrentPassword");
+                        },
+                      })}
+                      className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
+                    />
+                    {/* TODO: Create a error Message component */}
+                    {securityErrors.typedCurrentPassword && (
+                      <h1>{securityErrors.typedCurrentPassword.message}</h1>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-1 text-gray-500">
+                    <label>New password:</label>
+                    <input
+                      type="password"
+                      placeholder="Type new password"
+                      {...registerSecurity("newPassword", {
+                        onChange: (e) => {
+                          if (
+                            e.target.value != getSecurity("confirmPassword")
+                          ) {
+                            setSecurityError("newPassword", {
+                              message:
+                                "New Password and Confirm Password didn't match",
+                            });
+                            setSecurityError("confirmPassword", {
+                              message:
+                                "New Password and Confirm Password didn't match",
+                            });
+                          } else {
+                            clearSecurityErrors("newPassword");
+                            clearSecurityErrors("confirmPassword");
+                          }
+                        },
+                      })}
+                      className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1 text-gray-500">
+                    <label>Retype new password:</label>
+                    <input
+                      type="password"
+                      {...registerSecurity("confirmPassword", {
+                        onChange: (e) => {
+                          if (e.target.value != getSecurity("newPassword")) {
+                            setSecurityError("newPassword", {
+                              message:
+                                "New Password and Confirm Password didn't match",
+                            });
+                            setSecurityError("confirmPassword", {
+                              message:
+                                "New Password and Confirm Password didn't match",
+                            });
+                          } else {
+                            clearSecurityErrors("newPassword");
+                            clearSecurityErrors("confirmPassword");
+                          }
+                        },
+                      })}
+                      placeholder="Re-type password"
+                      className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
+                    />
+                  </div>
+
+                  {/* TODO: Create a error Message component */}
+                  {securityErrors.newPassword && (
+                    <h1>{securityErrors.newPassword.message}</h1>
+                  )}
+
+                  <div className="flex gap-5 flex-col">
+                    <div className=" hover:cursor-text">
+                      <Link passHref href="/forget-password">
+                        Forgot Password?
+                      </Link>
+                    </div>
+                    {/*TODO:  Disable button in case of error :: extend component to accept disabled prop  */}
+
                     <Button value="Update"></Button>
-                  </Link>
+                  </div>
                 </div>
-              </div>
+              </form>
             </div>
           </TabPanel>
 
@@ -330,22 +429,25 @@ export default function Profile() {
               Jobs you Applied
             </div>
             {jobs
-              ?.filter((job) => job.assignedToId?.id === user?.["id"])
+              ?.filter((job) => job.assignedTo?.id === session.user?.["id"])
               .map((job) => (
                 <div key={job?.id} className="p-1">
+                  {/* {JSON.stringify(job)} */}
                   <div className="shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
                     <div className="font-bold text-xl p-2">{job?.title}</div>
                     <div className="flex gap-4 italic p-3 m-auto items-center">
-                      <div>
-                        {/* {user?.["id"]} */}
-                        <Image
-                          src={job?.postedBy?.image}
-                          alt={job?.postedBy?.name}
-                          width={20}
-                          height={20}
-                          className="rounded-full"
-                        />
-                      </div>
+                      {job?.postedBy?.image && (
+                        <div>
+                          {/* {user?.["id"]} */}
+                          <Image
+                            src={job?.postedBy?.image}
+                            alt={job?.postedBy?.name}
+                            width={20}
+                            height={20}
+                            className="rounded-full"
+                          />
+                        </div>
+                      )}
                       <div>{job?.postedBy?.name}</div>
                       <div className="bg-blue-50 rounded-full px-3 ">
                         {formatDistance(new Date(job.postedOn), new Date(), {
@@ -363,37 +465,38 @@ export default function Profile() {
                       <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                         {job.Location.displayName}
                       </div>
-                      <Link href={`jobs/${job.id}`}>
-                        <Button value="View Job" onClick={null} />
-                      </Link>
+                      <Button value="Cancel" onClick={null} />
                     </div>
                   </div>
                 </div>
               ))}
           </TabPanel>
 
-          {user?.["role"] === "employer" && (
+          {session?.user?.["role"] === "employer" && (
             <TabPanel hidden={selectedTab !== "posted-job"}>
               <div className="text-4xl font-bold text-center m-20">
                 Jobs you Posted
               </div>
               {jobs
-                ?.filter((job) => job.postedBy?.id === user?.["id"])
+                ?.filter((job) => job.postedBy?.id === session.user?.["id"])
                 .map((job) => (
                   <div className="flex justify-center items-center">
                     <div key={job.id} className="w-full p-1">
+                      {JSON.stringify(job)}
                       <div className=" shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
                         <div className="font-bold text-xl p-2">{job.title}</div>
                         <div className="flex gap-4 italic p-3 m-auto items-center">
-                          <div>
-                            <Image
-                              src={job?.postedBy?.image}
-                              alt={job?.postedBy?.name}
-                              width={20}
-                              height={20}
-                              className="rounded-full"
-                            />
-                          </div>
+                          {job?.postedBy?.image && (
+                            <div>
+                              <Image
+                                src={job?.postedBy?.image}
+                                alt={job?.postedBy?.name}
+                                width={20}
+                                height={20}
+                                className="rounded-full"
+                              />
+                            </div>
+                          )}
                           <div>{job.postedBy.name}</div>
                           <div className="bg-blue-50 rounded-full px-3 ">
                             {formatDistance(
