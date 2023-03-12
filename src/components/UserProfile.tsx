@@ -27,7 +27,7 @@ export default function UserProfile() {
   });
 
   useEffect(() => {
-    fetch("/api/userProfile", {
+    fetch(`/api/users/${session.user["id"]}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -117,7 +117,7 @@ export default function UserProfile() {
           <div className="flex flex-col gap-1 text-gray-500">
             <label>DOB:</label>
             <input
-              type="dob"
+              type="date"
               {...register("dob")}
               placeholder="e.g. 1999-01-01"
               className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
@@ -126,7 +126,7 @@ export default function UserProfile() {
           <div className="flex flex-col gap-1 text-gray-500">
             <label>Permanent Address:</label>
             <input
-              type="address"
+              type="text"
               {...register("permananetAddress")}
               placeholder="Permanent Address"
               className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
@@ -135,7 +135,7 @@ export default function UserProfile() {
           <div className="flex flex-col gap-1 text-gray-500">
             <label>Temporary Address:</label>
             <input
-              type="address"
+              type="text"
               {...register("temporaryAddress")}
               placeholder="Temporary Address"
               className="border-2 focus:outline-none focus:shadow-outline border-gray-300 text-gray-700 p-3 rounded-md"
