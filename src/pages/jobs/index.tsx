@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { useQueryParams } from "use-query-params";
 import Button from "../../components/Button";
 
-export default function jobApply() {
+export default function JobApply() {
   const [{ category, location }] = useQueryParams({
     category: "",
     location: "",
   });
-  const [job, setJob] = useState([]);
-  const [activeTab, setActiveTab] = useState("date");
+  let [job, setJob] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState(null);
 
   useEffect(() => {
     fetch(`/api/jobs/`, {
@@ -27,35 +27,40 @@ export default function jobApply() {
       });
   }, []);
 
+  const handleFilterChange = (event) => {
+    setSelectedFilter(event.target.value);
+  };
+
   const searchResult = category ? category : location;
 
-  const handleDateFilter = () => {
-    setActiveTab("date");
-    const sortedData = job.sort((a, b) => b.postedOn.localeCompare(a.postedOn));
-    setJob(sortedData);
-  };
-
-  const handlePriceFilter = () => {
-    setActiveTab("price");
-    const sortedData = job.sort((a, b) => b.price - a.price);
-    setJob(sortedData);
-  };
+  if (selectedFilter === "oldest") {
+    job = job.sort((a, b) => a.postedOn.localeCompare(b.postedOn));
+  } else if (selectedFilter === "latest") {
+    job = job.sort((a, b) => b.postedOn.localeCompare(a.postedOn));
+  } else if (selectedFilter === "high-low") {
+    job = job.sort((a, b) => b.price - a.price);
+  } else if (selectedFilter === "low-high") {
+    job = job.sort((a, b) => a.price - b.price);
+  }
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-col items-center justify-center w-full">
+      <div className="flex flex-col items-center  w-full">
         <div className="flex font-bold text-2xl p-3">Jobs you might like</div>
-        <div className="flex gap-4">
-          <Button
-            value="Sort by date"
-            onClick={handleDateFilter}
-            className={activeTab === "date" ? "bg-gray-200" : ""}
-          />
-          <Button
-            value="Sort by price"
-            onClick={handlePriceFilter}
-            className={activeTab === "price" ? "bg-gray-200" : ""}
-          />
+        <div className="flex w-3/5 gap-2 justify-end">
+          <div className="bg-gray-100 rounded-lg p-1 px-5 text-lg justify-end ">
+            Sort By:
+          </div>
+          <select
+            className="bg-gray-100 rounded-lg p-1 px-3 text-lg"
+            value={selectedFilter}
+            onChange={handleFilterChange}
+          >
+            <option value="latest">Date: Newest</option>
+            <option value="oldest">Date: Oldest </option>
+            <option value="high-low">Price: High to Low</option>
+            <option value="low-high">Price: Low to High</option>
+          </select>
         </div>
       </div>
 
@@ -96,7 +101,7 @@ export default function jobApply() {
                   <div className="jobDetail text-lg px-3 w-full">
                     {job.description}
                   </div>
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-3 pl-3">
                     <div className="flex pt-5">
                       <span className="font-semibold">Price:</span> &#160;
                       {job.price}
@@ -128,7 +133,7 @@ export default function jobApply() {
                         className="rounded-full"
                       />
                     </div>
-
+                    <div>{job.postedBy.name}</div>
                     <div className="bg-blue-50 rounded-full px-3 ">
                       {formatDistance(new Date(job.postedOn), new Date(), {
                         addSuffix: true,
@@ -141,7 +146,7 @@ export default function jobApply() {
                   <div className="jobDetail text-lg px-3 w-full">
                     {job.description}
                   </div>
-                  <div className="flex flex-col gap-3 pt-5 pl-3">
+                  <div className="flex flex-col gap-3 pl-3">
                     <div className="flex pt-5">
                       <span className="font-semibold">Price:</span> &#160;
                       {job.price}
