@@ -32,13 +32,13 @@ export default function Security() {
   const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
-    fetch("/api/userProfile", {
+    fetch(`/api/users/${session.user["id"]}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("HERE", !data?.password);
+        // console.log("HERE", !data?.password);
         !data?.password
           ? setIsDisabled(true)
           : setSecurity("currentPassword", data?.password);
@@ -86,7 +86,7 @@ export default function Security() {
                       getSecurity("currentPassword")
                     ) {
                       setSecurityError("typedCurrentPassword", {
-                        message: "CurrentPassord doesn't match",
+                        message: "Current Passord doesn't match",
                       });
                       setIsDisabled(true);
                     } else {
@@ -99,9 +99,9 @@ export default function Security() {
               />
               {/* TODO: Create a error Message component */}
               {securityErrors.typedCurrentPassword && (
-                <h1 className="text-red-500">
+                <div className="flex bg-red-100 px-4 py-2 text-red-500 rounded">
                   {securityErrors.typedCurrentPassword.message}
-                </h1>
+                </div>
               )}
             </div>
             <div className="flex flex-col gap-1 text-gray-500">
@@ -161,9 +161,9 @@ export default function Security() {
 
             {/* TODO: Create a error Message component */}
             {securityErrors.newPassword && (
-              <h1 className="text-red-500">
+              <div className="flex bg-red-100 px-4 py-2 text-red-500 rounded">
                 {securityErrors.newPassword.message}
-              </h1>
+              </div>
             )}
 
             <div className="flex gap-5 flex-col">
@@ -177,8 +177,8 @@ export default function Security() {
               <Button value="Update" disabled={isDisabled}></Button>
             </div>
           </div>
-        </form>
-      </div>
-    </div>
+        </form >
+      </div >
+    </div >
   );
 }
