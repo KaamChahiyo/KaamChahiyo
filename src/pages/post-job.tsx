@@ -38,7 +38,7 @@ export default function PostJob() {
           postedById: session.user["id"],
         }),
       });
-      router.push(`/`);
+      router.push(`/user-profile`);
     } catch (error) {
       return null;
     }

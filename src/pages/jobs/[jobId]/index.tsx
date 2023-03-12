@@ -92,7 +92,7 @@ export default function apply({ job, params }) {
             <div className="bg-blue-50 rounded-full px-3 ">
               {formatDistance(new Date(job.postedOn), new Date(), {
                 addSuffix: true,
-              })}{" "}
+              })}
             </div>
             <div className="bg-blue-50 rounded-full px-3 ">
               {job.Category.displayName}
