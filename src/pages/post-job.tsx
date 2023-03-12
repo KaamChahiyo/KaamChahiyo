@@ -4,17 +4,13 @@ import { useRouter } from "next/router";
 import { authOptions } from "./api/auth/[...nextauth]";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
-import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 
 export default function PostJob() {
   const { data: session } = useSession();
-  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const [categories, setCategories] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [user, setUser] = useState([]);
-
   useEffect(() => {
     if (!session) {
       router.replace("/login");
@@ -42,6 +38,7 @@ export default function PostJob() {
           postedById: session.user["id"],
         }),
       });
+      router.push(`/user-profile`);
     } catch (error) {
       return null;
     }
