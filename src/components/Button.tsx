@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Button({ value, onClick }: any) {
+export default function Button({ value, onClick, disabled }: any) {
   let className =
     "flex rounded-md bg-[#0063F1] text-white text-lg font-medium px-6 py-2.5 border-2 border-[#0063F1] hover:bg-white hover:font-medium hover:text-[#0063F1] cursor-pointer";
   if (value == "Search") {
@@ -17,7 +17,7 @@ export default function Button({ value, onClick }: any) {
         value={value}
         className={className}
         onClick={onClick}
-
+        disabled={disabled}
       />
     </div>
   );

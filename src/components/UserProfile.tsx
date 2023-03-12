@@ -61,6 +61,7 @@ export default function UserProfile() {
       console.log(error);
     }
   }
+
   return (
     <div>
       <div className="p-10">

@@ -19,7 +19,7 @@ export default function Security() {
     setError: setSecurityError,
     getValues: getSecurity,
     clearErrors: clearSecurityErrors,
-    formState: { isSubmitting: isSecuritySubmitting, errors: securityErrors },
+    formState: { errors: securityErrors },
   } = useForm({
     defaultValues: {
       currentPassword: "",
@@ -29,6 +29,8 @@ export default function Security() {
     },
   });
 
+  const [isDisabled, setIsDisabled] = useState(true);
+
   useEffect(() => {
     fetch("/api/userProfile", {
       method: "GET",
@@ -36,45 +38,17 @@ export default function Security() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log("HERE", data);
-        setSecurity("currentPassword", data?.password);
+        console.log("HERE", !data?.password);
+        !data?.password
+          ? setIsDisabled(true)
+          : setSecurity("currentPassword", data?.password);
       });
   }, []);
 
-  // useEffect(() => {
-  //   const newUserId = session.user["id"];
-  //   setValue("name", newUser.name);
-  //   setValue("bio", selected_user.bio);
-  //   setValue("dob", selected_user.dob.substring(0, 10));
-  //   setValue("email", selected_user.email);
-  //   setValue("temporaryAddress", selected_user.temporaryAddress);
-  //   setValue("permananetAddress", selected_user.permananetAddress);
-  //   setValue("phoneNumber", selected_user.phoneNumber);
-  //   setSelectedUser(selected_user);
-  //   setRole(selected_user.role);
-  //   setStatus(selected_user.status);
-  // }, []);
-
-  async function onSubmit(data, e) {
-    try {
-      console.log(data);
-      await fetch(`/api/users/${session.user["id"]}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        body: JSON.stringify({ ...data, dob: new Date(data.dob) }),
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async function onSecuritySubmit(data, e) {
-    console.log("SECURITY SUBMIT", data);
+    // console.log("Button Clicked");
     try {
-      console.log(data);
+      //   console.log("SECURITY SUBMIT", data);
       await fetch(`/api/users/${session.user["id"]}`, {
         method: "PUT",
         headers: {
@@ -87,21 +61,6 @@ export default function Security() {
       null;
     }
   }
-
-  const [jobs, setJobs] = useState([]);
-
-  useEffect(() => {
-    fetch(`/api/jobs/`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data.jobs);
-        setJobs(data.jobs);
-        // data.jobs.postedBy.id;
-      });
-  }, []);
 
   return (
     <div>
@@ -116,7 +75,7 @@ export default function Security() {
 
             <div className="flex flex-col gap-1 text-gray-500">
               <label>Current Password:</label>
-              {/* <h1>asd:{getSecurity("currentPassword")}</h1> */}
+              {/* <h1>111: {getSecurity("currentPassword")}</h1> */}
               <input
                 type="password"
                 placeholder="Enter current Password"
@@ -129,7 +88,11 @@ export default function Security() {
                       setSecurityError("typedCurrentPassword", {
                         message: "CurrentPassord doesn't match",
                       });
-                    } else clearSecurityErrors("typedCurrentPassword");
+                      setIsDisabled(true);
+                    } else {
+                      clearSecurityErrors("typedCurrentPassword"),
+                        setIsDisabled(false);
+                    }
                   },
                 })}
                 className="border-2 focus:outline-none border-gray-300 p-3 rounded-md"
@@ -157,9 +120,11 @@ export default function Security() {
                         message:
                           "New Password and Confirm Password didn't match",
                       });
+                      setIsDisabled(true);
                     } else {
                       clearSecurityErrors("newPassword");
                       clearSecurityErrors("confirmPassword");
+                      setIsDisabled(false);
                     }
                   },
                 })}
@@ -181,9 +146,11 @@ export default function Security() {
                         message:
                           "New Password and Confirm Password didn't match",
                       });
+                      setIsDisabled(true);
                     } else {
                       clearSecurityErrors("newPassword");
                       clearSecurityErrors("confirmPassword");
+                      setIsDisabled(false);
                     }
                   },
                 })}
@@ -207,7 +174,7 @@ export default function Security() {
               </div>
               {/*TODO:  Disable button in case of error :: extend component to accept disabled prop  */}
 
-              <Button value="Update"></Button>
+              <Button value="Update" disabled={isDisabled}></Button>
             </div>
           </div>
         </form>
