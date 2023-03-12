@@ -21,7 +21,7 @@ export default function Services() {
           link={`/jobs/?${searchDomain}=${"plumber"}`}
           icon={PlumberIcon}
           services={"Plumber"}
-          activeJobs="5"
+          activeJobs="3"
           rank="N/A"
         />
 
@@ -29,49 +29,49 @@ export default function Services() {
           link={`/jobs/?${searchDomain}=${"electrician"}`}
           icon={ElectricianIcon}
           services={"Electrician"}
-          activeJobs="5"
+          activeJobs="2"
           rank="N/A"
         />
         <AllServices
           link={`/jobs/?${searchDomain}=${"computer-repair"}`}
           icon={ComputerIcon}
           services={"Computer Repair"}
-          activeJobs="5"
+          activeJobs="1"
           rank="N/A"
         />
         <AllServices
           link={`/jobs/?${searchDomain}=${"household"}`}
           icon={HomeIcon}
           services={"House Hold"}
-          activeJobs="5"
+          activeJobs="0"
           rank="N/A"
         />
         <AllServices
           link={`/jobs/?${searchDomain}=${"painter"}`}
           icon={PainterIcon}
           services={"Painter"}
-          activeJobs="5"
+          activeJobs="0"
           rank="N/A"
         />
         <AllServices
           link={`/jobs/?${searchDomain}=${"it-services"}`}
           icon={ItServiceIcon}
           services={"It Service"}
-          activeJobs="5"
+          activeJobs="1"
           rank="N/A"
         />
         <AllServices
           link={`/jobs/?${searchDomain}=${"web-designer"}`}
           icon={WebdesignerIcon}
           services={"Web Designer"}
-          activeJobs="5"
+          activeJobs="0"
           rank="N/A"
         />
         <AllServices
           link={`/jobs/?${searchDomain}=${"photographer"}`}
           icon={PhotographerIcon}
           services={"Photo Grapher"}
-          activeJobs="5"
+          activeJobs="1"
           rank="N/A"
         />
       </div>

@@ -316,10 +316,7 @@ export default function Profile() {
           </TabPanel>
           <TabPanel hidden={selectedTab !== "security-tab"}>
             <div className="p-10">
-              <form
-                onSubmit={handleSecurity(onSecuritySubmit)}
-                className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl"
-              >
+              <form onSubmit={handleSecurity(onSecuritySubmit)}>
                 <div className="flex flex-col gap-3 p-10 bg-white shadow-md rounded-3xl h-[672px]">
                   <div className="flex flex-col gap-3">
                     <p className="font-bold text-4xl text-center p-4">
@@ -329,7 +326,7 @@ export default function Profile() {
 
                   <div className="flex flex-col gap-1 text-gray-500">
                     <label>Current Password:</label>
-                    <h1>asd:{getSecurity("currentPassword")}</h1>
+                    {/* <h1>asd:{getSecurity("currentPassword")}</h1> */}
                     <input
                       type="password"
                       placeholder="Enter current Password"
@@ -349,7 +346,9 @@ export default function Profile() {
                     />
                     {/* TODO: Create a error Message component */}
                     {securityErrors.typedCurrentPassword && (
-                      <h1>{securityErrors.typedCurrentPassword.message}</h1>
+                      <h1 className="text-red-500">
+                        {securityErrors.typedCurrentPassword.message}
+                      </h1>
                     )}
                   </div>
                   <div className="flex flex-col gap-1 text-gray-500">
@@ -407,7 +406,9 @@ export default function Profile() {
 
                   {/* TODO: Create a error Message component */}
                   {securityErrors.newPassword && (
-                    <h1>{securityErrors.newPassword.message}</h1>
+                    <h1 className="text-red-500">
+                      {securityErrors.newPassword.message}
+                    </h1>
                   )}
 
                   <div className="flex gap-5 flex-col">
