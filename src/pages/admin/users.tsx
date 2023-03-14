@@ -49,7 +49,7 @@ export default function Users() {
     },
   });
 
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState(users[0]?.id || null);
 
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -70,7 +70,7 @@ export default function Users() {
       setRole(selected_user.role);
       setStatus(selected_user.status);
     }
-  }, [selectedUserId]);
+  }, [selectedUserId,users]);
 
   useEffect(() => {
     console.log(selectedUser);
