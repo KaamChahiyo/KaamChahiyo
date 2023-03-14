@@ -19,6 +19,12 @@ export default function Users() {
   }, [session]);
 
   const [users, setUsers] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const [role, setRole] = useState("");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     fetch(`/api/users`, {
@@ -29,6 +35,7 @@ export default function Users() {
       .then((data) => {
         console.log(data.users);
         setUsers(data.users);
+        setSelectedUserId(data.users[0]?.id || null);
       });
   }, []);
 
@@ -49,13 +56,6 @@ export default function Users() {
     },
   });
 
-  const [selectedUserId, setSelectedUserId] = useState(users[0]?.id || null);
-
-  const [selectedUser, setSelectedUser] = useState(null);
-
-  const [role, setRole] = useState("");
-  const [status, setStatus] = useState("");
-
   useEffect(() => {
     if (selectedUserId) {
       const selected_user = users.find((user) => user.id === selectedUserId);
@@ -70,11 +70,11 @@ export default function Users() {
       setRole(selected_user.role);
       setStatus(selected_user.status);
     }
-  }, [selectedUserId,users]);
+  }, [selectedUserId]);
 
-  useEffect(() => {
-    console.log(selectedUser);
-  }, [selectedUser]);
+  // useEffect(() => {
+  //   // console.log(selectedUser);
+  // }, [selectedUser]);
 
   async function onSubmit(data, e) {
     try {
@@ -220,7 +220,7 @@ export default function Users() {
                   </div>
                   <button
                     type="submit"
-                    className="px-5 py-4 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold w-1/3 focus:outline-none focus:shadow-outline"
+                    className="px-5 py-4 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold w-1/3 focus:outline-none focus:shadow-outline mb-5"
                   >
                     {isSubmitting ? <>Updating</> : <>Update</>}
                   </button>
