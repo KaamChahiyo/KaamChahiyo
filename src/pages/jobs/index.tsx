@@ -63,12 +63,12 @@ export default function JobApply() {
           </select>
         </div>
       </div>
-      {job.length === 0 ? (
+      {job.filter((job) => job.status === "approved").length === 0 ? (
         <p className="font-semibold">
-          No Any Jobs Available Currently. Thanks For Visiting
+          No Jobs Available Currently. Thanks For Visiting.
         </p>
       ) : (
-        <div className="flex flex-col items-center justify-center gap-4">
+        <div className="flex flex-col items-center justify-center gap-4 w-full">
           {searchResult &&
             job
               .filter(

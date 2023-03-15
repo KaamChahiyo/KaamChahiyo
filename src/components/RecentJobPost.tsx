@@ -24,7 +24,7 @@ export default function RecentJobPost() {
   return (
     <div className="flex flex-col justify-center items-center gap-5">
       <div className="flex font-bold text-2xl py-4">Recent Jobs</div>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-4 w-full">
         {job
           ?.filter((job) => job.status === "approved")
           .slice(0, 2)
