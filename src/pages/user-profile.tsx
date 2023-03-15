@@ -120,6 +120,7 @@ export default function Profile() {
             ) : (
               jobs
                 ?.filter((job) => job?.assignedTo?.id === session.user?.["id"])
+                .sort((a, b) => b?.postedOn?.localeCompare(a.postedOn))
                 .map((job) => (
                   <div key={job?.id} className="p-1">
                     {/* {JSON.stringify(job)} */}
@@ -177,6 +178,7 @@ export default function Profile() {
               ) : (
                 jobs
                   ?.filter((job) => job.postedBy?.id === session.user?.["id"])
+                  .sort((a, b) => b.postedOn.localeCompare(a.postedOn))
                   .map((job) => (
                     <div className="flex justify-center items-center">
                       <div key={job.id} className="w-full p-1">
