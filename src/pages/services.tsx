@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ComputerIcon,
   ElectricianIcon,
@@ -14,66 +14,72 @@ import {
 export default function Services() {
   const [searchDomain] = useState("category");
 
+  let [job, setJob] = useState([]);
+
+  useEffect(() => {
+    fetch(`/api/jobs`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const sortedData = data.jobs.sort((a, b) =>
+          b.postedOn.localeCompare(a.postedOn)
+        );
+        setJob(sortedData);
+      });
+  }, []);
+
+  const countActiveJobs = (category) => {
+    const filteredJobs = job.filter((job) => job.Category.name === category);
+    return filteredJobs.filter((job) => job.status === "approved").length;
+  };
+
+  const categories = [
+    { name: "plumber", displayName: "Plumber", icon: PlumberIcon },
+    { name: "electrician", displayName: "Electrician", icon: ElectricianIcon },
+    {
+      name: "computer-repair",
+      displayName: "Computer Repair",
+      icon: ComputerIcon,
+    },
+    { name: "household", displayName: "Household", icon: HomeIcon },
+    { name: "painter", displayName: "Painter", icon: PainterIcon },
+    { name: "it-services", displayName: "IT Services", icon: ItServiceIcon },
+    {
+      name: "web-designer",
+      displayName: "Web Designer",
+      icon: WebdesignerIcon,
+    },
+    {
+      name: "photographer",
+      displayName: "Photographer",
+      icon: PhotographerIcon,
+    },
+  ];
+
+  const categoryJobs = categories.map((category) => ({
+    name: category.name,
+    displayName: category.displayName,
+    icon: category.icon,
+    activeJobs: countActiveJobs(category.name),
+  }));
+
+  categoryJobs.sort((a, b) => b.activeJobs - a.activeJobs);
+
   return (
     <div className="flex justify-center">
       <div className="grid grid-cols-1 sm:grid-cols-3 py-5 gap-12 place-content-center">
-        <AllServices
-          link={`/jobs/?${searchDomain}=${"plumber"}`}
-          icon={PlumberIcon}
-          services={"Plumber"}
-          activeJobs="3"
-          rank="N/A"
-        />
-
-        <AllServices
-          link={`/jobs/?${searchDomain}=${"electrician"}`}
-          icon={ElectricianIcon}
-          services={"Electrician"}
-          activeJobs="2"
-          rank="N/A"
-        />
-        <AllServices
-          link={`/jobs/?${searchDomain}=${"computer-repair"}`}
-          icon={ComputerIcon}
-          services={"Computer Repair"}
-          activeJobs="1"
-          rank="N/A"
-        />
-        <AllServices
-          link={`/jobs/?${searchDomain}=${"household"}`}
-          icon={HomeIcon}
-          services={"House Hold"}
-          activeJobs="0"
-          rank="N/A"
-        />
-        <AllServices
-          link={`/jobs/?${searchDomain}=${"painter"}`}
-          icon={PainterIcon}
-          services={"Painter"}
-          activeJobs="0"
-          rank="N/A"
-        />
-        <AllServices
-          link={`/jobs/?${searchDomain}=${"it-services"}`}
-          icon={ItServiceIcon}
-          services={"It Service"}
-          activeJobs="1"
-          rank="N/A"
-        />
-        <AllServices
-          link={`/jobs/?${searchDomain}=${"web-designer"}`}
-          icon={WebdesignerIcon}
-          services={"Web Designer"}
-          activeJobs="0"
-          rank="N/A"
-        />
-        <AllServices
-          link={`/jobs/?${searchDomain}=${"photographer"}`}
-          icon={PhotographerIcon}
-          services={"Photo Grapher"}
-          activeJobs="1"
-          rank="N/A"
-        />
+        {categoryJobs.map((category) => (
+          <AllServices
+            key={category.name}
+            link={`/jobs/?${searchDomain}=${category.name}`}
+            icon={category.icon}
+            services={category.displayName}
+            activeJobs={category.activeJobs}
+            rank={categoryJobs.indexOf(category) + 1}
+          />
+        ))}
       </div>
     </div>
   );
@@ -89,8 +95,8 @@ const AllServices = ({
   link: string;
   icon: JSX.Element;
   services: string;
-  activeJobs: string;
-  rank: string;
+  activeJobs: number;
+  rank: number;
 }) => {
   return (
     <Link passHref href={link} className="flex gap-10">

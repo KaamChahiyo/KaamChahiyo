@@ -20,7 +20,7 @@ function TopEmployees() {
       <div className="flex justify-center font-bold text-2xl py-4">
         Top Employees
       </div>
-      <div className="flex gap-10">
+      <div className="flex flex-wrap gap-10">
         {users?.slice(0, 3).map((user) => {
           return (
             <div
