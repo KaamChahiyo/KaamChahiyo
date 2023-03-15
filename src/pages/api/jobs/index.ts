@@ -45,7 +45,13 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
       postedOn: true,
 
       assignedOn: true,
-
+      assignedTo: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
       Location: {
         select: {
           name: true,
