@@ -106,26 +106,30 @@ export default function UserProfile() {
                 />
               </div>
             )}
-            <div>
-              <div className="bg-blue-50 rounded-full px-3">{userRole}</div>
+            <div className="flex flex-col gap-5">
+              <div>
+                <div className="bg-blue-50 rounded-full text-center w-fit text-lg px-3">
+                  {userRole}
+                </div>
+              </div>
               {userRole == "employee" ? (
                 <div className="">
                   <button
-                    className="text-xl"
+                    className="flex rounded-md bg-[#0063F1] text-white text-lg font-medium px-9 py-4 sm:w-full border-2 border-[#0063F1] hover:bg-white hover:text-[#0063F1] cursor-pointer"
                     onClick={() => onClickBtn(userId, "employer")}
                   >
-                    Change to employer
+                    Be employer
                   </button>
                 </div>
               ) : userRole == "employer" ? (
                 <button
-                  className="text-xl"
+                  className="flex rounded-md bg-[#0063F1] text-white text-lg font-medium px-9 py-4 sm:w-full border-2 border-[#0063F1] hover:bg-white hover:text-[#0063F1] cursor-pointer"
                   onClick={() => onClickBtn(userId, "employee")}
                 >
-                  Change to employee
+                  Be employee
                 </button>
               ) : (
-                <div>Suman Pro max</div>
+                <div></div>
               )}
             </div>
           </div>

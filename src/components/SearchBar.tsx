@@ -3,7 +3,7 @@ import { ICategory, getCategories } from "../services/categoryService";
 import { ILocation, getLocations } from "../services/locationService";
 import Link from "next/link";
 import Button from "../components/Button";
-import { ChevronDownIcon } from "../icons";
+import { ChevronDownIcon } from "../icons/CheveronDownIcon";
 
 export default function test({ locations, categories }) {
   const [Values, setValues] = useState("");
@@ -25,9 +25,7 @@ export default function test({ locations, categories }) {
   };
 
   const [click, setClick] = React.useState(false);
-  const onClickChooseType = () => {
-    setClick(!click);
-  };
+
   const [selectedOption, setSelectedOption] = useState(categories);
   const [searchDomain, setSearchDomain] = useState("category");
   const [option, setOption] = React.useState("Catergories");
@@ -50,11 +48,11 @@ export default function test({ locations, categories }) {
       <div>
         <div className="flex items-center rounded-full ">
           <div
-            onClick={onClickChooseType}
+            onClick={() => setClick(!click)}
             className="flex rounded-l-full w-40 bg-white p-3 px-6 hover:cursor-pointer"
           >
             <div className="w-24">{option}</div>
-            <div className="text-black h-5 w-5 pt-0.5" >{ChevronDownIcon}</div>
+            <div className="text-black h-5 w-5 pt-0.5">{ChevronDownIcon}</div>
           </div>
 
           <input
@@ -69,8 +67,9 @@ export default function test({ locations, categories }) {
 
         <div className="flex gap-10">
           <div
-            className={`flex flex-col w-32 h-20 p-3 rounded-b-lg hover:cursor-pointer overflow-hidden ${click && "bg-white"
-              }`}
+            className={`flex flex-col w-32 h-20 p-3 rounded-b-lg overflow-hidden ${
+              click && "hover:cursor-pointer bg-white"
+            }`}
           >
             {click && (
               <div className="flex flex-col gap-2">
@@ -81,8 +80,9 @@ export default function test({ locations, categories }) {
           </div>
           <div className="">
             <div
-              className={`rounded-b-lg flex flex-col h-60 overflow-auto ${showInputOptions ? "block" : "hidden"
-                }`}
+              className={`rounded-b-lg flex flex-col h-60 overflow-auto ${
+                showInputOptions ? "block" : "hidden"
+              }`}
             >
               {selectedOption
                 .filter((selectOption: ICategory | ILocation) => {
@@ -91,8 +91,8 @@ export default function test({ locations, categories }) {
                   return SearchTerm == ""
                     ? lowerCaseData
                     : SearchTerm &&
-                    lowerCaseData.startsWith(SearchTerm) &&
-                    lowerCaseData != SearchTerm;
+                        lowerCaseData.startsWith(SearchTerm) &&
+                        lowerCaseData != SearchTerm;
                 })
                 .map((selectOption: ICategory | ILocation) => (
                   <div
