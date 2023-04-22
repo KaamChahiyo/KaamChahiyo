@@ -18,6 +18,8 @@ import Security from "../components/Security";
 import UserProfile from "../components/UserProfile";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
+import EmoployeeEarning from "../components/EmoployeeEarning";
+import EmployeeExpenses from "../components/EmployeeExpenses";
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -106,27 +108,27 @@ export default function Profile() {
           {/*expenses for  employer */}
           {session?.user?.["role"] === "employee" && (
             <TabSelector
-              isActive={selectedTab === "earnings-tab"}
-              onClick={() => setSelectedTab("earnings-tab")}
+              isActive={selectedTab === "expenses-tab"}
+              onClick={() => setSelectedTab("expenses-tab")}
             >
               <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
-                <div className=" w-6 text-white">{MoneyInIcon}</div>
+                <div className=" w-6 text-white">{MoneyOutIcon}</div>
               </div>
               <div className="font-medium text-lg lg:text-2xl flex items-center">
-                Earnings
+                Expenses
               </div>
             </TabSelector>
           )}
           {/* income for employee */}
           <TabSelector
-            isActive={selectedTab === "expenses-tab"}
-            onClick={() => setSelectedTab("expenses-tab")}
+            isActive={selectedTab === "earnings-tab"}
+            onClick={() => setSelectedTab("earnings-tab")}
           >
             <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
-              <div className=" w-6 text-white">{MoneyOutIcon}</div>
+              <div className=" w-6 text-white">{MoneyInIcon}</div>
             </div>
             <div className="font-medium text-lg lg:text-2xl flex items-center">
-              Expenses
+              Earnings
             </div>
           </TabSelector>
         </div>
@@ -137,7 +139,12 @@ export default function Profile() {
           <TabPanel hidden={selectedTab !== "security-tab"}>
             <Security />
           </TabPanel>
-
+          <TabPanel hidden={selectedTab !== "earnings-tab"}>
+            <EmoployeeEarning />
+          </TabPanel>
+          <TabPanel hidden={selectedTab !== "expenses-tab"}>
+            <EmployeeExpenses />
+          </TabPanel>
           <TabPanel hidden={selectedTab !== "applied-job"}>
             <div className="text-4xl font-bold text-center m-20">
               Jobs you Applied
