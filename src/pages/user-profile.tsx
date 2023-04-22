@@ -14,6 +14,8 @@ import {
 } from "../icons";
 import Security from "../components/Security";
 import UserProfile from "../components/UserProfile";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -221,4 +223,15 @@ export default function Profile() {
       </div>
     </div>
   );
+}
+
+
+
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      session: await getServerSession(context.req, context.res, authOptions),
+    },
+  };
 }

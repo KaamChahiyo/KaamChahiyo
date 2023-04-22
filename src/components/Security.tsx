@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import sha256 from "crypto-js/sha256";
@@ -11,6 +12,8 @@ const hashPassword = (password: string) => {
 
 export default function Security() {
   const { data: session } = useSession();
+
+
 
   const {
     handleSubmit: handleSecurity,
@@ -75,7 +78,7 @@ export default function Security() {
 
             <div className="flex flex-col gap-1 text-gray-500">
               <label>Current Password:</label>
-              {/* <h1>111: {getSecurity("currentPassword")}</h1> */}
+              <h1>111: {getSecurity("currentPassword")}</h1>
               <input
                 type="password"
                 placeholder="Enter current Password"
