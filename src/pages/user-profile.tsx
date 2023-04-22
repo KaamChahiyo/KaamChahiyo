@@ -8,12 +8,16 @@ import Button from "../components/Button";
 import { TabSelector } from "../components/TabSelector";
 import {
   AppliedJobIcon,
+  MoneyInIcon,
+  MoneyOutIcon,
   PasswordIcon,
   PostedJobIcon,
   ProfileIcon,
 } from "../icons";
 import Security from "../components/Security";
 import UserProfile from "../components/UserProfile";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -30,6 +34,8 @@ export default function Profile() {
     "security-tab",
     "posted-job",
     "applied-job",
+    "earnings-tab",
+    "expenses-tab"
   ]);
 
   const [jobs, setJobs] = useState([]);
@@ -41,14 +47,12 @@ export default function Profile() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.jobs);
         setJobs(data.jobs);
-        // data.jobs.postedBy.id;
       });
   }, []);
 
   return (
-    <div className="container mt-20 flex flex-col gap-12 z-10">
+    <div className="container mt-20 m-auto flex flex-col gap-12 z-10">
       <div className="container flex lg:flex-row flex-col-reverse">
         <div className="flex flex-row lg:flex-col w-1/4 gap-3 m-10">
           <TabSelector
@@ -99,6 +103,32 @@ export default function Profile() {
               </div>
             </TabSelector>
           )}
+          {/*expenses for  employer */}
+          {session?.user?.["role"] === "employer" && (
+            <TabSelector
+              isActive={selectedTab === "earnings-tab"}
+              onClick={() => setSelectedTab("earnings-tab")}
+            >
+              <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
+                <div className=" w-6 text-white">{MoneyInIcon}</div>
+              </div>
+              <div className="font-medium text-lg lg:text-2xl flex items-center">
+                Earnings
+              </div>
+            </TabSelector>
+          )}
+          {/* income for employee */}
+          <TabSelector
+            isActive={selectedTab === "expenses-tab"}
+            onClick={() => setSelectedTab("expenses-tab")}
+          >
+            <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
+              <div className=" w-6 text-white">{MoneyOutIcon}</div>
+            </div>
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
+              Expenses
+            </div>
+          </TabSelector>
         </div>
         <div className="w-3/4 ">
           <TabPanel hidden={selectedTab !== "profile-tab"}>
@@ -239,6 +269,17 @@ export default function Profile() {
           )}
         </div>
       </div>
-    </div>
+    </div >
   );
+}
+
+
+
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      session: await getServerSession(context.req, context.res, authOptions),
+    },
+  };
 }

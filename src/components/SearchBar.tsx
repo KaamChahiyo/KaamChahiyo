@@ -3,7 +3,7 @@ import { ICategory, getCategories } from "../services/categoryService";
 import { ILocation, getLocations } from "../services/locationService";
 import Link from "next/link";
 import Button from "../components/Button";
-import { ChevronDownIcon } from "../icons";
+import { ChevronDownIcon } from "../icons/CheveronDownIcon";
 
 export default function test({ locations, categories }) {
   const [Values, setValues] = useState("");
