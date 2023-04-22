@@ -20,6 +20,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function Profile() {
+  const [jobs, setJobs] = useState([]);
+
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -35,10 +37,22 @@ export default function Profile() {
     "posted-job",
     "applied-job",
     "earnings-tab",
-    "expenses-tab"
+    "expenses-tab",
   ]);
-
-  const [jobs, setJobs] = useState([]);
+  const updateJobStatusById = async (id: string, status: string) => {
+    try {
+      await fetch(`/api/jobs/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({ status: status }),
+      });
+    } catch (error) {
+      null;
+    }
+  };
 
   useEffect(() => {
     fetch(`/api/jobs/`, {
@@ -49,7 +63,7 @@ export default function Profile() {
       .then((data) => {
         setJobs(data.jobs);
       });
-  }, []);
+  }, [updateJobStatusById]);
 
   return (
     <div className="container mt-20 m-auto flex flex-col gap-12 z-10">
@@ -149,7 +163,11 @@ export default function Profile() {
               </div>
             ) : (
               jobs
-                ?.filter((job) => job?.assignedTo?.id === session.user?.["id"])
+                ?.filter(
+                  (job) =>
+                    job?.assignedTo?.id === session.user?.["id"] &&
+                    job?.status === "inProgress"
+                )
                 .sort((a, b) => b?.postedOn?.localeCompare(a.postedOn))
                 .map((job) => (
                   <div key={job?.id} className="p-1">
@@ -187,7 +205,12 @@ export default function Profile() {
                           {job.Location.displayName}
                         </div>
                         Rs. {job.price}
-                        {/* <Button value="Cancel" onClick={null} /> */}
+                        <Button
+                          value="Mark Completed"
+                          onClick={() =>
+                            updateJobStatusById(job.id, "completed")
+                          }
+                        />
                       </div>
                     </div>
                   </div>
@@ -251,7 +274,7 @@ export default function Profile() {
                           </div>
                           <div className="flex flex-col gap-3 pl-3">
                             <div className="flex pt-5">
-                              <span className="font-semibold">Price:</span>{" "}
+                              <span className="font-semibold">Price:</span>
                               &#160;
                               {job.price}
                             </div>
@@ -269,12 +292,9 @@ export default function Profile() {
           )}
         </div>
       </div>
-    </div >
+    </div>
   );
 }
-
-
-
 
 export async function getServerSideProps(context) {
   return {

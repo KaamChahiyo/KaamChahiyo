@@ -13,8 +13,6 @@ const hashPassword = (password: string) => {
 export default function Security() {
   const { data: session } = useSession();
 
-
-
   const {
     handleSubmit: handleSecurity,
     register: registerSecurity,
@@ -78,7 +76,7 @@ export default function Security() {
 
             <div className="flex flex-col gap-1 text-gray-500">
               <label>Current Password:</label>
-              <h1>111: {getSecurity("currentPassword")}</h1>
+              {/* <h1>111: {getSecurity("currentPassword")}</h1> */}
               <input
                 type="password"
                 placeholder="Enter current Password"
@@ -180,8 +178,8 @@ export default function Security() {
               <Button value="Update" disabled={isDisabled}></Button>
             </div>
           </div>
-        </form >
-      </div >
-    </div >
+        </form>
+      </div>
+    </div>
   );
 }
