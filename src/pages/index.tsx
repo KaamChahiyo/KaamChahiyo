@@ -1,6 +1,5 @@
 import Image from "next/image";
 import TopCategory from "../components/TopCategory";
-import TopServices from "../components/TopServices";
 import RecentJobPost from "../components/RecentJobPost";
 import TopEmployees from "../components/TopEmployees";
 import WorkingMethod from "../components/WorkingMethod";
@@ -26,7 +25,6 @@ export default function Home({ locations, categories }) {
         </div>
         <RecentJobPost />
         <TopCategory />
-        <TopServices />
         <TopEmployees />
         <WorkingMethod />
       </div>
