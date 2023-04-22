@@ -1,13 +1,16 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function UserProfile() {
   const { data: session } = useSession();
-
+  const router = useRouter();
   const [userImage, setUserImage] = useState("");
   const [userName, setUserName] = useState("");
+  const [userRole, setUserRole] = useState("");
+  const [userId, setUserId] = useState("");
 
   const {
     handleSubmit,
@@ -33,7 +36,6 @@ export default function UserProfile() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log("HERE", data);
         setValue("email", data.email);
         setValue("name", data.name);
         setValue("dob", data?.dob?.substring(0, 10));
@@ -41,6 +43,8 @@ export default function UserProfile() {
         setValue("temporaryAddress", data.temporaryAddress);
         setValue("phoneNumber", data.phoneNumber);
         setValue("bio", data.bio);
+        setUserId(data.id);
+        setUserRole(data.role);
         setUserImage(data.image);
         setUserName(data.name);
       });
@@ -48,7 +52,6 @@ export default function UserProfile() {
 
   async function onSubmit(data, e) {
     try {
-      // console.log(data);
       await fetch(`/api/users/${session.user["id"]}`, {
         method: "PUT",
         headers: {
@@ -62,6 +65,22 @@ export default function UserProfile() {
     }
   }
 
+  const onClickBtn = async (id: string, role: string) => {
+    try {
+      await fetch(`/api/users/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({ role: role }),
+      });
+      router.replace("/user-profile");
+    } catch (error) {
+      null;
+    }
+  };
+
   return (
     <div>
       <div className="p-10">
@@ -74,7 +93,7 @@ export default function UserProfile() {
               Update your profile
             </p>
           </div>
-          <div className="flex flex-col">
+          <div className="flex justify-between ">
             {userImage && (
               <div className="w-20 h-20">
                 <Image
@@ -86,6 +105,28 @@ export default function UserProfile() {
                 />
               </div>
             )}
+            <div>
+              <div className="bg-blue-50 rounded-full px-3">{userRole}</div>
+              {userRole == "employee" ? (
+                <div className="">
+                  <button
+                    className="text-xl"
+                    onClick={() => onClickBtn(userId, "employer")}
+                  >
+                    Change to employer
+                  </button>
+                </div>
+              ) : userRole == "employer" ? (
+                <button
+                  className="text-xl"
+                  onClick={() => onClickBtn(userId, "employee")}
+                >
+                  Change to employee
+                </button>
+              ) : (
+                <div>Suman Pro max</div>
+              )}
+            </div>
           </div>
           <div className="flex flex-col gap-1 text-gray-500">
             <label>Name:</label>
