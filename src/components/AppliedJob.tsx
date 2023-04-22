@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import Button from "./Button";
 
 function AppliedJob() {
   const { data: session } = useSession();
@@ -16,6 +17,21 @@ function AppliedJob() {
   }, [session]);
 
   const [jobs, setJobs] = useState([]);
+
+  const updateJobStatusById = async (id: string, status: string) => {
+    try {
+      await fetch(`/api/jobs/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({ status: status }),
+      });
+    } catch (error) {
+      null;
+    }
+  };
 
   useEffect(() => {
     fetch(`/api/jobs/`, {
@@ -40,7 +56,11 @@ function AppliedJob() {
         </div>
       ) : (
         jobs
-          ?.filter((job) => job?.assignedTo?.id === session.user?.["id"])
+          ?.filter(
+            (job) =>
+              job?.assignedTo?.id === session.user?.["id"] &&
+              job?.status === "inProgress"
+          )
           .sort((a, b) => b?.postedOn?.localeCompare(a.postedOn))
           .map((job) => (
             <div key={job?.id} className="p-1">
@@ -76,7 +96,10 @@ function AppliedJob() {
                     {job.Location.displayName}
                   </div>
                   Rs. {job.price}
-                  {/* <Button value="Cancel" onClick={null} /> */}
+                  <Button
+                    value="Mark Completed"
+                    onClick={() => updateJobStatusById(job.id, "completed")}
+                  />
                 </div>
               </div>
             </div>
