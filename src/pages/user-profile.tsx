@@ -104,7 +104,7 @@ export default function Profile() {
             </TabSelector>
           )}
           {/*expenses for  employer */}
-          {session?.user?.["role"] === "employer" && (
+          {session?.user?.["role"] === "employee" && (
             <TabSelector
               isActive={selectedTab === "earnings-tab"}
               onClick={() => setSelectedTab("earnings-tab")}
