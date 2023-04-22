@@ -39,7 +39,7 @@ const handlePUT = async (res: NextApiResponse, req: NextApiRequest) => {
           id: String(req.query.userId),
         },
         data: {
-          ...req.body,password:hashPassword(req.body.password)
+          ...req.body, password: hashPassword(req.body.password)
         },
       });
       res.json(omit(user, "password"));
