@@ -107,26 +107,24 @@ export default function UserProfile() {
               </div>
             )}
             <div className="flex flex-col gap-5">
-              <div>
-                <div className="bg-blue-50 rounded-full text-center w-fit text-lg px-3">
-                  {userRole}
-                </div>
+              <div className="flex rounded-full bg-blue-200 text-blue-600 text-normal text-center justify-center uppercase font-bold py-1">
+                Role: {userRole}
               </div>
               {userRole == "employee" ? (
                 <div className="">
                   <button
-                    className="flex rounded-md bg-[#0063F1] text-white text-lg font-medium px-9 py-4 sm:w-full border-2 border-[#0063F1] hover:bg-white hover:text-[#0063F1] cursor-pointer"
+                    className="flex rounded-full bg-blue-600 text-white text-md font-medium px-3 py-1 sm:w-full border-2 border-blue-600 hover:bg-white hover:text-blue-600 cursor-pointer"
                     onClick={() => onClickBtn(userId, "employer")}
                   >
-                    Be employer
+                    Switch to Employer
                   </button>
                 </div>
               ) : userRole == "employer" ? (
                 <button
-                  className="flex rounded-md bg-[#0063F1] text-white text-lg font-medium px-9 py-4 sm:w-full border-2 border-[#0063F1] hover:bg-white hover:text-[#0063F1] cursor-pointer"
+                  className="flex rounded-full bg-blue-600 text-white text-md font-medium px-3 py-1 sm:w-full border-2 border-blue-600 hover:bg-white hover:text-blue-600 cursor-pointer"
                   onClick={() => onClickBtn(userId, "employee")}
                 >
-                  Be employee
+                  Switch to Employee
                 </button>
               ) : (
                 <div></div>
