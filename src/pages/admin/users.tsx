@@ -90,6 +90,7 @@ export default function Users() {
     } catch (error) {
       null;
     }
+    router.reload();
   }
 
   return (
