@@ -5,15 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import classNames from "classnames";
 
 export default function apply({ job, params }) {
   const jobId = params?.jobId;
 
   const [apply, setApply] = useState(false);
-  const toggleApply = () => {
-    setApply(!apply);
-  };
 
   const {
     handleSubmit,
@@ -172,22 +168,28 @@ export default function apply({ job, params }) {
                             readOnly={true}
                           />
                         </div>
-                        {
-                          (phoneNumber === null || userAddress === null) ? (
-                            <div className="flex bg-red-100 px-4 py-2 text-red-500 rounded">Update your
-                              <Link href="/user-profile" >
-                                <span className="px-1 underline"> User Profile</span> </Link>
-                              first to continue
-                            </div>
-                          ) : ""
-                        }
+                        {phoneNumber === null || userAddress === null ? (
+                          <div className="flex bg-red-100 px-4 py-2 text-red-500 rounded">
+                            Update your
+                            <Link href="/user-profile">
+                              <span className="px-1 underline">
+                                User Profile
+                              </span>
+                            </Link>
+                            first to continue
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
 
                       <div className="flex gap-5">
                         <button className="px-5 py-4 w-fit border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline">
                           {isSubmitting ? <>Submitting</> : <>Submit</>}
                         </button>
-                        {(apply || phoneNumber !== null || userAddress !== null) && (
+                        {(apply ||
+                          phoneNumber !== null ||
+                          userAddress !== null) && (
                           <button
                             className="px-5 py-4 w-fit border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline"
                             onClick={() => setApply(false)}
@@ -213,9 +215,9 @@ export default function apply({ job, params }) {
               )}
             </div>
           </div>
-        </div >
-      </div >
-    </div >
+        </div>
+      </div>
+    </div>
   );
 }
 
