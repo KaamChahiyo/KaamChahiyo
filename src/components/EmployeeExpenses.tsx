@@ -17,7 +17,7 @@ export default function EmployeeExpenses() {
                         <div>
                             <button onClick={null} className='bg-blue-600 w-48 rounded-lg text-white p-4'>Withdraw Balance</button>
                             <Link href="#">
-                                <p className='text-lg underline'>Manage payout methods</p>
+                                <p className='text-lg underline'>Manage payment methods</p>
                             </Link>
                         </div>
 

@@ -23,6 +23,7 @@ export default function Signup() {
     name: "",
     email: "",
     password: "",
+    image: "https://omexcanada.com/images/meet-the-team/generic-headshot.jpg"
   };
   const { enqueueSnackbar } = useSnackbar();
   async function onSubmit(values) {
