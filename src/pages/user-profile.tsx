@@ -13,6 +13,7 @@ import {
   PasswordIcon,
   PostedJobIcon,
   ProfileIcon,
+  TickIcon,
 } from "../icons";
 import Security from "../components/Security";
 import UserProfile from "../components/UserProfile";
@@ -22,6 +23,7 @@ import EmoployeeEarning from "../components/EmoployeeEarning";
 import EmployeeExpenses from "../components/EmployeeExpenses";
 import AppliedJob from "../components/AppliedJob";
 import PostedJob from "../components/PostedJob";
+import CompletedJobs from "../components/CompletedJobs";
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -40,6 +42,7 @@ export default function Profile() {
     "applied-job",
     "earnings-tab",
     "expenses-tab",
+    "completed-job",
   ]);
 
   return (
@@ -77,7 +80,18 @@ export default function Profile() {
               <div className=" w-6 text-white">{AppliedJobIcon}</div>
             </div>
             <div className="font-medium text-lg lg:text-2xl flex items-center">
-              Applied Job
+              Applied Jobs
+            </div>
+          </TabSelector>
+          <TabSelector
+            isActive={selectedTab === "completed-job"}
+            onClick={() => setSelectedTab("completed-job")}
+          >
+            <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
+              <div className=" w-6 text-white">{TickIcon}</div>
+            </div>
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
+              Completed Jobs
             </div>
           </TabSelector>
           {/* posted Job only for employer */}
@@ -90,7 +104,7 @@ export default function Profile() {
                 <div className=" w-6 text-white">{PostedJobIcon}</div>
               </div>
               <div className="font-medium text-lg lg:text-2xl flex items-center">
-                Posted Job
+                Posted Jobs
               </div>
             </TabSelector>
           )}
@@ -139,6 +153,9 @@ export default function Profile() {
           </TabPanel>
           <TabPanel hidden={selectedTab !== "posted-job"}>
             <PostedJob />
+          </TabPanel>
+          <TabPanel hidden={selectedTab !== "completed-job"}>
+            <CompletedJobs />
           </TabPanel>
         </div>
       </div>

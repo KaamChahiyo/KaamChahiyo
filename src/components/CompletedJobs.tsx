@@ -1,11 +1,10 @@
+import React, { useEffect, useState } from "react";
 import { formatDistance } from "date-fns";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import Button from "./Button";
+import { useSession } from "next-auth/react";
 
-function AppliedJob() {
+export default function CompletedJobs() {
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -17,26 +16,6 @@ function AppliedJob() {
   }, [session]);
 
   const [jobs, setJobs] = useState([]);
-
-  const updateJobStatusById = async (
-    id: string,
-    status: string,
-    assignedOn: Date
-  ) => {
-    try {
-      await fetch(`/api/jobs/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-        },
-        body: JSON.stringify({ status: status, assignedOn: assignedOn }),
-      });
-    } catch (error) {
-      null;
-    }
-    router.reload();
-  };
 
   useEffect(() => {
     fetch(`/api/jobs/`, {
@@ -64,7 +43,7 @@ function AppliedJob() {
           ?.filter(
             (job) =>
               job?.assignedTo?.id === session.user?.["id"] &&
-              job?.status === "inProgress"
+              job?.status === "completed"
           )
           .sort((a, b) => b?.postedOn?.localeCompare(a.postedOn))
           .map((job) => (
@@ -101,12 +80,6 @@ function AppliedJob() {
                     {job.Location.displayName}
                   </div>
                   Rs. {job.price}
-                  <Button
-                    value="Mark Completed"
-                    onClick={() =>
-                      updateJobStatusById(job.id, "completed", new Date())
-                    }
-                  />
                 </div>
               </div>
             </div>
@@ -115,5 +88,3 @@ function AppliedJob() {
     </div>
   );
 }
-
-export default AppliedJob;
