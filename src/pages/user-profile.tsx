@@ -1,11 +1,13 @@
-import { formatDistance } from "date-fns";
+import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { TabPanel, useTabs } from "react-headless-tabs";
-import Button from "../components/Button";
+import AppliedJob from "../components/AppliedJob";
+import PostedJob from "../components/PostedJob";
+import Security from "../components/Security";
 import { TabSelector } from "../components/TabSelector";
+import UserProfile from "../components/UserProfile";
 import {
   AppliedJobIcon,
   MoneyInIcon,
@@ -15,12 +17,9 @@ import {
   ProfileIcon,
   TickIcon,
 } from "../icons";
-import Security from "../components/Security";
-import UserProfile from "../components/UserProfile";
-import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
-import EmoployeeEarning from "../components/EmoployeeEarning";
 import EmployeeExpenses from "../components/EmployeeExpenses";
+import EmoployeeEarning from "../components/EmoployeeEarning";
 import AppliedJob from "../components/AppliedJob";
 import PostedJob from "../components/PostedJob";
 import CompletedJobs from "../components/CompletedJobs";
@@ -108,8 +107,8 @@ export default function Profile() {
               </div>
             </TabSelector>
           )}
-          {/*expenses for  employer */}
-          {session?.user?.["role"] === "employee" && (
+          {/*expenses for  employer && only for employer*/}
+          {session?.user?.["role"] === "employer" && (
             <TabSelector
               isActive={selectedTab === "expenses-tab"}
               onClick={() => setSelectedTab("expenses-tab")}
