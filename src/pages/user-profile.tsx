@@ -1,11 +1,13 @@
-import { formatDistance } from "date-fns";
+import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { TabPanel, useTabs } from "react-headless-tabs";
-import Button from "../components/Button";
+import AppliedJob from "../components/AppliedJob";
+import PostedJob from "../components/PostedJob";
+import Security from "../components/Security";
 import { TabSelector } from "../components/TabSelector";
+import UserProfile from "../components/UserProfile";
 import {
   AppliedJobIcon,
   MoneyInIcon,
@@ -13,15 +15,14 @@ import {
   PasswordIcon,
   PostedJobIcon,
   ProfileIcon,
+  TickIcon,
 } from "../icons";
-import Security from "../components/Security";
-import UserProfile from "../components/UserProfile";
-import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
-import EmoployeeEarning from "../components/EmoployeeEarning";
 import EmployeeExpenses from "../components/EmployeeExpenses";
+import EmoployeeEarning from "../components/EmoployeeEarning";
 import AppliedJob from "../components/AppliedJob";
 import PostedJob from "../components/PostedJob";
+import CompletedJobs from "../components/CompletedJobs";
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -40,6 +41,7 @@ export default function Profile() {
     "applied-job",
     "earnings-tab",
     "expenses-tab",
+    "completed-job",
   ]);
 
   return (
@@ -77,7 +79,18 @@ export default function Profile() {
               <div className=" w-6 text-white">{AppliedJobIcon}</div>
             </div>
             <div className="font-medium text-lg lg:text-2xl flex items-center">
-              Applied Job
+              Applied Jobs
+            </div>
+          </TabSelector>
+          <TabSelector
+            isActive={selectedTab === "completed-job"}
+            onClick={() => setSelectedTab("completed-job")}
+          >
+            <div className=" hidden lg:flex bg-[#0064f1] justify-center items-center p-3 w-14 h-14   text-red   rounded-full">
+              <div className=" w-6 text-white">{TickIcon}</div>
+            </div>
+            <div className="font-medium text-lg lg:text-2xl flex items-center">
+              Completed Jobs
             </div>
           </TabSelector>
           {/* posted Job only for employer */}
@@ -90,12 +103,12 @@ export default function Profile() {
                 <div className=" w-6 text-white">{PostedJobIcon}</div>
               </div>
               <div className="font-medium text-lg lg:text-2xl flex items-center">
-                Posted Job
+                Posted Jobs
               </div>
             </TabSelector>
           )}
-          {/*expenses for  employer */}
-          {session?.user?.["role"] === "employee" && (
+          {/*expenses for  employer && only for employer*/}
+          {session?.user?.["role"] === "employer" && (
             <TabSelector
               isActive={selectedTab === "expenses-tab"}
               onClick={() => setSelectedTab("expenses-tab")}
@@ -139,6 +152,9 @@ export default function Profile() {
           </TabPanel>
           <TabPanel hidden={selectedTab !== "posted-job"}>
             <PostedJob />
+          </TabPanel>
+          <TabPanel hidden={selectedTab !== "completed-job"}>
+            <CompletedJobs />
           </TabPanel>
         </div>
       </div>
