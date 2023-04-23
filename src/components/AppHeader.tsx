@@ -140,13 +140,10 @@ export default function AppHeader() {
             </span>
             {userRole === "admin" ? (
               <span
-                className={classNames({
-                  "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
-                    route.pathname === "/admin/users",
-                })}
+                className="flex justify-center items-center border-2 px-3 border-blue-600 bg-blue-600 hover:bg-white text-white hover:text-black rounded-full"
               >
-                <Link passHref href="/admin/users">
-                  Manage User
+                <Link passHref href="/admin">
+                  Admin Portal
                 </Link>
               </span>
             ) : ("")}
