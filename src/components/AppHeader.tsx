@@ -152,15 +152,17 @@ export default function AppHeader() {
             {user ? (
               <Link passHref href="/user-profile">
                 <div className="relative ">
-                  <div className="rounded-full object-fill w-10 h-10">
-                    <Image
-                      src={user?.image}
-                      alt={user?.name}
-                      width={100}
-                      height={100}
-                      quality={100}
-                      className="rounded-full"
-                    />
+                  <div className="flex rounded-full overflow-hidden h-10 w-10">
+                    <div className="rounded-full object-cover">
+                      <Image
+                        src={user?.image}
+                        alt={user?.name}
+                        width={100}
+                        height={100}
+                        quality={100}
+                        className="rounded-full object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
               </Link>
