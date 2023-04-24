@@ -29,7 +29,7 @@ export default function EmployeeExpenses() {
 
   const [availableFunds, setAvailableFunds] = useState("400.00");
   const [loadedFunds, setLoadedFunds] = useState("900.00");
-  const [paymentsBeingCleared, setPaymentsBeingCleared] = useState();
+  const [paymentsBeingCleared, setPaymentsBeingCleared] = useState("");
 
   useEffect(() => {
     let price = 0;

@@ -20,8 +20,6 @@ import {
 import { authOptions } from "./api/auth/[...nextauth]";
 import EmployeeExpenses from "../components/EmployeeExpenses";
 import EmoployeeEarning from "../components/EmoployeeEarning";
-import AppliedJob from "../components/AppliedJob";
-import PostedJob from "../components/PostedJob";
 import CompletedJobs from "../components/CompletedJobs";
 
 export default function Profile() {
