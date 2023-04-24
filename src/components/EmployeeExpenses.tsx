@@ -29,17 +29,14 @@ export default function EmployeeExpenses() {
 
   const [availableFunds, setAvailableFunds] = useState("400.00");
   const [loadedFunds, setLoadedFunds] = useState("900.00");
-  const [paymentsBeingCleared, setPaymentsBeingCleared] = useState("");
 
-  useEffect(() => {
-    let price = 0;
+  let paymentsBeingCleared = 0;
 
-    for (let job of filteredJob) {
-      price += job?.price;
-    }
-    setPaymentsBeingCleared(price.toString());
-  }, [setPaymentsBeingCleared]);
-  console.log(paymentsBeingCleared);
+  for (let job of filteredJob) {
+    paymentsBeingCleared += job?.price;
+  }
+
+  // console.log(paymentsBeingCleared);
 
   return (
     <div className="py-16">
