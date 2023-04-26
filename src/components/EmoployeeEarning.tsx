@@ -19,11 +19,15 @@ export default function EmoployeeEarning() {
       });
   }, []);
 
-  const filteredJob = jobs?.filter(
+  const CompletedJob = jobs?.filter(
     (job) => job.assignedTo?.id === currentUser && job.status === "completed"
   );
 
-  const totalCompletedJobs = filteredJob.length;
+  const OnGoingJob = jobs?.filter(
+    (job) => job.assignedTo?.id === currentUser && job.status === "inProgress"
+  );
+
+  const totalCompletedJobs = CompletedJob.length;
 
   const [availableFunds, setAvailableFunds] = useState("0.00");
   const [loadedFunds, setLoadedFunds] = useState("0.00");
@@ -31,13 +35,15 @@ export default function EmoployeeEarning() {
 
   let paymentsBeingCleared = 0;
 
-  for (let job of filteredJob) {
+  for (let job of CompletedJob) {
     paymentsBeingCleared += job?.price;
   }
 
-  remainingTime <= 0
-    ? setAvailableFunds(paymentsBeingCleared.toString())
-    : null;
+  let paymentOfOngoingJob = 0;
+
+  for (let job of OnGoingJob) {
+    paymentOfOngoingJob += job?.price;
+  }
 
   return (
     <div className="py-16">
@@ -81,9 +87,9 @@ export default function EmoployeeEarning() {
             </div>
             <hr className="bg-gray-300 h-0.5" />
             <div>
-              <h5 className="text-lg">Payments being cleared:</h5>
+              <h5 className="text-lg">Payments of ongoing task:</h5>
               <p className="text-2xl font-bold text-blue-600">
-                NPR {paymentsBeingCleared}
+                NPR {paymentOfOngoingJob}
               </p>
             </div>
           </div>
@@ -116,7 +122,7 @@ export default function EmoployeeEarning() {
             </tr>
           </thead>
           <tbody>
-            {filteredJob.map((job) => {
+            {CompletedJob.map((job) => {
               const assignedDate = new Date(job.assignedOn);
               const currentDate = new Date();
               const timeDiff = Math.abs(currentDate - assignedDate);
