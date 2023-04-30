@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import Button from "./Button";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
 import sha256 from "crypto-js/sha256";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import Button from "./Button";
 
 const hashPassword = (password: string) => {
   return sha256(password).toString();

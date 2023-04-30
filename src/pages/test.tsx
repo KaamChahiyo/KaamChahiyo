@@ -1,4 +1,3 @@
-import { SHA256 } from "crypto-js";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,15 +29,10 @@ export default function ChangePassword() {
   };
 
   const [typeCurrentPassword, setTypeCurrentPassword] = useState("");
-  const handleTypeCurrentPassword = (e) => {
-    setTypeCurrentPassword(e.target.value);
-  };
 
   const {
     register,
     handleSubmit,
-    getValues,
-    setValue,
     formState: { isSubmitting, errors },
   } = useForm({});
 
@@ -48,20 +42,19 @@ export default function ChangePassword() {
 
   // const [getCurrentPassword, setGetCurrentPassword] = useState("");
   let [postNewPassword, setPostNewPassword] = useState("");
-  const getCurrentPassword=async()=>{return await fetch(`/api/users/${id}`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("DATA",data)
-      return data?.user?.password
-     
-    });}
+  const getCurrentPassword = async () => {
+    return await fetch(`/api/users/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("DATA", data);
+        return data?.user?.password;
+      });
+  };
 
-  const currentPassword=getCurrentPassword()
-
-
+  const currentPassword = getCurrentPassword();
 
   // useEffect(() => {
   //   fetch(`/api/users/${id}`, {

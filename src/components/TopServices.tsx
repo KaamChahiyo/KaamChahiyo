@@ -1,11 +1,11 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-  ElectricianIcon,
-  PlumberIcon,
   ComputerIcon,
-  WebdesignerIcon,
+  ElectricianIcon,
   PhotographerIcon,
+  PlumberIcon,
+  WebdesignerIcon,
 } from "../icons";
 
 export default function TopServices() {

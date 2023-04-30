@@ -1,13 +1,12 @@
+import { formatDistance } from "date-fns";
 import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { TabPanel, useTabs } from "react-headless-tabs";
-import { TabSelector } from "../../components/TabSelector";
 import Button from "../../components/Button";
-import { authOptions } from "../api/auth/[...nextauth]";
-import { formatDistance } from "date-fns";
+import { TabSelector } from "../../components/TabSelector";
 import {
   CompletedIcon,
   CrossIcon,
@@ -15,6 +14,7 @@ import {
   InProgressIcon,
   TickIcon,
 } from "../../icons";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 export default function jobs() {
   const { data: session } = useSession();
