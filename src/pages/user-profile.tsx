@@ -4,9 +4,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { TabPanel, useTabs } from "react-headless-tabs";
 import AppliedJob from "../components/AppliedJob";
-import CompletedJobs from "../components/CompletedJobs";
-import EmoployeeEarning from "../components/EmoployeeEarning";
-import EmployeeExpenses from "../components/EmployeeExpenses";
 import PostedJob from "../components/PostedJob";
 import Security from "../components/Security";
 import { TabSelector } from "../components/TabSelector";
@@ -21,7 +18,9 @@ import {
   TickIcon,
 } from "../icons";
 import { authOptions } from "./api/auth/[...nextauth]";
-
+import EmployeeExpenses from "../components/EmployeeExpenses";
+import EmoployeeEarning from "../components/EmoployeeEarning";
+import CompletedJobs from "../components/CompletedJobs";
 export default function Profile() {
   const { data: session } = useSession();
 
@@ -105,8 +104,8 @@ export default function Profile() {
               </div>
             </TabSelector>
           )}
-          {/*expenses for  employer */}
-          {session?.user?.["role"] === "employee" && (
+          {/*expenses for  employer && only for employer*/}
+          {session?.user?.["role"] === "employer" && (
             <TabSelector
               isActive={selectedTab === "expenses-tab"}
               onClick={() => setSelectedTab("expenses-tab")}
