@@ -29,7 +29,7 @@ export default function Profile() {
     if (!session) {
       router.replace("/login");
     }
-  }, [session]);
+  }, [session, router]);
 
   const [selectedTab, setSelectedTab] = useTabs([
     "profile-tab",

@@ -15,7 +15,7 @@ export default function ChangePassword() {
       // console.log("userId : " + userId);
       setId(userId);
     }
-  }, [session]);
+  }, [session, router]);
   const [id, setId] = useState("");
 
   const [newPassword, setNewPassword] = useState("");

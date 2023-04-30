@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function apply({ job }) {
+export default function Apply({ job }) {
   const [apply, setApply] = useState(false);
 
   const {

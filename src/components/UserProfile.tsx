@@ -48,7 +48,7 @@ export default function UserProfile() {
         setUserImage(data.image);
         setUserName(data.name);
       });
-  }, []);
+  }, [session.user, setValue]);
 
   async function onSubmit(data, e) {
     try {
