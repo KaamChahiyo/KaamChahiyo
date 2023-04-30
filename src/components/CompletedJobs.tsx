@@ -13,7 +13,7 @@ export default function CompletedJobs() {
     if (!session) {
       router.replace("/login");
     }
-  }, [session]);
+  }, [session, router]);
 
   const [jobs, setJobs] = useState([]);
 

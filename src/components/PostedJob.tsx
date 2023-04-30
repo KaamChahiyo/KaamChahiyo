@@ -16,7 +16,7 @@ function PostedJob() {
     if (!session) {
       router.replace("/login");
     }
-  }, [session]);
+  }, [session, router]);
 
   useEffect(() => {
     fetch(`/api/jobs/`, {

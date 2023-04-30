@@ -38,7 +38,7 @@ export default function EmployeeExpenses() {
       price += job?.price;
     }
     setPaymentsBeingCleared(price.toString());
-  }, [setPaymentsBeingCleared]);
+  }, [setPaymentsBeingCleared, filteredJob]);
   console.log(paymentsBeingCleared);
   return (
     <div className="py-16">
