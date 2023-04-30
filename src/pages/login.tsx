@@ -3,7 +3,7 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { authOptions } from "./api/auth/[...nextauth]";
 
@@ -19,7 +19,7 @@ export default function Login() {
   async function onSubmit(values) {
     const res = await signIn("credentials", {
       ...values,
-      callbackUrl: router.query.callbackUrl
+      callbackUrl: router.query.callbackUrl,
     });
   }
 
@@ -28,7 +28,6 @@ export default function Login() {
       router.replace("/");
     }
   }, [session]);
-
 
   return (
     <>

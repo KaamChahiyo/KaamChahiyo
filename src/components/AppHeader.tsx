@@ -31,7 +31,7 @@ export default function AppHeader() {
         },
         {
           label: "Job Listing",
-          link: "/jobs"
+          link: "/jobs",
         },
         {
           label: "Location",
@@ -75,7 +75,6 @@ export default function AppHeader() {
               />
             </Link>
           </div>
-
 
           <div className="gap-12 justify-center font-semibold leading-7 hidden lg:flex">
             <span
@@ -139,14 +138,14 @@ export default function AppHeader() {
               </Link>
             </span>
             {userRole === "admin" ? (
-              <span
-                className="flex justify-center items-center border-2 px-3 border-blue-600 bg-blue-600 hover:bg-white text-white hover:text-black rounded-full"
-              >
+              <span className="flex justify-center items-center border-2 px-3 border-blue-600 bg-blue-600 hover:bg-white text-white hover:text-black rounded-full">
                 <Link passHref href="/admin">
                   Admin Portal
                 </Link>
               </span>
-            ) : ("")}
+            ) : (
+              ""
+            )}
           </div>
           <div className="flex items-center gap-8">
             {user ? (
@@ -166,7 +165,9 @@ export default function AppHeader() {
                   </div>
                 </div>
               </Link>
-            ) : ("")}
+            ) : (
+              ""
+            )}
             <div className="hidden lg:flex gap-8 items-center justify-center">
               {user ? (
                 <>
@@ -214,7 +215,6 @@ export default function AppHeader() {
             onClick={() => setIsNavOpen(false)}
           >
             <div className="bg-white  min-h-screen w-8/12 flex flex-col align-top overflow-hidden justify-start p-6">
-
               <div className="relative flex justify-start">
                 <Link passHref href="/">
                   <Image
@@ -267,10 +267,9 @@ export default function AppHeader() {
                 )}
               </div>
             </div>
-
           </div>
         </section>
-      </nav >
-    </div >
+      </nav>
+    </div>
   );
 }

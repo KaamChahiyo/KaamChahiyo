@@ -1,10 +1,10 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 export default function Users() {
   const { data: session } = useSession();
@@ -76,7 +76,7 @@ export default function Users() {
   //   // console.log(selectedUser);
   // }, [selectedUser]);
 
-  async function onSubmit(data, e) {
+  async function onSubmit(data, _e) {
     try {
       // console.log(data);
       await fetch(`/api/users/${selectedUserId}`, {

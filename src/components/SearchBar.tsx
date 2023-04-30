@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { ICategory, getCategories } from "../services/categoryService";
-import { ILocation, getLocations } from "../services/locationService";
 import Link from "next/link";
+import React, { useState } from "react";
 import Button from "../components/Button";
 import { ChevronDownIcon } from "../icons/CheveronDownIcon";
+import { ICategory, getCategories } from "../services/categoryService";
+import { ILocation, getLocations } from "../services/locationService";
 
 export default function test({ locations, categories }) {
   const [Values, setValues] = useState("");
