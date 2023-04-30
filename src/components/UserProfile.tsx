@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { Router, useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function UserProfile() {
@@ -76,7 +76,6 @@ export default function UserProfile() {
         },
         body: JSON.stringify({ role: role }),
       });
-
     } catch (error) {
       null;
     }
@@ -196,11 +195,12 @@ export default function UserProfile() {
           </div>
           <button
             type="submit"
-            className="px-5 py-4 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold w-1/3 focus:outline-none focus:shadow-outline" >
+            className="px-5 py-4 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold w-1/3 focus:outline-none focus:shadow-outline"
+          >
             {isSubmitting ? <>Updating</> : <>Update</>}
           </button>
         </form>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }

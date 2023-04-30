@@ -1,14 +1,14 @@
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
-  PlumberIcon,
-  ItServiceIcon,
-  PainterIcon,
+  ComputerIcon,
   ElectricianIcon,
   HomeIcon,
-  WebdesignerIcon,
+  ItServiceIcon,
+  PainterIcon,
   PhotographerIcon,
-  ComputerIcon,
+  PlumberIcon,
+  WebdesignerIcon,
 } from "../icons";
 
 const categories = [

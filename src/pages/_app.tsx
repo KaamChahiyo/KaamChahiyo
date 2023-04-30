@@ -1,14 +1,14 @@
 import { SessionProvider } from "next-auth/react";
-import AppHeader from "../components/AppHeader";
-import Footer from "../components/Footer";
-import { SnackbarProvider } from "notistack";
-import "../styles/globals.css";
-import { QueryParamProvider } from "use-query-params";
 import { NextAdapter } from "next-query-params";
+import { Router } from "next/router";
+import { SnackbarProvider } from "notistack";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import { Router } from "next/router";
 import { createContext, useState } from "react";
+import { QueryParamProvider } from "use-query-params";
+import AppHeader from "../components/AppHeader";
+import Footer from "../components/Footer";
+import "../styles/globals.css";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -19,12 +19,11 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
-
-  const [location, setLocation] = useState('chitwan');
+  const [location, setLocation] = useState("chitwan");
 
   const selectLocation = (location) => {
-    setLocation(location)
-  }
+    setLocation(location);
+  };
 
   return (
     <>

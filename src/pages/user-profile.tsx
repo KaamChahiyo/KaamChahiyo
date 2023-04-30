@@ -21,7 +21,6 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import EmployeeExpenses from "../components/EmployeeExpenses";
 import EmoployeeEarning from "../components/EmoployeeEarning";
 import CompletedJobs from "../components/CompletedJobs";
-
 export default function Profile() {
   const { data: session } = useSession();
 
