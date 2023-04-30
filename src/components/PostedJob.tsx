@@ -45,8 +45,8 @@ function PostedJob() {
             jobs
               ?.filter((job) => job.postedBy?.id === session.user?.["id"])
               .sort((a, b) => b.postedOn.localeCompare(a.postedOn))
-              .map((job) => (
-                <div className="flex justify-center items-center">
+              .map((job, index) => (
+                <div className="flex justify-center items-center" key={index}>
                   <div key={job.id} className="w-full p-1">
                     {/* {JSON.stringify(job)} */}
                     <div className=" shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">
