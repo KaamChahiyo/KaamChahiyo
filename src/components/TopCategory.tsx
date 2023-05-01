@@ -60,7 +60,7 @@ export default function TopCategory() {
 
         setTopCategories(categoryJobs.slice(0, 5));
       });
-  }, []);
+  }, [job]);
 
   return (
     <div className="flex flex-wrap m-auto container gap-36 justify-center items-center">
