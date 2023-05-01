@@ -110,7 +110,7 @@ export default function EmoployeeEarning() {
                   <tr key={job.id} className="bg-white hover:bg-blue-50">
                     <th className="px-6 py-4">{job.assignedOn.slice(0, 10)}</th>
                     <td className="px-6 py-4">
-                      {remainingTime <= 0 ? "cleared" : `clearing`}
+                      {remainingTime <= 0 ? "Cleared" : `Clearing`}
                     </td>
                     <td className="px-6 py-4">
                       {remainingTime <= 0

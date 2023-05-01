@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 function TopEmployees() {
   const [users, setUsers] = useState([]);
+  console.log(users);
 
   useEffect(() => {
     fetch(`/api/users`, {
@@ -19,6 +20,7 @@ function TopEmployees() {
       <div className="flex justify-center font-bold text-2xl py-4">
         Top Employees
       </div>
+
       <div className="flex flex-wrap gap-10">
         {users?.slice(0, 3).map((user) => {
           return (
