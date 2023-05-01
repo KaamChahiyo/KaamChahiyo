@@ -30,11 +30,6 @@ export default function TopCategory() {
   const [searchDomain] = useState("category");
   const [topCategories, setTopCategories] = useState([]);
 
-  const countActiveJobs = (category) => {
-    const filteredJobs = job.filter((job) => job.Category.name === category);
-    return filteredJobs.filter((job) => job.status === "approved").length;
-  };
-
   let [job, setJob] = useState([]);
 
   useEffect(() => {
@@ -48,6 +43,11 @@ export default function TopCategory() {
           b.postedOn.localeCompare(a.postedOn)
         );
         setJob(sortedData);
+
+        const countActiveJobs = (category) => {
+          const filteredJobs = job.filter((job) => job.Category.name === category);
+          return filteredJobs.filter((job) => job.status === "approved").length;
+        };
 
         const categoryJobs = categories.map((category) => ({
           name: category.name,
