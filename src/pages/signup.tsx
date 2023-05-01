@@ -70,7 +70,7 @@ export default function Signup() {
     if (session) {
       router.replace("/");
     }
-  }, [session]);
+  }, [session, router]);
 
   return (
     <>

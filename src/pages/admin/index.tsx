@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { authOptions } from "../api/auth/[...nextauth]";
 
-export default function index() {
+export default function Index() {
   const router = useRouter();
   const { data: session } = useSession();
   console.log(session);

@@ -8,17 +8,17 @@ export default function WorkingMethod() {
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
 
-  let hello = user?.["role"];
+  let role = user?.["role"];
 
   useEffect(() => {
-    if (hello == "employer") {
+    if (role == "employer") {
       setDescription("Post Job");
       setLink("/post-job");
     } else {
       setDescription("Apply for Job");
       setLink("/jobs");
     }
-  }, []);
+  }, [role]);
   return (
     <div className="flex flex-col container m-auto w-full justify-center gap-10 mb-16">
       <div className="text-2xl text-center font-bold">Working Procedure</div>

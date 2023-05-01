@@ -16,7 +16,7 @@ export default function Users() {
     if (session && session.user["role"] != "admin") {
       router.replace("/user-profile");
     }
-  }, [session]);
+  }, [session, router]);
 
   const [users, setUsers] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -70,7 +70,7 @@ export default function Users() {
       setRole(selected_user.role);
       setStatus(selected_user.status);
     }
-  }, [selectedUserId]);
+  }, [selectedUserId, setValue, users]);
 
   // useEffect(() => {
   //   // console.log(selectedUser);

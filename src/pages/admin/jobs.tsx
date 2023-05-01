@@ -16,7 +16,7 @@ import {
 } from "../../icons";
 import { authOptions } from "../api/auth/[...nextauth]";
 
-export default function jobs() {
+export default function Jobs() {
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function jobs() {
     if (!session) {
       router.replace("/login");
     }
-  }, [session]);
+  }, [session, router]);
 
   const [job, setJob] = useState([]);
 
