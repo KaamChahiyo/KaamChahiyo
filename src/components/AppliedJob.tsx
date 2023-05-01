@@ -45,7 +45,11 @@ function AppliedJob() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setJobs(data.jobs);
+        try {
+          setJobs(data.jobs);
+        } catch (error) {
+          // console.log(error);
+        }
       });
   }, []);
 

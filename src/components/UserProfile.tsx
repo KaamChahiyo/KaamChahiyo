@@ -30,6 +30,7 @@ export default function UserProfile() {
   });
 
   useEffect(() => {
+<<<<<<< HEAD
     fetch(`/api/users/${session.user["id"]}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -49,6 +50,31 @@ export default function UserProfile() {
         setUserName(data.name);
       });
   }, [session.user, setValue]);
+=======
+    try {
+      fetch(`/api/users/${session.user["id"]}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setValue("email", data.email);
+          setValue("name", data.name);
+          setValue("dob", data?.dob?.substring(0, 10));
+          setValue("permananetAddress", data.permananetAddress);
+          setValue("temporaryAddress", data.temporaryAddress);
+          setValue("phoneNumber", data.phoneNumber);
+          setValue("bio", data.bio);
+          setUserId(data.id);
+          setUserRole(data.role);
+          setUserImage(data.image);
+          setUserName(data.name);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+>>>>>>> deepak-main
 
   async function onSubmit(data, e) {
     try {

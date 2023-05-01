@@ -29,17 +29,24 @@ export default function EmployeeExpenses() {
 
   const [availableFunds, setAvailableFunds] = useState("400.00");
   const [loadedFunds, setLoadedFunds] = useState("900.00");
-  const [paymentsBeingCleared, setPaymentsBeingCleared] = useState("");
 
-  useEffect(() => {
-    let price = 0;
+  let paymentsBeingCleared = 0;
 
+<<<<<<< HEAD
     for (let job of filteredJob) {
       price += job?.price;
     }
     setPaymentsBeingCleared(price.toString());
   }, [setPaymentsBeingCleared, filteredJob]);
   console.log(paymentsBeingCleared);
+=======
+  for (let job of filteredJob) {
+    paymentsBeingCleared += job?.price;
+  }
+
+  // console.log(paymentsBeingCleared);
+
+>>>>>>> deepak-main
   return (
     <div className="py-16">
       <h1 className="text-3xl font-semibold pb-8">Employeer Expenses</h1>
