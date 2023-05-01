@@ -16,10 +16,7 @@ export default function EmoployeeEarning() {
       .then((res) => res.json())
       .then((data) => {
         setJobs(data.jobs);
-<<<<<<< HEAD
         // console.log(data.jobs);
-=======
->>>>>>> deepak-main
       });
   }, []);
 
@@ -126,7 +123,6 @@ export default function EmoployeeEarning() {
             </tr>
           </thead>
           <tbody>
-<<<<<<< HEAD
             {jobs
               ?.filter(
                 (job) =>
@@ -169,43 +165,6 @@ export default function EmoployeeEarning() {
                   </tr>
                 );
               })}
-=======
-            {CompletedJob.map((job) => {
-              const assignedDate = new Date(job.assignedOn);
-              const currentDate = new Date();
-              const timeDiff = Math.abs(currentDate - assignedDate);
-              const hoursDiff = Math.ceil(timeDiff / (1000 * 60 * 60));
-              const remainingTime = 72 - hoursDiff;
-              //   setRemainingTime(remainingTime);
-              let remainingDays = Math.floor(remainingTime / 24);
-              let remainingHours = remainingTime % 24;
-
-              return (
-                <tr key={job.id} className="bg-white hover:bg-blue-50">
-                  <th className="px-6 py-4">{job.assignedOn.slice(0, 10)}</th>
-                  <td className="px-6 py-4">
-                    {remainingTime <= 0 ? "cleared" : `clearing`}
-                  </td>
-                  <td className="px-6 py-4">
-                    {remainingTime <= 0
-                      ? "Cleared"
-                      : "Clearing in " +
-                        `${remainingDays}` +
-                        " days " +
-                        `${remainingHours}` +
-                        " hours"}
-                  </td>
-                  <td className="px-6 py-4">{job.postedBy.name}</td>
-                  <td className="px-6 py-4">
-                    <Link href={`${process.env.NEXTAUTH_URL}/jobs/${job.id}`}>
-                      {job.title.slice(0, 12)}...
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4">NPR. {job.price}</td>
-                </tr>
-              );
-            })}
->>>>>>> deepak-main
           </tbody>
         </table>
       </div>
