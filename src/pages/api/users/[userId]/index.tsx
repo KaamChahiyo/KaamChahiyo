@@ -10,7 +10,6 @@ const hashPassword = (password: string) => {
   return sha256(password).toString();
 };
 
-
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
@@ -39,7 +38,8 @@ const handlePUT = async (res: NextApiResponse, req: NextApiRequest) => {
           id: String(req.query.userId),
         },
         data: {
-          ...req.body, password: hashPassword(req.body.password)
+          ...req.body,
+          password: hashPassword(req.body.password),
         },
       });
       res.json(omit(user, "password"));
