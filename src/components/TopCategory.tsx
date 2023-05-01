@@ -30,11 +30,6 @@ export default function TopCategory() {
   const [searchDomain] = useState("category");
   const [topCategories, setTopCategories] = useState([]);
 
-  const countActiveJobs = (category) => {
-    const filteredJobs = job.filter((job) => job.Category.name === category);
-    return filteredJobs.filter((job) => job.status === "approved").length;
-  };
-
   let [job, setJob] = useState([]);
 
   useEffect(() => {
@@ -49,6 +44,11 @@ export default function TopCategory() {
         );
         setJob(sortedData);
 
+        const countActiveJobs = (category) => {
+          const filteredJobs = job.filter((job) => job.Category.name === category);
+          return filteredJobs.filter((job) => job.status === "approved").length;
+        };
+
         const categoryJobs = categories.map((category) => ({
           name: category.name,
           displayName: category.displayName,
@@ -60,7 +60,7 @@ export default function TopCategory() {
 
         setTopCategories(categoryJobs.slice(0, 5));
       });
-  }, [countActiveJobs]);
+  }, [job]);
 
   return (
     <div className="flex flex-wrap m-auto container gap-36 justify-center items-center">
