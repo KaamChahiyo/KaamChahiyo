@@ -29,6 +29,20 @@ export default function Jobs() {
 
   const [job, setJob] = useState([]);
 
+  const updateJobStatusById = async (id: string, status: string) => {
+    try {
+      await fetch(`/api/jobs/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({ status: status }),
+      });
+    } catch (error) {
+      null;
+    }
+  };
 
   useEffect(() => {
     fetch(`/api/jobs/`, {
@@ -40,24 +54,9 @@ export default function Jobs() {
         const sortedData = data.jobs.sort((a, b) =>
           b.postedOn.localeCompare(a.postedOn)
         );
-
-        const updateJobStatusById = async (id: string, status: string) => {
-          try {
-            await fetch(`/api/jobs/${id}`, {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-                accept: "application/json",
-              },
-              body: JSON.stringify({ status: status }),
-            });
-          } catch (error) {
-            null;
-          }
-        };
         setJob(sortedData);
       });
-  }, []);
+  }, [updateJobStatusById]);
 
   const [selectedTab, setSelectedTab] = useTabs([
     "Approved",
