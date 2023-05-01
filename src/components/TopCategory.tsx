@@ -37,11 +37,6 @@ export default function TopCategory() {
 
   let [job, setJob] = useState([]);
 
-  const countActiveJobs = (category) => {
-    const filteredJobs = job.filter((job) => job.Category.name === category);
-    return filteredJobs.filter((job) => job.status === "approved").length;
-  };
-
   useEffect(() => {
     fetch(`/api/jobs`, {
       method: "GET",
