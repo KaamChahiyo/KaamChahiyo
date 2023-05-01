@@ -13,7 +13,6 @@ import "../styles/globals.css";
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
-
 export const LocationContext = createContext(null);
 
 export default function App({

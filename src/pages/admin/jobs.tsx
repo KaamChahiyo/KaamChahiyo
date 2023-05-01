@@ -56,7 +56,7 @@ export default function Jobs() {
         );
         setJob(sortedData);
       });
-  }, [updateJobStatusById]);
+  }, []);
 
   const [selectedTab, setSelectedTab] = useTabs([
     "Approved",

@@ -63,7 +63,7 @@ export default function TopCategory() {
   }, []);
 
   return (
-    <div>
+    <>
       <div className="flex flex-wrap m-auto container gap-36 justify-center items-center">
         <div className="flex text-center font-bold text-2xl ">Top Category</div>
         <div className="grid grid-cols-3 md:grid-cols-5 flex-wrap justify-center text-sm text-center gap-10">
@@ -77,7 +77,7 @@ export default function TopCategory() {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
