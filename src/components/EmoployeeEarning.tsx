@@ -14,7 +14,7 @@ export default function EmoployeeEarning() {
       .then((res) => res.json())
       .then((data) => {
         setJobs(data.jobs);
-        console.log(data.jobs);
+        // console.log(data.jobs);
       });
   }, []);
 
@@ -98,7 +98,9 @@ export default function EmoployeeEarning() {
               .map((job) => {
                 const assignedDate = new Date(job.assignedOn);
                 const currentDate = new Date();
-                const timeDiff = Math.abs(currentDate - assignedDate);
+                const timeDiff = Math.abs(
+                  currentDate.getTime() - assignedDate.getTime()
+                );
                 const hoursDiff = Math.ceil(timeDiff / (1000 * 60 * 60));
                 const remainingTime = 72 - hoursDiff;
                 let remainingDays = Math.floor(remainingTime / 24);
