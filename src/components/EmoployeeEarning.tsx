@@ -16,9 +16,31 @@ export default function EmoployeeEarning() {
       .then((res) => res.json())
       .then((data) => {
         setJobs(data.jobs);
-        // console.log(data.jobs);
       });
   }, []);
+
+  useEffect(() => {
+    var af = 0;
+    var pf = 0;
+    jobs
+      ?.filter(
+        (job) =>
+          job.assignedTo?.id === session?.user?.["id"] &&
+          job.status === "completed"
+      )
+      ?.map((job) => {
+        const assignedDate = new Date(job.assignedOn);
+        const currentDate = new Date();
+        const timeDiff = Math.abs(
+          currentDate.getTime() - assignedDate.getTime()
+        );
+        const hoursDiff = Math.ceil(timeDiff / (1000 * 60 * 60));
+        const remainingTime = 72 - hoursDiff;
+
+        if (remainingTime > 0) setPaymentsBeingCleared((pf += job.price));
+        else setAvailableFunds((af += job.price));
+      });
+  }, [jobs]);
 
   const CompletedJob = jobs?.filter(
     (job) => job.assignedTo?.id === currentUser && job.status === "completed"
@@ -31,14 +53,8 @@ export default function EmoployeeEarning() {
   const totalCompletedJobs = CompletedJob.length;
 
   const [availableFunds, setAvailableFunds] = useState("0.00");
-  const [loadedFunds, setLoadedFunds] = useState("0.00");
-  const [remainingTime, setRemainingTime] = useState(null);
-
-  let paymentsBeingCleared = 0;
-
-  for (let job of CompletedJob) {
-    paymentsBeingCleared += job?.price;
-  }
+  const [withDrawnFunds, setWithDrawnFunds] = useState("0.00");
+  const [paymentsBeingCleared, setPaymentsBeingCleared] = useState(0);
 
   let paymentOfOngoingJob = 0;
 
@@ -59,8 +75,8 @@ export default function EmoployeeEarning() {
                 NPR {availableFunds}
               </p>
               <p>
-                Withdrawn till the date:{" "}
-                <span className="font-semibold">NPR {loadedFunds}</span>
+                Withdrawn till the date:
+                <span className="font-semibold">NPR {withDrawnFunds}</span>
               </p>
             </div>
             <div>
