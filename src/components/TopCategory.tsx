@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ComputerIcon,
   ElectricianIcon,
@@ -27,12 +27,9 @@ const categories = [
 ];
 
 export default function TopCategory() {
-  const [searchDomain] = useState("category");
   const [topCategories, setTopCategories] = useState([]);
 
-  let [job, setJob] = useState([]);
-
-  useEffect(() => {
+  const fetchJobs = () => {
     fetch(`/api/jobs`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -42,40 +39,45 @@ export default function TopCategory() {
         const sortedData = data.jobs.sort((a, b) =>
           b.postedOn.localeCompare(a.postedOn)
         );
-        setJob(sortedData);
 
         const categoryJobs = categories.map((category) => ({
           name: category.name,
           displayName: category.displayName,
           icon: category.icon,
-          activeJobs: countActiveJobs(category.name),
+          activeJobs: countActiveJobs(category.name, sortedData),
         }));
 
         categoryJobs.sort((a, b) => b.activeJobs - a.activeJobs);
 
         setTopCategories(categoryJobs.slice(0, 5));
       });
-  }, []);
+  };
 
-  const countActiveJobs = (category) => {
-    const filteredJobs = job.filter((job) => job.Category.name === category);
+  const countActiveJobs = (category, jobs) => {
+    const filteredJobs = jobs.filter((job) => job.Category.name === category);
     return filteredJobs.filter((job) => job.status === "approved").length;
   };
 
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
   return (
-    <div className="flex flex-wrap m-auto container gap-36 justify-center items-center">
-      <div className="flex text-center font-bold text-2xl ">Top Category</div>
-      <div className="grid grid-cols-3 md:grid-cols-5 flex-wrap justify-center text-sm text-center gap-10">
-        {topCategories.map(({ name, displayName, icon }) => (
-          <Category
-            key={name}
-            icon={icon}
-            services={displayName}
-            link={`/jobs/?${searchDomain}=${name}`}
-          />
-        ))}
+    <>
+      <div className="flex flex-wrap m-auto container gap-36 justify-center items-center">
+        <div className="flex text-center font-bold text-2xl ">Top Category</div>
+        <div className="grid grid-cols-3 md:grid-cols-5 flex-wrap justify-center text-sm text-center gap-10">
+          {topCategories.map(({ name, displayName, icon }) => (
+            <Category
+              key={name}
+              icon={icon}
+              services={displayName}
+              link={`/jobs/?category=${name}`}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -95,7 +97,7 @@ const Category = ({
         border-gray-200 hover:border-cyan-600 rounded-lg overflow-hiddentext-emerald-700 w-24 h-24 p-16 gap-3"
       >
         <div className="h-20 w-16">{icon}</div>
-        <div> {services}</div>
+        <> {services}</>
       </div>
     </Link>
   );

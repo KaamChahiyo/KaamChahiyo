@@ -11,7 +11,7 @@ export default function ForgetPassword() {
     if (session) {
       router.replace("/");
     }
-  }, [session]);
+  }, [session, router]);
 
   return (
     <>

@@ -27,7 +27,7 @@ export default function Login() {
     if (session) {
       router.replace("/");
     }
-  }, [session]);
+  }, [session, router]);
 
   return (
     <>
@@ -112,7 +112,7 @@ export default function Login() {
                 </div>
               </button>
               <div>
-                <p className="text-center ">Don't have account ?</p>
+                <p className="text-center ">Don&apos;t have account ?</p>
 
                 <p className="text-[#0063F1] font-bold text-sm text-center">
                   <Link passHref href="/signup">

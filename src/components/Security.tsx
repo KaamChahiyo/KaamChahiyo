@@ -43,7 +43,7 @@ export default function Security() {
           ? setIsDisabled(true)
           : setSecurity("currentPassword", data?.password);
       });
-  }, []);
+  }, [session.user, setSecurity]);
 
   async function onSecuritySubmit(data, e) {
     // console.log("Button Clicked");

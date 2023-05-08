@@ -15,7 +15,7 @@ export default function PostJob() {
     if (!session) {
       router.replace("/login");
     }
-  }, [session]);
+  }, [session, router]);
 
   const {
     handleSubmit,

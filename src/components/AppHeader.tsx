@@ -211,7 +211,7 @@ export default function AppHeader() {
           )}
         >
           <div
-            className="flex w-full min-h-screen bg-gray-600 bg-opacity-30 "
+            className="flex w-full min-h-screen bg-gray-600 bg-opacity-10 "
             onClick={() => setIsNavOpen(false)}
           >
             <div className="bg-white  min-h-screen w-8/12 flex flex-col align-top overflow-hidden justify-start p-6">
