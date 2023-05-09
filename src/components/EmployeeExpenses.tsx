@@ -89,13 +89,12 @@ export default function EmployeeExpenses() {
         </div>
       </div>
       <h1 className="text-xl font-semibold py-10">Expense History</h1>
-
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-500">
           <thead className="text-md text-white uppercase bg-blue-600">
             <tr>
               <th scope="col" className="px-6 py-4">
-                10 Date
+                Date
               </th>
               <th scope="col" className="px-6 py-4">
                 Activity
@@ -104,7 +103,7 @@ export default function EmployeeExpenses() {
                 Description
               </th>
               <th scope="col" className="px-6 py-4">
-                To
+                From
               </th>
               <th scope="col" className="px-6 py-4">
                 Order

@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import { useRouter } from "next/router";
+import { useContext } from "react";
 import { DistrictMap } from "react-nepal-map";
 import { LocationContext } from "./_app";
-import { useRouter } from "next/router";
 
 export default function Location() {
   const router = useRouter();

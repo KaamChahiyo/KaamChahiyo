@@ -36,7 +36,7 @@ const handleViewUser = async (res, req) => {
         permananetAddress: true,
         email: true,
         bio: true,
-        password:true,
+        password: true,
         role: true,
         image: true,
         createdAt: true,

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
 import { formatDistance } from "date-fns";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function CompletedJobs() {
   const { data: session } = useSession();
@@ -13,7 +13,7 @@ export default function CompletedJobs() {
     if (!session) {
       router.replace("/login");
     }
-  }, [session]);
+  }, [session, router]);
 
   const [jobs, setJobs] = useState([]);
 

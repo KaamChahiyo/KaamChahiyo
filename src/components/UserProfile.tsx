@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { Router, useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function UserProfile() {
@@ -30,29 +30,25 @@ export default function UserProfile() {
   });
 
   useEffect(() => {
-    try {
-      fetch(`/api/users/${session.user["id"]}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setValue("email", data.email);
-          setValue("name", data.name);
-          setValue("dob", data?.dob?.substring(0, 10));
-          setValue("permananetAddress", data.permananetAddress);
-          setValue("temporaryAddress", data.temporaryAddress);
-          setValue("phoneNumber", data.phoneNumber);
-          setValue("bio", data.bio);
-          setUserId(data.id);
-          setUserRole(data.role);
-          setUserImage(data.image);
-          setUserName(data.name);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+    fetch(`/api/users/${session.user["id"]}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setValue("email", data.email);
+        setValue("name", data.name);
+        setValue("dob", data?.dob?.substring(0, 10));
+        setValue("permananetAddress", data.permananetAddress);
+        setValue("temporaryAddress", data.temporaryAddress);
+        setValue("phoneNumber", data.phoneNumber);
+        setValue("bio", data.bio);
+        setUserId(data.id);
+        setUserRole(data.role);
+        setUserImage(data.image);
+        setUserName(data.name);
+      });
+  }, [session.user, setValue]);
 
   async function onSubmit(data, e) {
     try {
@@ -110,18 +106,16 @@ export default function UserProfile() {
               </div>
             )}
             <div className="flex flex-col gap-5">
-              <div className="flex rounded-full bg-blue-200 text-blue-600 text-normal text-center justify-center uppercase font-bold py-1">
+              <div className="flex rounded-full bg-blue-200 text-blue-600 text-normal text-center justify-center uppercase font-bold py-1 px-3">
                 Role: {userRole}
               </div>
               {userRole == "employee" ? (
-                <div className="">
-                  <button
-                    className="flex rounded-full bg-blue-600 text-white text-md font-medium px-3 py-1 sm:w-full border-2 border-blue-600 hover:bg-white hover:text-blue-600 cursor-pointer"
-                    onClick={() => onClickBtn(userId, "employer")}
-                  >
-                    Switch to Employer
-                  </button>
-                </div>
+                <button
+                  className="flex rounded-full bg-blue-600 text-white text-md font-medium px-3 py-1 sm:w-full border-2 border-blue-600 hover:bg-white hover:text-blue-600 cursor-pointer"
+                  onClick={() => onClickBtn(userId, "employer")}
+                >
+                  Switch to Employer
+                </button>
               ) : userRole == "employer" ? (
                 <button
                   className="flex rounded-full bg-blue-600 text-white text-md font-medium px-3 py-1 sm:w-full border-2 border-blue-600 hover:bg-white hover:text-blue-600 cursor-pointer"

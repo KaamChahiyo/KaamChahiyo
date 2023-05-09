@@ -3,7 +3,7 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { authOptions } from "./api/auth/[...nextauth]";
 
@@ -19,7 +19,7 @@ export default function Login() {
   async function onSubmit(values) {
     const res = await signIn("credentials", {
       ...values,
-      callbackUrl: router.query.callbackUrl
+      callbackUrl: router.query.callbackUrl,
     });
   }
 
@@ -27,8 +27,7 @@ export default function Login() {
     if (session) {
       router.replace("/");
     }
-  }, [session]);
-
+  }, [session, router]);
 
   return (
     <>
@@ -113,7 +112,7 @@ export default function Login() {
                 </div>
               </button>
               <div>
-                <p className="text-center ">Don't have account ?</p>
+                <p className="text-center ">Don&apos;t have account ?</p>
 
                 <p className="text-[#0063F1] font-bold text-sm text-center">
                   <Link passHref href="/signup">

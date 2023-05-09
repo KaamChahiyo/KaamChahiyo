@@ -1,7 +1,7 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
 import { formatDistance } from "date-fns";
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 
 export default function RecentJobPost() {

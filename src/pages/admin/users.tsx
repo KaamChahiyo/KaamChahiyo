@@ -1,10 +1,10 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 export default function Users() {
   const { data: session } = useSession();
@@ -16,7 +16,7 @@ export default function Users() {
     if (session && session.user["role"] != "admin") {
       router.replace("/user-profile");
     }
-  }, [session]);
+  }, [session, router]);
 
   const [users, setUsers] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
@@ -70,13 +70,13 @@ export default function Users() {
       setRole(selected_user.role);
       setStatus(selected_user.status);
     }
-  }, [selectedUserId]);
+  }, [selectedUserId, setValue, users]);
 
   // useEffect(() => {
   //   // console.log(selectedUser);
   // }, [selectedUser]);
 
-  async function onSubmit(data, e) {
+  async function onSubmit(data, _e) {
     try {
       // console.log(data);
       await fetch(`/api/users/${selectedUserId}`, {

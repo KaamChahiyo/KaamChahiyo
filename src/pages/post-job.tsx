@@ -1,10 +1,10 @@
 import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { authOptions } from "./api/auth/[...nextauth]";
 import { useEffect, useState } from "react";
-import Button from "../components/Button";
 import { useForm } from "react-hook-form";
+import Button from "../components/Button";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function PostJob() {
   const { data: session } = useSession();
@@ -15,7 +15,7 @@ export default function PostJob() {
     if (!session) {
       router.replace("/login");
     }
-  }, [session]);
+  }, [session, router]);
 
   const {
     handleSubmit,

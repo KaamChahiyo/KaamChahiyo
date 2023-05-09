@@ -2,7 +2,7 @@ import { formatDistance } from "date-fns";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 
 function PostedJob() {
@@ -16,7 +16,7 @@ function PostedJob() {
     if (!session) {
       router.replace("/login");
     }
-  }, [session]);
+  }, [session, router]);
 
   useEffect(() => {
     fetch(`/api/jobs/`, {
@@ -45,8 +45,8 @@ function PostedJob() {
             jobs
               ?.filter((job) => job.postedBy?.id === session.user?.["id"])
               .sort((a, b) => b.postedOn.localeCompare(a.postedOn))
-              .map((job) => (
-                <div className="flex justify-center items-center">
+              .map((job, index) => (
+                <div className="flex justify-center items-center" key={index}>
                   <div key={job.id} className="w-full p-1">
                     {/* {JSON.stringify(job)} */}
                     <div className=" shadow border border-gray-200  hover:border-cyan-600  rounded-lg overflow-hidden p-3">

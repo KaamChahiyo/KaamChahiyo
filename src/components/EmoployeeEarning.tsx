@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function EmoployeeEarning() {
   const { data: session } = useSession();
@@ -19,6 +19,29 @@ export default function EmoployeeEarning() {
       });
   }, []);
 
+  useEffect(() => {
+    var af = 0;
+    var pf = 0;
+    jobs
+      ?.filter(
+        (job) =>
+          job.assignedTo?.id === session?.user?.["id"] &&
+          job.status === "completed"
+      )
+      ?.map((job) => {
+        const assignedDate = new Date(job.assignedOn);
+        const currentDate = new Date();
+        const timeDiff = Math.abs(
+          currentDate.getTime() - assignedDate.getTime()
+        );
+        const hoursDiff = Math.ceil(timeDiff / (1000 * 60 * 60));
+        const remainingTime = 72 - hoursDiff;
+
+        if (remainingTime > 0) setPaymentsBeingCleared((pf += job.price));
+        else setAvailableFunds((af += job.price));
+      });
+  }, [jobs]);
+
   const CompletedJob = jobs?.filter(
     (job) => job.assignedTo?.id === currentUser && job.status === "completed"
   );
@@ -30,14 +53,8 @@ export default function EmoployeeEarning() {
   const totalCompletedJobs = CompletedJob.length;
 
   const [availableFunds, setAvailableFunds] = useState("0.00");
-  const [loadedFunds, setLoadedFunds] = useState("0.00");
-  const [remainingTime, setRemainingTime] = useState(null);
-
-  let paymentsBeingCleared = 0;
-
-  for (let job of CompletedJob) {
-    paymentsBeingCleared += job?.price;
-  }
+  const [withDrawnFunds, setWithDrawnFunds] = useState("0.00");
+  const [paymentsBeingCleared, setPaymentsBeingCleared] = useState(0);
 
   let paymentOfOngoingJob = 0;
 
@@ -58,8 +75,8 @@ export default function EmoployeeEarning() {
                 NPR {availableFunds}
               </p>
               <p>
-                Withdrawn till the date:{" "}
-                <span className="font-semibold">NPR {loadedFunds}</span>
+                Withdrawn till the date:
+                <span className="font-semibold">NPR {withDrawnFunds}</span>
               </p>
             </div>
             <div>
@@ -122,41 +139,48 @@ export default function EmoployeeEarning() {
             </tr>
           </thead>
           <tbody>
-            {CompletedJob.map((job) => {
-              const assignedDate = new Date(job.assignedOn);
-              const currentDate = new Date();
-              const timeDiff = Math.abs(currentDate - assignedDate);
-              const hoursDiff = Math.ceil(timeDiff / (1000 * 60 * 60));
-              const remainingTime = 72 - hoursDiff;
-              //   setRemainingTime(remainingTime);
-              let remainingDays = Math.floor(remainingTime / 24);
-              let remainingHours = remainingTime % 24;
+            {jobs
+              ?.filter(
+                (job) =>
+                  job.assignedTo?.id === session?.user?.["id"] &&
+                  job.status === "completed"
+              )
+              .map((job) => {
+                const assignedDate = new Date(job.assignedOn);
+                const currentDate = new Date();
+                const timeDiff = Math.abs(
+                  currentDate.getTime() - assignedDate.getTime()
+                );
+                const hoursDiff = Math.ceil(timeDiff / (1000 * 60 * 60));
+                const remainingTime = 72 - hoursDiff;
+                let remainingDays = Math.floor(remainingTime / 24);
+                let remainingHours = remainingTime % 24;
 
-              return (
-                <tr key={job.id} className="bg-white hover:bg-blue-50">
-                  <th className="px-6 py-4">{job.assignedOn.slice(0, 10)}</th>
-                  <td className="px-6 py-4">
-                    {remainingTime <= 0 ? "cleared" : `clearing`}
-                  </td>
-                  <td className="px-6 py-4">
-                    {remainingTime <= 0
-                      ? "Cleared"
-                      : "Clearing in " +
-                        `${remainingDays}` +
-                        " days " +
-                        `${remainingHours}` +
-                        " hours"}
-                  </td>
-                  <td className="px-6 py-4">{job.postedBy.name}</td>
-                  <td className="px-6 py-4">
-                    <Link href={`${process.env.NEXTAUTH_URL}/jobs/${job.id}`}>
-                      {job.title.slice(0, 12)}...
-                    </Link>
-                  </td>
-                  <td className="px-6 py-4">NPR. {job.price}</td>
-                </tr>
-              );
-            })}
+                return (
+                  <tr key={job.id} className="bg-white hover:bg-blue-50">
+                    <th className="px-6 py-4">{job.assignedOn.slice(0, 10)}</th>
+                    <td className="px-6 py-4">
+                      {remainingTime <= 0 ? "Cleared" : `Clearing`}
+                    </td>
+                    <td className="px-6 py-4">
+                      {remainingTime <= 0
+                        ? "Cleared"
+                        : "Clearing in " +
+                          `${remainingDays}` +
+                          " days " +
+                          `${remainingHours}` +
+                          " hours"}
+                    </td>
+                    <td className="px-6 py-4">{job.postedBy.name}</td>
+                    <td className="px-6 py-4">
+                      <Link href={`${process.env.NEXTAUTH_URL}/jobs/${job.id}`}>
+                        {job.title.slice(0, 12)}...
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4">NPR. {job.price}</td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>

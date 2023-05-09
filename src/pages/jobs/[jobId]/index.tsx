@@ -3,12 +3,10 @@ import { now } from "lodash";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function apply({ job, params }) {
-  const jobId = params?.jobId;
-
+export default function Apply({ job }) {
   const [apply, setApply] = useState(false);
 
   const {
@@ -47,7 +45,7 @@ export default function apply({ job, params }) {
       });
   }, []);
 
-  async function onSubmit(data, e) {
+  async function onSubmit(data, _e) {
     try {
       console.log(data);
       await fetch(`/api/jobs/${job.id}`, {
