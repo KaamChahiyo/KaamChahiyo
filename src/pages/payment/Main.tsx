@@ -11,8 +11,8 @@ export default function Main() {
         tAmt: 100,
         pid: process.env.ESEWA_TEST_PID,
         scd: process.env.ESEWA_SCD,
-        su: "http://localhost:3000/success",
-        fu: "http://localhost:3000/failed"
+        su: "http://localhost:3000/payment/success",
+        fu: "http://localhost:3000/payment/failed"
     });
 
     useEffect(() => {
