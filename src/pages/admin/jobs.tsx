@@ -239,7 +239,7 @@ export default function Jobs() {
                               onClick={() =>
                                 updateJobStatusById(job.id, "approved")
                               }
-                              className="px-5 py-3 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-lg font-bold  focus:outline-none focus:shadow-outline"
+                              className="px-5 py-3 border-2 border-blue-600 bg-blue-600 hover:bg-white hover:text-blue-600 rounded-lg text-white text-lg font-bold  focus:outline-none focus:shadow-outline"
                             >
                               Approve
                             </button>
@@ -247,7 +247,7 @@ export default function Jobs() {
                               onClick={() =>
                                 updateJobStatusById(job.id, "rejected")
                               }
-                              className="px-5 py-3 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-lg font-bold  focus:outline-none focus:shadow-outline"
+                              className="px-5 py-3 border-2 border-blue-600 bg-blue-600 hover:bg-white hover:text-blue-600 rounded-lg text-white text-lg font-bold  focus:outline-none focus:shadow-outline"
                             >
                               Reject
                             </button>
@@ -303,14 +303,13 @@ export default function Jobs() {
                           <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                             {job.Location.displayName}
                           </div>
-                          <button
+                          <Button
                             onClick={() =>
                               updateJobStatusById(job.id, "approved")
                             }
-                            className="w-fit px-5 py-3 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-lg font-bold  focus:outline-none focus:shadow-outline"
                           >
                             Approve
-                          </button>
+                          </Button>
                         </div>
                       </div>
                     </div>
@@ -362,7 +361,6 @@ export default function Jobs() {
                           <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                             {job.Location.displayName}
                           </div>
-                          {/* <Button value="Approve" onClick={null} /> */}
                         </div>
                       </div>
                     </div>
@@ -415,11 +413,12 @@ export default function Jobs() {
                             {job.Location.displayName}
                           </div>
                           <Button
-                            value="Approve"
                             onClick={() =>
                               updateJobStatusById(job.id, "approved")
                             }
-                          />
+                          >
+                            Approve
+                          </Button>
                         </div>
                       </div>
                     </div>
@@ -471,7 +470,6 @@ export default function Jobs() {
                           <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                             {job.Location.displayName}
                           </div>
-                          {/* <Button value="Approve" onClick={null} /> */}
                         </div>
                       </div>
                     </div>

@@ -79,7 +79,7 @@ function PostedJob() {
                       <div className="jobDetail text-lg px-3 w-full">
                         {job.description}
                       </div>
-                      <div className="flex flex-col gap-3 pl-3">
+                      <div className="flex flex-col gap-3 pl-3 pb-5">
                         <div className="flex pt-5">
                           <span className="font-semibold">Price:</span>
                           &#160;
@@ -88,8 +88,10 @@ function PostedJob() {
                         <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                           {job.Location.displayName}
                         </div>
-                        <Button value="Delete" />
                       </div>
+                      {job.status !== "completed" || "inProgress" ? (
+                        <Button>Delete </Button>
+                      ) : null}
                     </div>
                   </div>
                 </div>

@@ -79,7 +79,7 @@ export default function AppHeader() {
           <div className="gap-12 justify-center font-semibold leading-7 hidden lg:flex">
             <span
               className={classNames({
-                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-blue-600 text-blue-600 hover:text-blue-600 border-primary-0 active:outline-offset-3":
                   route.pathname === "/",
               })}
             >
@@ -89,7 +89,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-blue-600 text-blue-600 hover:text-blue-600 border-primary-0 active:outline-offset-3":
                   route.pathname === "/services",
               })}
             >
@@ -99,7 +99,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-blue-600 text-blue-600 hover:text-blue-600 border-primary-0 active:outline-offset-3":
                   route.pathname === "/jobs",
               })}
             >
@@ -109,7 +109,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-blue-600 text-blue-600 hover:text-blue-600 border-primary-0 active:outline-offset-3":
                   route.pathname === "/location",
               })}
             >
@@ -119,7 +119,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-blue-600 text-blue-600 hover:text-blue-600 border-primary-0 active:outline-offset-3":
                   route.pathname === "/about",
               })}
             >
@@ -129,7 +129,7 @@ export default function AppHeader() {
             </span>
             <span
               className={classNames({
-                "border-b-2 border-[#0063F1] text-[#0063F1] hover:text-[#0063F1] border-primary-0 active:outline-offset-3":
+                "border-b-2 border-blue-600 text-blue-600 hover:text-blue-600 border-primary-0 active:outline-offset-3":
                   route.pathname === "/blog",
               })}
             >
@@ -171,7 +171,7 @@ export default function AppHeader() {
             <div className="hidden lg:flex gap-8 items-center justify-center">
               {user ? (
                 <>
-                  <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
+                  <div className="flex bg-blue-600 border-2 border-blue-600 text-white font-semibold px-6 py-3 rounded hover:text-blue-600 hover:bg-white hover:border-2 hover:border-blue-600 ">
                     <Link passHref href="/logout">
                       Logout
                     </Link>
@@ -180,12 +180,12 @@ export default function AppHeader() {
               ) : (
                 <>
                   <Link passHref href="/login">
-                    <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1]">
+                    <div className="flex bg-blue-600 border-2 border-blue-600 text-white font-semibold px-6 py-3 rounded hover:text-blue-600 hover:bg-white hover:border-2 hover:border-blue-600">
                       Login
                     </div>
                   </Link>
                   <Link passHref href="/signup">
-                    <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
+                    <div className="flex bg-blue-600 border-2 border-blue-600 text-white font-semibold px-6 py-3 rounded hover:text-blue-600 hover:bg-white hover:border-2 hover:border-blue-600 ">
                       Signup
                     </div>
                   </Link>
@@ -245,7 +245,7 @@ export default function AppHeader() {
               <div className="flex gap-8 items-center justify-center">
                 {user ? (
                   <>
-                    <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
+                    <div className="flex bg-blue-600 border-2 border-blue-600 text-white font-semibold px-6 py-3 rounded hover:text-blue-600 hover:bg-white hover:border-2 hover:border-blue-600 ">
                       <Link passHref href="/logout">
                         Logout
                       </Link>
@@ -254,12 +254,12 @@ export default function AppHeader() {
                 ) : (
                   <>
                     <Link passHref href="/login">
-                      <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1]">
+                      <div className="flex bg-blue-600 border-2 border-blue-600 text-white font-semibold px-6 py-3 rounded hover:text-blue-600 hover:bg-white hover:border-2 hover:border-blue-600">
                         Login
                       </div>
                     </Link>
                     <Link passHref href="/signup">
-                      <div className="flex bg-[#0063F1] border-2 border-[#0063F1] text-white font-semibold px-6 py-3 rounded hover:text-[#0063F1] hover:bg-white hover:border-2 hover:border-[#0063F1] ">
+                      <div className="flex bg-blue-600 border-2 border-blue-600 text-white font-semibold px-6 py-3 rounded hover:text-blue-600 hover:bg-white hover:border-2 hover:border-blue-600 ">
                         Signup
                       </div>
                     </Link>

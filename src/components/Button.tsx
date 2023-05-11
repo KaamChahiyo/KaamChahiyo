@@ -1,22 +1,37 @@
-export default function Button({ value, onClick, disabled }: any) {
-  let className =
-    "flex rounded-md bg-[#0063F1] text-white text-lg font-medium px-6 py-2.5 border-2 border-[#0063F1] hover:bg-white hover:font-medium hover:text-[#0063F1] cursor-pointer";
-  if (value == "Search") {
-    className =
-      "flex rounded-full bg-[#0063F1] text-white text-lg font-medium px-6 py-2.5 border-2 border-[#0063F1] hover:bg-white hover:font-medium hover:text-[#0063F1] cursor-pointer";
-  } else if (value == "Post Job") {
-    className =
-      "flex rounded-md bg-[#0063F1] text-white text-lg font-medium px-9 py-4 sm:w-full border-2 border-[#0063F1] hover:bg-white hover:text-[#0063F1] cursor-pointer";
-  }
-  return (
-    <div>
-      <input
-        type="submit"
-        value={value}
-        className={className}
-        onClick={onClick}
-        disabled={disabled}
-      />
-    </div>
-  );
+import classNames from "classnames";
+import React, { ReactEventHandler, ReactNode } from "react";
+
+interface ButtonProps {
+  varient?: "Search" | "passwordUpdate";
+  disabled?: boolean;
+  children?: ReactNode;
+  onClick?: ReactEventHandler;
 }
+
+const Button = ({
+  varient,
+  onClick,
+  disabled = false,
+  children,
+}: ButtonProps) => {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={classNames(
+        "flex items-center justify-center w-fit bg-blue-600 text-white text-lg font-medium border-2 border-blue-600 hover:bg-white hover:font-medium hover:text-blue-600 ",
+        {
+          "rounded-full h-12 py-6 px-6 cursor-pointer": varient === "Search",
+          "cursor-not-allowed":
+            varient == "passwordUpdate" && disabled === true,
+
+          "h-16 px-6 py-2 cursor-pointer rounded-md": varient !== "Search",
+        }
+      )}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default Button;

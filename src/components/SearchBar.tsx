@@ -110,7 +110,9 @@ export default function Test({ locations, categories }) {
 
       <div>
         <Link href={Values ? `/jobs/?${searchDomain}=${searchTerm}` : "/"}>
-          <Button value="Search" onClick={null} />
+          <Button varient="Search">
+            <p className="">Search</p>
+          </Button>
         </Link>
       </div>
     </div>

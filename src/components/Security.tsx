@@ -38,7 +38,6 @@ export default function Security() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log("HERE", !data?.password);
         !data?.password
           ? setIsDisabled(true)
           : setSecurity("currentPassword", data?.password);
@@ -46,9 +45,7 @@ export default function Security() {
   }, [session.user, setSecurity]);
 
   async function onSecuritySubmit(data, e) {
-    // console.log("Button Clicked");
     try {
-      //   console.log("SECURITY SUBMIT", data);
       await fetch(`/api/users/${session.user["id"]}`, {
         method: "PUT",
         headers: {
@@ -75,7 +72,7 @@ export default function Security() {
 
             <div className="flex flex-col gap-1 text-gray-500">
               <label>Current Password:</label>
-              {/* <h1>111: {getSecurity("currentPassword")}</h1> */}
+              {/* <h1>111?: {getSecurity("currentPassword")}</h1> */}
               <input
                 type="password"
                 placeholder="Enter current Password"
@@ -173,8 +170,11 @@ export default function Security() {
                 </Link>
               </div>
               {/*TODO:  Disable button in case of error :: extend component to accept disabled prop  */}
-
-              <Button value="Update" disabled={isDisabled}></Button>
+              <div>
+                <Button varient="passwordUpdate" disabled={isDisabled}>
+                  Update
+                </Button>
+              </div>
             </div>
           </div>
         </form>

@@ -114,7 +114,7 @@ export default function JobApply() {
                         {job.Location.displayName}
                       </div>
                       <Link href={`jobs/${job.id}`}>
-                        <Button value="View Job" onClick={null} />
+                        <Button>View Job</Button>
                       </Link>
                     </div>
                   </div>
@@ -159,7 +159,7 @@ export default function JobApply() {
                         {job.Location.displayName}
                       </div>
                       <Link href={`jobs/${job.id}`}>
-                        <Button value="View Job" onClick={null} />
+                        <Button>View Job</Button>
                       </Link>
                     </div>
                   </div>
