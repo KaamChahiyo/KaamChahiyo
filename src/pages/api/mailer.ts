@@ -372,6 +372,7 @@ const generateEmailContent = (data) => {
                                             <td valign="top" class="bodyContent">
     
     <h2>New Contact Message</h2>
+    ${textData}
     ${htmlData}
     
     
