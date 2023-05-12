@@ -147,7 +147,7 @@ export default function PostJob() {
                     ))}
                   </select>
                 </div>
-                <Button value={isSubmitting ? " Posting..." : "Post"}></Button>
+                <Button>{isSubmitting ? " Posting..." : "Post"}</Button>
               </div>
             </div>
           </form>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "./Button";
+import router from "next/router";
 
 const hashPassword = (password: string) => {
   return sha256(password).toString();
@@ -57,6 +58,7 @@ export default function Security() {
     } catch (error) {
       null;
     }
+    router.reload();
   }
 
   return (
@@ -158,7 +160,7 @@ export default function Security() {
 
             {/* TODO: Create a error Message component */}
             {securityErrors.newPassword && (
-              <div className="flex bg-red-100 px-4 py-2 text-red-500 rounded">
+              <div className="flex bg-red-100 px-4 py-2 text-red-500 rounded ">
                 {securityErrors.newPassword.message}
               </div>
             )}
