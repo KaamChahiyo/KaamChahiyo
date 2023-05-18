@@ -20,7 +20,7 @@ export default function Security() {
     setError: setSecurityError,
     getValues: getSecurity,
     clearErrors: clearSecurityErrors,
-    formState: { errors: securityErrors },
+    formState: { errors: securityErrors, isSubmitting },
   } = useForm({
     defaultValues: {
       currentPassword: "",
@@ -89,8 +89,8 @@ export default function Security() {
                       });
                       setIsDisabled(true);
                     } else {
-                      clearSecurityErrors("typedCurrentPassword"),
-                        setIsDisabled(false);
+                      clearSecurityErrors("typedCurrentPassword");
+                      // setIsDisabled(false);
                     }
                   },
                 })}
@@ -110,7 +110,20 @@ export default function Security() {
                 placeholder="Type new password"
                 {...registerSecurity("newPassword", {
                   onChange: (e) => {
-                    if (e.target.value != getSecurity("confirmPassword")) {
+                    // if (e.target.value.length === 0) {
+                    //   setSecurityError("newPassword" || "confirmPassword", {
+                    //     message: "Password cannot be empty",
+                    //   });
+                    //   setIsDisabled(true);
+                    // } else
+                    if (e.target.value.length < 8) {
+                      setSecurityError("newPassword", {
+                        message: "Password must be at least 8 characters",
+                      });
+                      setIsDisabled(true);
+                    } else if (
+                      e.target.value != getSecurity("confirmPassword")
+                    ) {
                       setSecurityError("newPassword", {
                         message:
                           "New Password and Confirm Password didn't match",
@@ -174,7 +187,7 @@ export default function Security() {
               {/*TODO:  Disable button in case of error :: extend component to accept disabled prop  */}
               <div>
                 <Button varient="passwordUpdate" disabled={isDisabled}>
-                  Update
+                  {isSubmitting ? "Updating" : "Update"}
                 </Button>
               </div>
             </div>
