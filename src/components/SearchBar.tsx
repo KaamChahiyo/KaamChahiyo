@@ -21,7 +21,7 @@ export default function Test({ locations, categories }) {
 
   const [showInputOptions, setshowInputOptions] = useState(false);
   const handleInputClick = () => {
-    setshowInputOptions(true);
+    setshowInputOptions(!showInputOptions);
   };
 
   const [click, setClick] = React.useState(false);
