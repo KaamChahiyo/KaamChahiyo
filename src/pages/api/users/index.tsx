@@ -34,6 +34,7 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
           temporaryAddress: true,
           permananetAddress: true,
           phoneNumber: true,
+          balance: true,
           image: true,
           createdAt: true,
           updatedAt: true,

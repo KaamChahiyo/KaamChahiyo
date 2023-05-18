@@ -33,6 +33,24 @@ export default function EmployeeExpenses() {
   const [availableFunds, setAvailableFunds] = useState("400.00");
   const [loadedFunds, setLoadedFunds] = useState("900.00");
 
+  const [userId, setUserId] = useState("");
+  const [balance, setBalance] = useState("");
+
+
+
+  useEffect(() => {
+    fetch(`/api/users/${session.user["id"]}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserId(data.id);
+        setBalance(data.balance);
+      });
+  }, [session.user]);
+
+
   const [paymentsBeingCleared, setPaymentsBeingCleared] = useState(0);
 
   let paymentOfOngoingJob = 0;
@@ -69,7 +87,7 @@ export default function EmployeeExpenses() {
             <div>
               <h5 className="text-lg">Balance available for use:</h5>
               <p className="text-5xl font-bold text-blue-600">
-                NPR {availableFunds}
+                NPR {balance}
               </p>
               <p>
                 Loaded till the date:{" "}
@@ -77,13 +95,14 @@ export default function EmployeeExpenses() {
               </p>
             </div>
             <div>
-              <button
-                onClick={null}
-                className="bg-blue-600 w-48 rounded-lg text-white p-4"
-              >
-                Load Money
-              </button>
-              <Link href="#">
+              <Link href="/load-balance">
+                <button
+                  className="bg-blue-600 w-48 rounded-lg text-white p-4"
+                >
+                  Load Money
+                </button>
+              </Link>
+              <Link href="/manage-payment">
                 <p className="text-lg underline">Manage payment methods</p>
               </Link>
             </div>
@@ -154,10 +173,10 @@ export default function EmployeeExpenses() {
                     {remainingTime <= 0
                       ? "Cleared"
                       : "Clearing in " +
-                        `${remainingDays}` +
-                        " days " +
-                        `${remainingHours}` +
-                        " hours"}
+                      `${remainingDays}` +
+                      " days " +
+                      `${remainingHours}` +
+                      " hours"}
                   </td>
                   <td className="px-6 py-4">{job?.assignedTo?.name}</td>
                   <td className="px-6 py-4">

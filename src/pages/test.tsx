@@ -9,7 +9,7 @@ export default function ChangePassword() {
   const router = useRouter();
   useEffect(() => {
     if (!session) {
-      router.replace(`/test/`);
+      router.replace(`/login`);
     } else {
       const userId = session.user["id"];
       // console.log("userId : " + userId);
