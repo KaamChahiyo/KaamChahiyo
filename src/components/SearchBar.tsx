@@ -62,7 +62,7 @@ export default function Test({ locations, categories }) {
             onChange={onChange}
             placeholder="Search by category or location"
             onClick={handleInputClick}
-            onBlur={() => setshowInputOptions(false)}
+            // onBlur={() => setshowInputOptions(false)}
           ></input>
         </div>
 
