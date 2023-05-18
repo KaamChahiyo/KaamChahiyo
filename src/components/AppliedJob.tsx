@@ -100,18 +100,19 @@ function AppliedJob() {
                 <div className="jobDetail text-lg px-3 w-full">
                   {job.description}
                 </div>
-                <div className="flex flex-col gap-3 pt-5">
+                <div className="flex flex-col gap-3 p-5">
                   <div className="bg-blue-50 rounded-full px-3 py-1 flex w-fit ">
                     {job.Location.displayName}
                   </div>
                   Rs. {job.price}
-                  <Button
-                    value="Mark Completed"
-                    onClick={() =>
-                      updateJobStatusById(job.id, "completed", new Date())
-                    }
-                  />
                 </div>
+                <Button
+                  onClick={() =>
+                    updateJobStatusById(job.id, "completed", new Date())
+                  }
+                >
+                  Mark Completed
+                </Button>
               </div>
             </div>
           ))

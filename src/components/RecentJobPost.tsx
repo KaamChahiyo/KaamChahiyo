@@ -18,7 +18,6 @@ export default function RecentJobPost() {
           b.postedOn.localeCompare(a.postedOn)
         );
         setJob(sortedData);
-        // console.log(data);
       });
   }, []);
   return (
@@ -61,7 +60,7 @@ export default function RecentJobPost() {
                       {job.Location.displayName}
                     </div>
                     <Link href={`jobs/${job.id}`}>
-                      <Button value="View Job" onClick={null} />
+                      <Button>View Job</Button>
                     </Link>
                   </div>
                 </div>
@@ -70,7 +69,7 @@ export default function RecentJobPost() {
           })}
       </div>
       <Link href="/jobs">
-        <Button value="Show More Jobs" onClick={null} />
+        <Button>Show More Jobs</Button>
       </Link>
     </div>
   );

@@ -7,7 +7,7 @@ export default function Footer() {
   const [searchDomain] = useState("category");
 
   return (
-    <div className=" bg-[#0063F1] text-white w-full h-full mt-10">
+    <div className=" bg-blue-600 text-white w-full h-full mt-10">
       <div className="flex justify-center">
         <div className="grid grid-cols-1 md:grid-cols-4 flex-wrap justify-center m-auto container gap-6 px-5 py-12 text-white">
           <div className="flex flex-col gap-5">

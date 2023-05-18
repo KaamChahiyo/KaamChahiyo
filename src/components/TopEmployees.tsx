@@ -44,7 +44,10 @@ function TopEmployees() {
                   </div>
                 </div>
                 <div className="flex flex-col justify-center items-center text-center gap-2">
-                  <div className="text-lg">{user.bio}</div>
+                  <div className="text-lg">
+                    {user.bio.slice(0, 100)}{" "}
+                    {user.bio.length >= 100 ? "..." : null}
+                  </div>
                 </div>
               </div>
             );

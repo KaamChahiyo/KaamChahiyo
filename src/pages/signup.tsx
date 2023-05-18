@@ -128,7 +128,7 @@ export default function Signup() {
                 ) : (
                   <button
                     type="submit"
-                    className="px-9 py-4 border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold sm:w-full focus:outline-none focus:shadow-outline"
+                    className="px-9 py-4 border-2 border-blue-600 bg-blue-600 hover:bg-white hover:text-blue-600 rounded-lg text-white text-xl font-bold sm:w-full focus:outline-none focus:shadow-outline"
                   >
                     Signup
                   </button>
@@ -187,7 +187,7 @@ export default function Signup() {
           <div>
             <p className="text-center ">Already have account ?</p>
 
-            <p className="text-[#0063F1] font-bold text-sm text-center">
+            <p className="text-blue-600 font-bold text-sm text-center">
               <Link passHref href="/login">
                 Login
               </Link>

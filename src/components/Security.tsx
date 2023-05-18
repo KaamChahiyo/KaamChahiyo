@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "./Button";
+import router from "next/router";
 
 const hashPassword = (password: string) => {
   return sha256(password).toString();
@@ -19,7 +20,7 @@ export default function Security() {
     setError: setSecurityError,
     getValues: getSecurity,
     clearErrors: clearSecurityErrors,
-    formState: { errors: securityErrors },
+    formState: { errors: securityErrors, isSubmitting },
   } = useForm({
     defaultValues: {
       currentPassword: "",
@@ -38,7 +39,6 @@ export default function Security() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log("HERE", !data?.password);
         !data?.password
           ? setIsDisabled(true)
           : setSecurity("currentPassword", data?.password);
@@ -46,9 +46,7 @@ export default function Security() {
   }, [session.user, setSecurity]);
 
   async function onSecuritySubmit(data, e) {
-    // console.log("Button Clicked");
     try {
-      //   console.log("SECURITY SUBMIT", data);
       await fetch(`/api/users/${session.user["id"]}`, {
         method: "PUT",
         headers: {
@@ -60,6 +58,7 @@ export default function Security() {
     } catch (error) {
       null;
     }
+    router.reload();
   }
 
   return (
@@ -75,7 +74,7 @@ export default function Security() {
 
             <div className="flex flex-col gap-1 text-gray-500">
               <label>Current Password:</label>
-              {/* <h1>111: {getSecurity("currentPassword")}</h1> */}
+              {/* <h1>111?: {getSecurity("currentPassword")}</h1> */}
               <input
                 type="password"
                 placeholder="Enter current Password"
@@ -90,8 +89,8 @@ export default function Security() {
                       });
                       setIsDisabled(true);
                     } else {
-                      clearSecurityErrors("typedCurrentPassword"),
-                        setIsDisabled(false);
+                      clearSecurityErrors("typedCurrentPassword");
+                      // setIsDisabled(false);
                     }
                   },
                 })}
@@ -111,7 +110,20 @@ export default function Security() {
                 placeholder="Type new password"
                 {...registerSecurity("newPassword", {
                   onChange: (e) => {
-                    if (e.target.value != getSecurity("confirmPassword")) {
+                    // if (e.target.value.length === 0) {
+                    //   setSecurityError("newPassword" || "confirmPassword", {
+                    //     message: "Password cannot be empty",
+                    //   });
+                    //   setIsDisabled(true);
+                    // } else
+                    if (e.target.value.length < 8) {
+                      setSecurityError("newPassword", {
+                        message: "Password must be at least 8 characters",
+                      });
+                      setIsDisabled(true);
+                    } else if (
+                      e.target.value != getSecurity("confirmPassword")
+                    ) {
                       setSecurityError("newPassword", {
                         message:
                           "New Password and Confirm Password didn't match",
@@ -161,7 +173,7 @@ export default function Security() {
 
             {/* TODO: Create a error Message component */}
             {securityErrors.newPassword && (
-              <div className="flex bg-red-100 px-4 py-2 text-red-500 rounded">
+              <div className="flex bg-red-100 px-4 py-2 text-red-500 rounded ">
                 {securityErrors.newPassword.message}
               </div>
             )}
@@ -173,8 +185,11 @@ export default function Security() {
                 </Link>
               </div>
               {/*TODO:  Disable button in case of error :: extend component to accept disabled prop  */}
-
-              <Button value="Update" disabled={isDisabled}></Button>
+              <div>
+                <Button varient="passwordUpdate" disabled={isDisabled}>
+                  {isSubmitting ? "Updating" : "Update"}
+                </Button>
+              </div>
             </div>
           </div>
         </form>
