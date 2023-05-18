@@ -11,7 +11,7 @@ export default function Test({ locations, categories }) {
 
   const onChange = (e: { target: { value: string } }) => {
     setValues(e.target.value);
-    setshowInputOptions(true);
+    setshowInputOptions(!showInputOptions);
   };
 
   const onSearch = (SearchTerm) => {
