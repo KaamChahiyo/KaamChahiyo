@@ -203,14 +203,16 @@ export default function Apply({ job }) {
                 ""
               )}
 
-              {!apply && (
-                <button
-                  className="px-5 py-4 w-fit border-2 border-blue-600 bg-blue-600 hover:bg-white hover:text-blue-600 rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline"
-                  onClick={() => setApply(true)}
-                >
-                  Apply
-                </button>
-              )}
+              {!apply
+                ? job.status === "approved" && (
+                    <button
+                      className="px-5 py-4 w-fit border-2 border-[#0063F1] bg-[#0063F1] hover:bg-white hover:text-[#0063F1] rounded-lg text-white text-xl font-bold focus:outline-none focus:shadow-outline"
+                      onClick={() => setApply(true)}
+                    >
+                      Apply
+                    </button>
+                  )
+                : null}
             </div>
           </div>
         </div>

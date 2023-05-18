@@ -27,6 +27,7 @@ const handleGET = async (res: NextApiResponse, req: NextApiRequest) => {
       title: true,
       description: true,
       price: true,
+      status: true,
       postedBy: {
         select: {
           id: true,

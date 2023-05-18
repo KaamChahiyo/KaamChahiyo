@@ -42,15 +42,15 @@ export default function EmoployeeEarning() {
       });
   }, [jobs]);
 
-  const CompletedJob = jobs?.filter(
-    (job) => job.assignedTo?.id === currentUser && job.status === "completed"
-  );
+  const CompletedJob = jobs
+    ?.filter(
+      (job) => job.assignedTo?.id === currentUser && job.status === "completed"
+    )
+    .sort((a, b) => b.assignedOn.localeCompare(a.assignedOn));
 
   const OnGoingJob = jobs?.filter(
     (job) => job.assignedTo?.id === currentUser && job.status === "inProgress"
   );
-
-  const totalCompletedJobs = CompletedJob.length;
 
   const [availableFunds, setAvailableFunds] = useState("0.00");
   const [withDrawnFunds, setWithDrawnFunds] = useState("0.00");
@@ -100,7 +100,6 @@ export default function EmoployeeEarning() {
               <p className="text-5xl font-bold text-blue-600">
                 NPR {paymentsBeingCleared}
               </p>
-              <p>{totalCompletedJobs} payment</p>
             </div>
             <hr className="bg-gray-300 h-0.5" />
             <div>
@@ -139,48 +138,42 @@ export default function EmoployeeEarning() {
             </tr>
           </thead>
           <tbody>
-            {jobs
-              ?.filter(
-                (job) =>
-                  job.assignedTo?.id === session?.user?.["id"] &&
-                  job.status === "completed"
-              )
-              .map((job) => {
-                const assignedDate = new Date(job.assignedOn);
-                const currentDate = new Date();
-                const timeDiff = Math.abs(
-                  currentDate.getTime() - assignedDate.getTime()
-                );
-                const hoursDiff = Math.ceil(timeDiff / (1000 * 60 * 60));
-                const remainingTime = 72 - hoursDiff;
-                let remainingDays = Math.floor(remainingTime / 24);
-                let remainingHours = remainingTime % 24;
+            {CompletedJob.map((job) => {
+              const assignedDate = new Date(job.assignedOn);
+              const currentDate = new Date();
+              const timeDiff = Math.abs(
+                currentDate.getTime() - assignedDate.getTime()
+              );
+              const hoursDiff = Math.ceil(timeDiff / (1000 * 60 * 60));
+              const remainingTime = 72 - hoursDiff;
+              let remainingDays = Math.floor(remainingTime / 24);
+              let remainingHours = remainingTime % 24;
 
-                return (
-                  <tr key={job.id} className="bg-white hover:bg-blue-50">
-                    <th className="px-6 py-4">{job.assignedOn.slice(0, 10)}</th>
-                    <td className="px-6 py-4">
-                      {remainingTime <= 0 ? "Cleared" : `Clearing`}
-                    </td>
-                    <td className="px-6 py-4">
-                      {remainingTime <= 0
-                        ? "Cleared"
-                        : "Clearing in " +
-                          `${remainingDays}` +
-                          " days " +
-                          `${remainingHours}` +
-                          " hours"}
-                    </td>
-                    <td className="px-6 py-4">{job.postedBy.name}</td>
-                    <td className="px-6 py-4">
-                      <Link href={`${process.env.NEXTAUTH_URL}/jobs/${job.id}`}>
-                        {job.title.slice(0, 12)}...
-                      </Link>
-                    </td>
-                    <td className="px-6 py-4">NPR. {job.price}</td>
-                  </tr>
-                );
-              })}
+              return (
+                <tr key={job.id} className="bg-white hover:bg-blue-50">
+                  <th className="px-6 py-4">{job.assignedOn.slice(0, 10)}</th>
+                  <td className="px-6 py-4">
+                    {remainingTime <= 0 ? "Cleared" : `Clearing`}
+                  </td>
+                  <td className="px-6 py-4">
+                    {remainingTime <= 0
+                      ? "Cleared"
+                      : "Clearing in " +
+                        `${remainingDays}` +
+                        " days " +
+                        `${remainingHours}` +
+                        " hours"}
+                  </td>
+                  <td className="px-6 py-4">{job.postedBy.name}</td>
+                  <td className="px-6 py-4">
+                    <Link href={`/jobs/${job.id}`}>
+                      {job.title.slice(0, 12)}...
+                    </Link>
+                  </td>
+                  <td className="px-6 py-4">NPR. {job.price}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

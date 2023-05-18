@@ -20,10 +20,11 @@ export default function Footer() {
               />
             </div>
             <div>
-              <p className="text-lg ">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Exercitationem ut at molestias provident sapiente, blanditiis
-                porro
+              <p className="text-base">
+                KaamChahiyo focuses on creating Employment Opportunities,
+                Consulting, Training, as well as to provide Professionals of
+                several fields to various users around the Nation through a
+                Digital Platform.
               </p>
             </div>
           </div>
