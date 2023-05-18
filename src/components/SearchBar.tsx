@@ -21,7 +21,7 @@ export default function Test({ locations, categories }) {
 
   const [showInputOptions, setshowInputOptions] = useState(false);
   const handleInputClick = () => {
-    setshowInputOptions(!showInputOptions);
+    setshowInputOptions(true);
   };
 
   const [click, setClick] = React.useState(false);
@@ -62,6 +62,7 @@ export default function Test({ locations, categories }) {
             onChange={onChange}
             placeholder="Search by category or location"
             onClick={handleInputClick}
+            onBlur={() => setshowInputOptions(false)}
           ></input>
         </div>
 
