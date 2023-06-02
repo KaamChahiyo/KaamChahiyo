@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -24,10 +21,10 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId], map: "Account_userId_fkey")
 }
 
 model Session {
@@ -36,6 +33,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "Session_userId_fkey")
 }
 
 model User {
@@ -57,24 +56,16 @@ model User {
   createdAt         DateTime         @default(now())
   updatedAt         DateTime?        @default(now())
   deletedAt         DateTime?
+  jobId             String?
+  balance           Float            @default(0)
+  Account           Account[]
   AssignedOn        Job[]            @relation("Assigned")
   PostedOn          Job[]            @relation("Posted")
-  Account           Account[]
-  Session           Session[]
   JobApplication    JobApplication[]
+  Session           Session[]
   Job               Job?             @relation(fields: [jobId], references: [id])
-  jobId             String?
-}
 
-enum Roles {
-  employee
-  employer
-  admin
-}
-
-enum UserStatus {
-  active
-  inactive
+  @@index([jobId], map: "User_jobId_fkey")
 }
 
 model Location {
@@ -95,8 +86,10 @@ model Payment {
   id              String        @id @default(cuid())
   status          String
   paymentDate     DateTime
-  PaymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
   paymentMethodId String
+  PaymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+
+  @@index([paymentMethodId], map: "Payment_paymentMethodId_fkey")
 }
 
 model Category {
@@ -107,12 +100,13 @@ model Category {
 }
 
 model JobApplication {
-  Job    Job    @relation(fields: [jobId], references: [id])
   jobId  String
-  User   User   @relation(fields: [userId], references: [id])
   userId String
+  Job    Job    @relation(fields: [jobId], references: [id])
+  User   User   @relation(fields: [userId], references: [id])
 
   @@id([jobId, userId])
+  @@index([userId], map: "JobApplication_userId_fkey")
 }
 
 model Job {
@@ -122,18 +116,34 @@ model Job {
   description  String           @db.VarChar(255)
   price        Float
   status       JobStatus        @default(pendingApproval)
-  postedBy     User             @relation("Posted", fields: [postedById], references: [id])
   postedById   String
   postedOn     DateTime         @default(now())
-  assignedTo   User?            @relation("Assigned", fields: [assignedToId], references: [id])
-  assignedToId String?         
-  assignedOn   DateTime?   
-  Category     Category         @relation(fields: [categoryId], references: [id])
+  assignedToId String?
+  assignedOn   DateTime?
   categoryId   String
-  Location     Location         @relation(fields: [locationId], references: [id])
   locationId   String
+  assignedTo   User?            @relation("Assigned", fields: [assignedToId], references: [id])
+  Category     Category         @relation(fields: [categoryId], references: [id])
+  Location     Location         @relation(fields: [locationId], references: [id])
+  postedBy     User             @relation("Posted", fields: [postedById], references: [id])
   appliedBy    JobApplication[]
   User         User[]
+
+  @@index([assignedToId], map: "Job_assignedToId_fkey")
+  @@index([categoryId], map: "Job_categoryId_fkey")
+  @@index([locationId], map: "Job_locationId_fkey")
+  @@index([postedById], map: "Job_postedById_fkey")
+}
+
+enum Roles {
+  employee
+  employer
+  admin
+}
+
+enum UserStatus {
+  active
+  inactive
 }
 
 enum JobStatus {
